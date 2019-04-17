@@ -116,7 +116,7 @@
                         <index>true</index>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.spocone.sarny.App</mainClass>
+                            <mainClass>com.sarny.spocone.App</mainClass>
                         </manifest>
                         <manifestEntries>
                             <mode>development</mode>

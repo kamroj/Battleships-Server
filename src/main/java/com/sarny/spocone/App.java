@@ -1,4 +1,4 @@
-package com.spocone.sarny;
+package com.sarny.spocone;
 
 /**
  * @author Kamil Rojek
