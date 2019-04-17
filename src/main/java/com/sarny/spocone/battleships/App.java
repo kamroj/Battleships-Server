@@ -1,4 +1,4 @@
-package com.sarny.spocone;
+package com.sarny.spocone.battleships;
 
 /**
  * @author Kamil Rojek
