@@ -28,9 +28,19 @@ class PrototypeController {
     }
 
     @PostMapping(path = "/shot")
-    private String handlePlayerShot(@RequestBody int fieldNumber) {
-        String result = board.markShot(fieldNumber);
+    private String handlePlayerShot(Shot shot) {
+        String result = board.markShot(shot.fieldNumber);
         System.out.println(board);
         return result;
+    }
+
+    private class Shot {
+        int fieldNumber;
+        int playerId;
+
+        public Shot(int fieldNumber, int playerId) {
+            this.fieldNumber = fieldNumber;
+            this.playerId = playerId;
+        }
     }
 }
