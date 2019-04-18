@@ -1,4 +1,4 @@
-package com.sarny.spocone.battleships;
+package com.sarny.spocone.battleships.prototype;
 
 /**
  * @author Makiela Wojciech

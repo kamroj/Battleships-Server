@@ -1,4 +1,4 @@
-package com.sarny.spocone.battleships;
+package com.sarny.spocone.battleships.prototype;
 
 import org.springframework.stereotype.Component;
 
@@ -43,11 +43,13 @@ class Board {
         return builder.toString();
     }
 
-    void markShot(int shot) {
+    String markShot(int shot) {
         if (symbols[shot] == 's') {
             symbols[shot] = 'x';
+            return "hit";
         } else {
             symbols[shot] = 'o';
+            return "miss";
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.sarny.spocone.battleships;
+package com.sarny.spocone.battleships.prototype;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +28,9 @@ class PrototypeController {
     }
 
     @PostMapping(path = "/shot")
-    private void placeNewShipOnBoard(@RequestBody int fieldNumber) {
-        System.out.println(fieldNumber);
-        board.markShot(fieldNumber);
+    private String handlePlayerShot(@RequestBody int fieldNumber) {
+        String result = board.markShot(fieldNumber);
         System.out.println(board);
+        return result;
     }
 }
