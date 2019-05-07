@@ -15,29 +15,7 @@ class Board {
     }
 
     ShotOutcome markShot(int fieldNumber) {
-        Ship ship = getShipFromField(fieldNumber);
-        if (ship == null) {
-            return ShotOutcome.MISS;
-        }
-        return getShotOutcome(ship, fieldNumber);
-    }
-
-    private ShotOutcome getShotOutcome(Ship ship, int fieldNumber) {
-        ShotOutcome shotOutcome = ship.fire(fieldNumber);
-
-        switch (shotOutcome) {
-            case HIT:
-                return ShotOutcome.HIT;
-            case SUNK:
-                ships.remove(ship);
-                return checkIfWin();
-            default:
-                return ShotOutcome.MISS;
-        }
-    }
-
-    private ShotOutcome checkIfWin() {
-        return ships.isEmpty() ? ShotOutcome.WIN : ShotOutcome.SUNK;
+        return getShotResult(getShipFromField(fieldNumber), fieldNumber);
     }
 
     Ship getShipFromField(int fieldNumber) {
@@ -46,5 +24,23 @@ class Board {
                 return ship;
         }
         return null;
+    }
+
+    private ShotOutcome getShotResult(Ship ship, int fieldNumber) {
+        if (ship == null)
+            return ShotOutcome.MISS;
+
+        ShotOutcome shotOutcome = ship.fire(fieldNumber);
+
+        if (shotOutcome == ShotOutcome.SUNK) {
+            ships.remove(ship);
+            return checkIfWin();
+        } else {
+            return shotOutcome;
+        }
+    }
+
+    private ShotOutcome checkIfWin() {
+        return ships.isEmpty() ? ShotOutcome.WIN : ShotOutcome.SUNK;
     }
 }

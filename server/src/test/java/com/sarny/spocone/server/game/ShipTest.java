@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author Kamil Rojek
+ */
 public class ShipTest {
 
     @DataProvider
