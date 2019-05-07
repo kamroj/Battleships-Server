@@ -7,8 +7,8 @@ import java.util.*;
  * @author Wojciech Makiela
  */
 class Ship {
-    private List<Integer> toHit;
-    private List<Integer> hit;
+    List<Integer> toHit;
+    List<Integer> hit;
 
     Ship(Integer ... fields) {
         toHit = List.of(fields);
