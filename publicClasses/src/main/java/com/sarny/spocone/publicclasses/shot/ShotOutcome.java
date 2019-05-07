@@ -7,4 +7,8 @@ package com.sarny.spocone.publicclasses.shot;
  * @see ShotResult
  */
 public enum ShotOutcome {
+    MISS,
+    HIT,
+    SUNK,
+    WIN
 }

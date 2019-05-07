@@ -7,4 +7,20 @@ package com.sarny.spocone.publicclasses.shot;
  * @see ShotOutcome
  */
 public class ShotResult {
+
+    private ShotOutcome shotOutcome;
+    private int field;
+
+    public ShotResult(ShotOutcome shotOutcome, int field) {
+        this.shotOutcome = shotOutcome;
+        this.field = field;
+    }
+
+    public ShotOutcome getShotOutcome() {
+        return shotOutcome;
+    }
+
+    public int getField() {
+        return field;
+    }
 }

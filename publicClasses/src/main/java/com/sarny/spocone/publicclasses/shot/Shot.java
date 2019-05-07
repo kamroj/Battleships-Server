@@ -6,4 +6,20 @@ package com.sarny.spocone.publicclasses.shot;
  * @author Agnieszka Trzewik
  */
 public class Shot {
+
+    private int playerID;
+    private int field;
+
+    public Shot(int playerID, int field) {
+        this.playerID = playerID;
+        this.field = field;
+    }
+
+    public int getPlayerID() {
+        return playerID;
+    }
+
+    public int getField() {
+        return field;
+    }
 }
