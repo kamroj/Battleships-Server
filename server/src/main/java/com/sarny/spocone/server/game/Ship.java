@@ -1,6 +1,7 @@
 package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
+
 import java.util.*;
 
 /**
@@ -10,8 +11,8 @@ class Ship {
     List<Integer> toHit;
     List<Integer> hit;
 
-    Ship(Integer ... fields) {
-        toHit = List.of(fields);
+    Ship(List<Integer> fields) {
+        toHit = new LinkedList<>(fields);
         hit = new ArrayList<>();
     }
 
@@ -21,7 +22,7 @@ class Ship {
 
     ShotOutcome fire(int fieldNumber) {
         if (toHit.contains(fieldNumber)) {
-            toHit.remove(fieldNumber);
+            toHit.remove(Integer.valueOf(fieldNumber)); //I used Integer.valueOf cause fieldNumber is treated as Index
             hit.add(fieldNumber);
             return toHit.isEmpty() ? ShotOutcome.SUNK : ShotOutcome.HIT;
         }
