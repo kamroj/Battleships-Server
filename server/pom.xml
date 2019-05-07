@@ -60,6 +60,12 @@
             <version>${version.mockito}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.spocone.sarny</groupId>
+            <artifactId>publicClasses</artifactId>
+            <version>0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
