@@ -11,7 +11,7 @@ class Board {
     private List<Ship> ships;
 
     Board(List<Ship> ships) {
-        this.ships = ships;
+        this.ships = new ArrayList<>(ships);
     }
 
     ShotOutcome markShot(int fieldNumber) {

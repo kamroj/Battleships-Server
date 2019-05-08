@@ -96,4 +96,44 @@ public class ShipTest {
         //Assert
         Assert.assertEquals(fireResult, ShotOutcome.SUNK);
     }
+
+    @Test
+    public void testEquals_whenTwoShipsHaveSameSize_returnTrue() {
+        //Arrange
+        Ship firstShip = new Ship(Arrays.asList(1, 2, 3));
+        Ship secondShip = new Ship(Arrays.asList(1, 2, 3));
+
+        //Assert
+        Assert.assertEquals(firstShip, secondShip);
+    }
+
+    @Test
+    public void testEquals_whenShipsHaveDifferentSize_returnFalse() {
+        //Arrange
+        Ship firstShip = new Ship(Arrays.asList(1, 2, 3));
+        Ship secondShip = new Ship(Arrays.asList(1, 2, 3, 4));
+
+        //Assert
+        Assert.assertNotEquals(firstShip, secondShip);
+    }
+
+    @Test
+    public void testHashCode_whenTwoShipsHaveSameSize_returnTrue() {
+        //Arrange
+        Ship firstShip = new Ship(Arrays.asList(1, 2, 3));
+        Ship secondShip = new Ship(Arrays.asList(1, 2, 3));
+
+        //Assert
+        Assert.assertEquals(firstShip.hashCode(), secondShip.hashCode());
+    }
+
+    @Test
+    public void testHashCode_whenShipsHaveDifferentSize_returnTrue() {
+        //Arrange
+        Ship firstShip = new Ship(Arrays.asList(1, 2, 3));
+        Ship secondShip = new Ship(Arrays.asList(1, 2, 3, 4));
+
+        //Assert
+        Assert.assertNotEquals(firstShip.hashCode(), secondShip.hashCode());
+    }
 }
