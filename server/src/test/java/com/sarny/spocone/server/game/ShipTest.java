@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class ShipTest {
     @Test
     public void testFire_whenHitShipButNotSunk_ReturnShotOutcomeHit() {
         //Arrange
-        Ship ship = new Ship(Arrays.asList(0, 1, 2));
+        Ship ship = new Ship(new ArrayList<>(Arrays.asList(0, 1, 2)));
 
         //Act
         ShotOutcome fireResult = ship.fire(0);
@@ -86,7 +87,7 @@ public class ShipTest {
     @Test
     public void testFire_whenHitShipAndSunk_ReturnShotOutcomeSunk() {
         //Arrange
-        Ship ship = new Ship(Arrays.asList(0, 1, 2));
+        Ship ship = new Ship(new ArrayList<>(Arrays.asList(0, 1, 2)));
 
         //Act
         ship.fire(0);

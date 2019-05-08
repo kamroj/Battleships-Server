@@ -2,7 +2,7 @@ package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Kamil Rojek
@@ -11,7 +11,7 @@ class Board {
     private List<Ship> ships;
 
     Board(List<Ship> ships) {
-        this.ships = new ArrayList<>(ships);
+        this.ships = ships;
     }
 
     ShotOutcome markShot(int fieldNumber) {

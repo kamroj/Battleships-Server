@@ -1,5 +1,6 @@
 package com.sarny.spocone.server.game;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,8 @@ class GuaranteedMissGenerator {
 
     Set<Integer> generateMisses(Ship ship) {
         Set<Integer> misses = new HashSet<>();
-        List<Integer> occupiedFields = ship.toHit;
+        List<Integer> occupiedFields = new ArrayList<>();
+        occupiedFields.addAll(ship.toHit);
         occupiedFields.addAll(ship.hit);
         for (Integer field : occupiedFields) {
             if (field != (((field / COLUMNS) * COLUMNS) + COLUMNS - 1)) {

@@ -19,14 +19,14 @@ public class BoardTest {
     public static Object[][] dprov_ShipsGenerator() {
         return new Object[][]{
                 {new ArrayList<>(Arrays.asList(
-                        new Ship(Arrays.asList(0, 1, 2)),
-                        new Ship(Arrays.asList(4, 5, 6)),
-                        new Ship(Arrays.asList(40, 50, 60)))),
+                        new Ship(new ArrayList<>(Arrays.asList(0, 1, 2))),
+                        new Ship(new ArrayList<>(Arrays.asList(4, 5, 6))),
+                        new Ship(new ArrayList<>(Arrays.asList(40, 50, 60))))),
                 },
                 {new ArrayList<>(Arrays.asList(
-                        new Ship(Arrays.asList(0, 1, 2)),
-                        new Ship(Arrays.asList(30, 40, 50)),
-                        new Ship(Arrays.asList(60, 70, 80)))),
+                        new Ship(new ArrayList<>(Arrays.asList(0, 1, 2))),
+                        new Ship(new ArrayList<>(Arrays.asList(30, 40, 50))),
+                        new Ship(new ArrayList<>(Arrays.asList(60, 70, 80))))),
                 },
         };
     }
@@ -73,7 +73,7 @@ public class BoardTest {
     public void testMarkShot_AllShipSunk_ReturnWin() {
         //Arrange
         List<Ship> ships = new ArrayList<>(Collections.singletonList(
-                new Ship(Arrays.asList(0, 1, 2))
+                new Ship(new ArrayList<>(Arrays.asList(0, 1, 2)))
         ));
 
         Board board = new Board(ships);
