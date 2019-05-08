@@ -2,7 +2,9 @@ package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Kamil Rojek
@@ -12,7 +14,7 @@ class Ship {
     List<Integer> hit;
 
     Ship(List<Integer> fields) {
-        toHit = new LinkedList<>(fields);
+        toHit = fields;
         hit = new ArrayList<>();
     }
 
@@ -29,7 +31,7 @@ class Ship {
         return ShotOutcome.MISS;
     }
 
-    private int lenght() {
+    int length() {
         return toHit.size() + hit.size();
     }
 
@@ -38,7 +40,7 @@ class Ship {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ship ship = (Ship) o;
-        return this.lenght() == ship.lenght();
+        return this.length() == ship.length();
     }
 
     @Override

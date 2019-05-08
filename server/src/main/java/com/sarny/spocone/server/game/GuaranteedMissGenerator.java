@@ -13,7 +13,9 @@ class GuaranteedMissGenerator {
 
     Set<Integer> generateMisses(Ship ship) {
         Set<Integer> misses = new HashSet<>();
-        for (Integer field : ship.hit) {
+        List<Integer> occupiedFields = ship.toHit;
+        occupiedFields.addAll(ship.hit);
+        for (Integer field : occupiedFields) {
             if (field != (((field / COLUMNS) * COLUMNS) + COLUMNS - 1)) {
                 generateMissesFromRightSideOfAField(field, misses, ship.hit);
             }

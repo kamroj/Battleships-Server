@@ -1,6 +1,8 @@
 package com.sarny.spocone.server.game;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Wojciech Makiela
@@ -9,7 +11,7 @@ class ShipPlacementValidator {
 
     private final Board board;
     private final GuaranteedMissGenerator generator;
-    private Map<Integer, Integer> shipsOfLengthToPlace;
+    private final Map<Integer, Integer> shipsOfLengthToPlace;
 
     private ShipPlacementValidator(HashMap<Integer, Integer> shipsOfLengthToPlace, Board board, GuaranteedMissGenerator generator) {
         this.shipsOfLengthToPlace = shipsOfLengthToPlace;
@@ -27,6 +29,10 @@ class ShipPlacementValidator {
     }
 
     boolean validate(Ship ship) {
+        int shipsToPlace = shipsOfLengthToPlace.get(ship.length());
+        if (shipsToPlace <= 0) {
+            return false;
+        }
         Set<Integer> fieldsAroundShip = generator.generateMisses(ship);
         fieldsAroundShip.addAll(ship.toHit);
 
@@ -36,6 +42,11 @@ class ShipPlacementValidator {
             }
         }
         return true;
+    }
+
+    void placedNewShip(Ship ship) {
+        int previousRemainingShips = shipsOfLengthToPlace.get(ship.length());
+        shipsOfLengthToPlace.put(ship.length(), previousRemainingShips - 1);
     }
 
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
@@ -87,28 +98,28 @@ class ShipPlacementValidator {
         }
     }
 
-    private interface WithShipsOfLength4 {
+    interface WithShipsOfLength4 {
         WithShipsOfLength3 withShipsOfLength4(int ships);
     }
 
-    private interface WithShipsOfLength3 {
+    interface WithShipsOfLength3 {
         WithShipsOfLength2 withShipsOfLength3(int ships);
 
     }
 
-    private interface WithShipsOfLength2 {
+    interface WithShipsOfLength2 {
         WithShipsOfLength1 withShipsOfLength2(int ships);
     }
 
-    private interface WithShipsOfLength1 {
+    interface WithShipsOfLength1 {
         WithGuaranteedMissGenerator withShipsOfLength1(int ships);
     }
 
-    private interface WithGuaranteedMissGenerator {
+    interface WithGuaranteedMissGenerator {
         BuildShipPlacementValidator withGuaranteedMissGenerator(GuaranteedMissGenerator generator);
     }
 
-    private interface BuildShipPlacementValidator {
+    interface BuildShipPlacementValidator {
         ShipPlacementValidator forBoard(Board board);
     }
 }
