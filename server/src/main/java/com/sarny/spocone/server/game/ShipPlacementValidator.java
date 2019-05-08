@@ -1,8 +1,6 @@
 package com.sarny.spocone.server.game;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Wojciech Makiela
@@ -29,7 +27,7 @@ class ShipPlacementValidator {
     }
 
     boolean validate(Ship ship) {
-        List<Integer> fieldsAroundShip = generator.generateMisses(ship);
+        Set<Integer> fieldsAroundShip = generator.generateMisses(ship);
         fieldsAroundShip.addAll(ship.toHit);
 
         for (Integer field : fieldsAroundShip) {

@@ -15,7 +15,7 @@ public class GuaranteedMissGeneratorTest {
 
     @Test(dataProvider = "shipFieldsAndProperMisses")
     public void testGenerateMisses(List<Integer> shipFields, Set<Integer> properMisses) {
-        Ship ship = new Ship();
+        Ship ship = new Ship(Collections.emptyList());
         ship.hit = shipFields;
         Set<Integer> misses = new GuaranteedMissGenerator().generateMisses(ship);
         assert misses.containsAll(properMisses) && properMisses.containsAll(misses);
