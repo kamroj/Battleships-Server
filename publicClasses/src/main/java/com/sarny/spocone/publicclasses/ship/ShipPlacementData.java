@@ -19,6 +19,9 @@ public class ShipPlacementData {
         this.isHorizontally = isHorizontally;
     }
 
+    public ShipPlacementData() {
+    }
+
     public int getPlayerID() {
         return playerID;
     }

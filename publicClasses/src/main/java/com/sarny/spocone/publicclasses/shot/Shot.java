@@ -15,6 +15,9 @@ public class Shot {
         this.field = field;
     }
 
+    public Shot() {
+    }
+
     public int getPlayerID() {
         return playerID;
     }
