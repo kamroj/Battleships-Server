@@ -16,7 +16,7 @@ import java.util.List;
 public class BoardTest {
 
     @DataProvider
-    public static Object[][] dprov_ShipsGenerator() {
+    public static Object[][] dprov_shipsGenerator() {
         return new Object[][]{
                 {new ArrayList<>(Arrays.asList(
                         new Ship(new ArrayList<>(Arrays.asList(0, 1, 2))),
@@ -31,8 +31,8 @@ public class BoardTest {
         };
     }
 
-    @Test(dataProvider = "dprov_ShipsGenerator")
-    public void testMarkShot_WhenNotHitShip_ReturnMiss(List<Ship> ships) {
+    @Test(dataProvider = "dprov_shipsGenerator")
+    public void testMarkShot_whenNotHitShip_returnMiss(List<Ship> ships) {
         //Arrange
         Board board = new Board(ships);
 
@@ -43,8 +43,8 @@ public class BoardTest {
         Assert.assertEquals(markResult, ShotOutcome.MISS);
     }
 
-    @Test(dataProvider = "dprov_ShipsGenerator")
-    public void testMarkShot_WhenHitShip_ReturnHit(List<Ship> ships) {
+    @Test(dataProvider = "dprov_shipsGenerator")
+    public void testMarkShot_whenHitShip_returnHit(List<Ship> ships) {
         //Arrange
         Board board = new Board(ships);
 
@@ -55,8 +55,8 @@ public class BoardTest {
         Assert.assertEquals(markResult, ShotOutcome.HIT);
     }
 
-    @Test(dataProvider = "dprov_ShipsGenerator")
-    public void testMarkShot_WhenHitShipAndSunk_ReturnSunk(List<Ship> ships) {
+    @Test(dataProvider = "dprov_shipsGenerator")
+    public void testMarkShot_whenHitShipAndSunk_returnSunk(List<Ship> ships) {
         //Arrange
         Board board = new Board(ships);
 
@@ -70,7 +70,7 @@ public class BoardTest {
     }
 
     @Test
-    public void testMarkShot_AllShipSunk_ReturnWin() {
+    public void testMarkShot_whenAllShipSunk_returnWin() {
         //Arrange
         List<Ship> ships = new ArrayList<>(Collections.singletonList(
                 new Ship(new ArrayList<>(Arrays.asList(0, 1, 2)))

@@ -15,7 +15,7 @@ import java.util.List;
 public class ShipTest {
 
     @DataProvider
-    public static Object[][] dprov_isOnField_GenerateTrueParameters() {
+    public static Object[][] dprov_isOnField_generateTrueParameters() {
         return new Object[][]{
                 {List.of(1, 2, 3), 1},
                 {List.of(1, 11, 21), 11},
@@ -26,7 +26,7 @@ public class ShipTest {
     }
 
     @DataProvider
-    public static Object[][] dprov_isOnField_GenerateFalseParameters() {
+    public static Object[][] dprov_isOnField_generateFalseParameters() {
         return new Object[][]{
                 {List.of(1, 2, 3), 4},
                 {List.of(1, 11, 21), 0},
@@ -36,8 +36,8 @@ public class ShipTest {
         };
     }
 
-    @Test(dataProvider = "dprov_isOnField_GenerateTrueParameters")
-    public void testIsOnField_WhenPointingToFieldWhereShipIsPlaced_ReturnTrue(List<Integer> shipFields, int fieldOnBoard) {
+    @Test(dataProvider = "dprov_isOnField_generateTrueParameters")
+    public void testIsOnField_whenPointingToFieldWhereShipIsPlaced_returnTrue(List<Integer> shipFields, int fieldOnBoard) {
         //Arrange
         Ship ship = new Ship(shipFields);
 
@@ -48,8 +48,8 @@ public class ShipTest {
         Assert.assertTrue(isOnField);
     }
 
-    @Test(dataProvider = "dprov_isOnField_GenerateFalseParameters")
-    public void testIsOnField_WhenPointingToFieldWhereShipIsNotPlaced_ReturnFalse(List<Integer> shipFields, int fieldOnBoard) {
+    @Test(dataProvider = "dprov_isOnField_generateFalseParameters")
+    public void testIsOnField_whenPointingToFieldWhereShipIsNotPlaced_returnFalse(List<Integer> shipFields, int fieldOnBoard) {
         //Arrange
         Ship ship = new Ship(shipFields);
 
@@ -61,7 +61,7 @@ public class ShipTest {
     }
 
     @Test
-    public void testFire_whenNotHitShip_ReturnShotOutcomeMiss() {
+    public void testFire_whenNotHitShip_returnShotOutcomeMiss() {
         //Arrange
         Ship ship = new Ship(Arrays.asList(0, 1, 2));
 
@@ -73,7 +73,7 @@ public class ShipTest {
     }
 
     @Test
-    public void testFire_whenHitShipButNotSunk_ReturnShotOutcomeHit() {
+    public void testFire_whenHitShipButNotSunk_returnShotOutcomeHit() {
         //Arrange
         Ship ship = new Ship(new ArrayList<>(Arrays.asList(0, 1, 2)));
 
@@ -85,7 +85,7 @@ public class ShipTest {
     }
 
     @Test
-    public void testFire_whenHitShipAndSunk_ReturnShotOutcomeSunk() {
+    public void testFire_whenHitShipAndSunk_returnShotOutcomeSunk() {
         //Arrange
         Ship ship = new Ship(new ArrayList<>(Arrays.asList(0, 1, 2)));
 

@@ -9,6 +9,7 @@ import java.util.Map;
  * @author Kamil Rojek
  */
 class ActiveBoards {
+
     private Map<Integer, Board> boardsInGame;
 
     ActiveBoards(Map<Integer, Board> boardsInGame) {

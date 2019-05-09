@@ -15,8 +15,8 @@ import java.util.Map;
  * @author Agnieszka Trzewik
  */
 class Round {
+
     private static final int FIRST_PLAYER_INDEX = 0;
-    private static final int SECOND_PLAYER_INDEX = 1;
 
     private ActiveBoards activeBoards;
     private Map<Integer, List<ShotResult>> playersShots;

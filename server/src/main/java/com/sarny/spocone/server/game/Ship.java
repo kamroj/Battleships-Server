@@ -10,6 +10,7 @@ import java.util.Objects;
  * @author Kamil Rojek
  */
 class Ship {
+
     List<Integer> toHit;
     List<Integer> hit;
 
@@ -24,7 +25,7 @@ class Ship {
 
     ShotOutcome fire(int fieldNumber) {
         if (toHit.contains(fieldNumber)) {
-            toHit.remove(Integer.valueOf(fieldNumber)); //I used Integer.valueOf cause fieldNumber is treated as Index
+            toHit.remove(Integer.valueOf(fieldNumber)); //Used Integer.valueOf cause fieldNumber is treated as Index
             hit.add(fieldNumber);
             return toHit.isEmpty() ? ShotOutcome.SUNK : ShotOutcome.HIT;
         }

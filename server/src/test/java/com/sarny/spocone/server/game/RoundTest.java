@@ -16,6 +16,7 @@ import static org.testng.Assert.*;
  * @author Kamil Rojek
  */
 public class RoundTest {
+
     private final int FIRST_PLAYER_ID = 1;
     private final int SECOND_PLAYER_ID = 2;
     private Round round;
@@ -49,7 +50,7 @@ public class RoundTest {
     }
 
     @Test(dataProvider = "dprov_generateMissShots")
-    public void testHandleShot_shotInotWater_returnShotObjectWithMISS(int fieldNumber) {
+    public void testHandleShot_shotIntoWater_returnShotObjectWithMISS(int fieldNumber) {
         //Arrange
         Shot shot = new Shot(1, fieldNumber);
 
@@ -80,7 +81,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testGetSeconPlayerShots_whenSecondPlayerHasShotOn2And3FieldAndHITShip_returnShotResults2and3HIT() {
+    public void testGetSecondPlayerShots_whenSecondPlayerHasShotOn2And3FieldAndHITShip_returnShotResults2and3HIT() {
         //Arrange
         Shot firstShot = new Shot(FIRST_PLAYER_ID, 2);
         Shot secondShot = new Shot(FIRST_PLAYER_ID, 3);

@@ -12,6 +12,7 @@ import java.util.*;
  * @author Kamil Rojek
  */
 public class ActiveBoardsTest {
+
     private ActiveBoards activeBoards;
 
     @BeforeMethod

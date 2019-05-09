@@ -9,6 +9,7 @@ import java.util.List;
  * @author Kamil Rojek
  */
 class Board {
+
     private List<Ship> ships;
     private List<Ship> sunkShips;
 

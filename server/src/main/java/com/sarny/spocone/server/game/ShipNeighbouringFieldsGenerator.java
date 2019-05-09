@@ -14,9 +14,8 @@ class ShipNeighbouringFieldsGenerator {
 
     Set<Integer> generateNeighbours(Ship ship) {
         Set<Integer> neighbours = new HashSet<>();
-        List<Integer> occupiedFields = new ArrayList<>();
-        occupiedFields.addAll(ship.toHit);
-        occupiedFields.addAll(ship.hit);
+        List<Integer> occupiedFields = getOccupiedFields(ship);
+
         for (Integer field : occupiedFields) {
             if (field != (((field / COLUMNS) * COLUMNS) + COLUMNS - 1)) {
                 generateNeighboursFromRightSideOfAField(field, neighbours, ship.hit);
@@ -61,5 +60,12 @@ class ShipNeighbouringFieldsGenerator {
         if (neighbour >= 0 && neighbour < 100) {
             neighbours.add(neighbour);
         }
+    }
+
+    private List<Integer> getOccupiedFields(Ship ship) {
+        List<Integer> occupiedFields = new ArrayList<>();
+        occupiedFields.addAll(ship.toHit);
+        occupiedFields.addAll(ship.hit);
+        return occupiedFields;
     }
 }

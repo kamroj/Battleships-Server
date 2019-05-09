@@ -60,7 +60,7 @@ public class GameTest {
     }
 
     @Test(dataProvider = "dprov_forSecondPlayerShotsGetter")
-    public void testGetSecondPlayerShots_when_return(List<Integer> fieldsForSecondPlayerShip) {
+    public void testGetSecondPlayerShots_whenSecondPlayerShipGiven_returnProperSummaryOfFirstPlayerShots(List<Integer> fieldsForSecondPlayerShip) {
         //Arrange
         Board boardForFirstPlayer = new Board(new ArrayList<>());
 

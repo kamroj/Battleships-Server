@@ -1,5 +1,6 @@
 package com.sarny.spocone.server.game;
 
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -31,6 +32,6 @@ public class ShipNeighbouringFieldsGeneratorTest {
         Ship ship = new Ship(Collections.emptyList());
         ship.hit = shipFields;
         Set<Integer> neighbours = new ShipNeighbouringFieldsGenerator().generateNeighbours(ship);
-        assert neighbours.containsAll(properNeighbours) && properNeighbours.containsAll(neighbours);
+        Assert.assertTrue(neighbours.containsAll(properNeighbours) && properNeighbours.containsAll(neighbours));
     }
 }
