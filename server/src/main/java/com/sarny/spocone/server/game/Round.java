@@ -27,11 +27,7 @@ class Round {
 
     ShotResult handleShot(Shot shot) {
         ShotOutcome shotOutcome = activeBoards.markShot(shot);
-
-        if (shotOutcome == ShotOutcome.MISS) {
-            activePlayerID = oppositePlayerID(shot.getPlayerID());
-        }
-
+        updateRoundData(shot, shotOutcome);
         return new ShotResult(shotOutcome, shot.getField());
     }
 
@@ -51,12 +47,21 @@ class Round {
                 .orElse(null);
     }
 
-    private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
-        return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
-    }
-
     boolean isPlayerRound(int playerID) {
         return playerID == activePlayerID;
+    }
+
+    private void updateRoundData(Shot shot, ShotOutcome shotOutcome) {
+        ShotResult shotResult = new ShotResult(shotOutcome, shot.getField());
+        playersShots.get(activePlayerID).add(shotResult);
+
+        if (shotOutcome == ShotOutcome.MISS) {
+            activePlayerID = oppositePlayerID(shot.getPlayerID());
+        }
+    }
+
+    private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
+        return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
     }
 
     private int oppositePlayerID(int currentPlayerID) {
