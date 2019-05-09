@@ -53,7 +53,7 @@ class ShotController {
     ShotsSummary getSummaryOfOpponentsShots(@RequestBody Integer firstPlayerId) {
         Game gameForPlayer = activeGames.findGameForPlayer(firstPlayerId);
         if (gameForPlayer == null) return null;
-        return gameForPlayer.getSecondPlayerShots(firstPlayerId);
+        return gameForPlayer.getOpponentsShots(firstPlayerId);
     }
 
     @GetMapping("/misses")

@@ -11,6 +11,7 @@ import java.util.*;
  * Package private constructor prevents instantiating Game without using GameInitializer
  *
  * @author Wojciech Makiela
+ * @author Agnieszka Trzewik
  */
 public class Game {
 
@@ -41,14 +42,19 @@ public class Game {
         return activeRound.isPlayerRound(playerID);
     }
 
-    public ShotsSummary getSecondPlayerShots(int playerID) {
-        return activeRound.getSecondPlayerShots(playerID);
+    public ShotsSummary getOpponentsShots(int playerID) {
+        return activeRound.getOpponentsShots(playerID);
     }
 
     public Set<Integer> getGuaranteedMisses(int playerID) {
-        int oppositePlayerID = activeRound.oppositePlayerID(playerID);
-        Ship ship = activeBoards.getShipOnField(activeRound.lastSunkField(oppositePlayerID), oppositePlayerID);
+        Ship ship = getLasSunkShip(playerID);
         return new GuaranteedMissGenerator().generateMisses(ship);
+    }
+
+    private Ship getLasSunkShip(int playerID) {
+        int oppositePlayerID = activeRound.oppositePlayerID(playerID);
+        Integer fieldNumber = activeRound.lastSunkField(playerID);
+        return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 
     private void createNewRound() {

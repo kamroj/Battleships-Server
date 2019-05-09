@@ -9,7 +9,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 import static org.testng.Assert.*;
 
@@ -64,7 +63,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testGetSecondPlayerShots_whenSecondPlayerHasShotOn2and3Field_returnShotResults2and3(){
+    public void testGetSecondPlayerShots_whenSecondPlayerHasShotOn2and3Field_returnShotResults2and3() {
         //Arrange
         Shot firstShot = new Shot(FIRST_PLAYER_ID, 2);
         Shot secondShot = new Shot(FIRST_PLAYER_ID, 3);
@@ -72,7 +71,7 @@ public class RoundTest {
         //Act
         round.handleShot(firstShot);
         round.handleShot(secondShot);
-        ShotsSummary opponentPlayerShots = round.getSecondPlayerShots(SECOND_PLAYER_ID);
+        ShotsSummary opponentPlayerShots = round.getOpponentsShots(SECOND_PLAYER_ID);
         List<ShotResult> shotResultList = opponentPlayerShots.getShotResults();
 
         //Assert
@@ -81,7 +80,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testGetSeconPlayerShots_whenSecondPlayerHasShotOn2And3FieldAndHITShip_returnShotResults2and3HIT(){
+    public void testGetSeconPlayerShots_whenSecondPlayerHasShotOn2And3FieldAndHITShip_returnShotResults2and3HIT() {
         //Arrange
         Shot firstShot = new Shot(FIRST_PLAYER_ID, 2);
         Shot secondShot = new Shot(FIRST_PLAYER_ID, 3);
@@ -89,7 +88,7 @@ public class RoundTest {
         //Act
         round.handleShot(firstShot);
         round.handleShot(secondShot);
-        ShotsSummary opponentPlayerShots = round.getSecondPlayerShots(SECOND_PLAYER_ID);
+        ShotsSummary opponentPlayerShots = round.getOpponentsShots(SECOND_PLAYER_ID);
         List<ShotResult> shotResultList = opponentPlayerShots.getShotResults();
 
         //Assert
@@ -98,7 +97,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testLastSunkField_whenLastSunkFieldIs3_returnTrue(){
+    public void testLastSunkField_whenLastSunkFieldIs3_returnTrue() {
         //Arrange
         Shot firstShot = new Shot(FIRST_PLAYER_ID, 1);
         Shot secondShot = new Shot(FIRST_PLAYER_ID, 2);
@@ -115,7 +114,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testIsPlayerRound_player2AsksForTurnWhenFirstPlayerHasFinishedHis_returnFalse(){
+    public void testIsPlayerRound_player2AsksForTurnWhenFirstPlayerHasFinishedHis_returnFalse() {
         //Arrange
         Shot firstPlayerMissShot = new Shot(FIRST_PLAYER_ID, 6);
 
@@ -128,7 +127,7 @@ public class RoundTest {
     }
 
     @Test
-    public void testIsPlayerRound_player2AsksDuringPlayerOneRound_returnFalse(){
+    public void testIsPlayerRound_player2AsksDuringPlayerOneRound_returnFalse() {
         //Act
         boolean isPlayerRound = round.isPlayerRound(SECOND_PLAYER_ID);
 

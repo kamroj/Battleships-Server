@@ -2,6 +2,7 @@ package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,9 +10,11 @@ import java.util.List;
  */
 class Board {
     private List<Ship> ships;
+    private List<Ship> sunkShips;
 
     Board(List<Ship> ships) {
         this.ships = ships;
+        sunkShips = new ArrayList<>();
     }
 
     ShotOutcome markShot(int fieldNumber) {
@@ -20,6 +23,10 @@ class Board {
 
     Ship getShipFromField(int fieldNumber) {
         for (Ship ship : ships) {
+            if (ship.isOnField(fieldNumber))
+                return ship;
+        }
+        for (Ship ship : sunkShips) {
             if (ship.isOnField(fieldNumber))
                 return ship;
         }
@@ -34,6 +41,7 @@ class Board {
 
         if (shotOutcome == ShotOutcome.SUNK) {
             ships.remove(ship);
+            sunkShips.add(ship);
             return checkIfWin();
         } else {
             return shotOutcome;

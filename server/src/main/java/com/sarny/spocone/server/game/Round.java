@@ -39,7 +39,7 @@ class Round {
         return misses == 2;
     }
 
-    ShotsSummary getSecondPlayerShots(int playerID) {
+    ShotsSummary getOpponentsShots(int playerID) {
         int oppositePlayerID = oppositePlayerID(playerID);
         List<ShotResult> shotResults = playersShots.get(oppositePlayerID);
         return new ShotsSummary(shotResults, checkIfLastShotIsWin(shotResults));
@@ -47,7 +47,7 @@ class Round {
 
     Integer lastSunkField(int playerID) {
         return playersShots.get(playerID).stream()
-                .filter(r -> r.getShotOutcome() == ShotOutcome.SUNK)
+                .filter(r -> r.getShotOutcome() == ShotOutcome.SUNK || r.getShotOutcome() == ShotOutcome.WIN)
                 .reduce((first, second) -> second)
                 .map(ShotResult::getField)
                 .orElse(null);
@@ -76,15 +76,6 @@ class Round {
 
     private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
         return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
-    }
-
-    private Integer firstAddedPlayerId() {
-        return playersShots.keySet().iterator().next();
-    }
-
-    private boolean noShotsMarked() {
-        return playersShots.get(FIRST_PLAYER_INDEX).isEmpty()
-                && playersShots.get(SECOND_PLAYER_INDEX).isEmpty();
     }
 
     private void initializePlayersShotsContainer(List<Integer> playersIDs) {

@@ -10,16 +10,8 @@ import java.util.*;
  */
 public class GuaranteedMissGeneratorTest {
 
-    @Test(dataProvider = "shipFieldsAndProperMisses")
-    public void testGenerateMisses(List<Integer> shipFields, Set<Integer> properMisses) {
-        Ship ship = new Ship(Collections.emptyList());
-        ship.hit = shipFields;
-        Set<Integer> misses = new GuaranteedMissGenerator().generateMisses(ship);
-        assert misses.containsAll(properMisses) && properMisses.containsAll(misses);
-    }
-
     @DataProvider
-    public static Object[][] shipFieldsAndProperMisses() {
+    public static Object[][] dprov_shipFieldsAndProperMisses() {
         return new Object[][]{
                 {new ArrayList<>(Arrays.asList(11, 12, 13)), Set.of(0, 1, 2, 3, 4, 10, 14, 20, 21, 22, 23, 24)},
                 {new ArrayList<>(Collections.singletonList(0)), Set.of(1, 10, 11)},
@@ -32,5 +24,13 @@ public class GuaranteedMissGeneratorTest {
                 {new ArrayList<>(Arrays.asList(90, 91, 92)), Set.of(80, 81, 82, 83, 93)},
                 {new ArrayList<>(Collections.singletonList(24)), Set.of(13, 14, 15, 23, 25, 33, 34, 35)},
         };
+    }
+
+    @Test(dataProvider = "dprov_shipFieldsAndProperMisses")
+    public void testGenerateMisses_whenShipsGenerateProperly_returnTrue(List<Integer> shipFields, Set<Integer> properMisses) {
+        Ship ship = new Ship(Collections.emptyList());
+        ship.hit = shipFields;
+        Set<Integer> misses = new GuaranteedMissGenerator().generateMisses(ship);
+        assert misses.containsAll(properMisses) && properMisses.containsAll(misses);
     }
 }
