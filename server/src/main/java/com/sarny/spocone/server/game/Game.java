@@ -1,10 +1,10 @@
 package com.sarny.spocone.server.game;
 
-import java.util.*;
-
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
+
+import java.util.*;
 
 /**
  * Provides set of functions allowing conducting single game
@@ -18,9 +18,6 @@ public class Game {
     private Stack<Round> rounds;
     private Round activeRound;
     private List<Integer> playersIDs;
-
-    // TODO delete when StubRegister class is deleted
-    Game(){}
 
     Game(ActiveBoards activeBoards, int firstPlayerID, int secondPlayerID) {
         this.activeBoards = activeBoards;
@@ -40,17 +37,17 @@ public class Game {
         return shotResult;
     }
 
-    boolean isPlayerRound(int playerID) {
+    public boolean isPlayerRound(int playerID) {
         return activeRound.isPlayerRound(playerID);
     }
 
-    ShotsSummary getSecondPlayerShots(int playerID) {
+    public ShotsSummary getSecondPlayerShots(int playerID) {
         return activeRound.getSecondPlayerShots(playerID);
     }
 
-    Set<Integer> getGuaranteedMisses(int playerID){
+    public Set<Integer> getGuaranteedMisses(int playerID) {
         int oppositePlayerID = activeRound.oppositePlayerID(playerID);
-        Ship ship = activeBoards.getShipOnField(activeRound.lastSunkField(oppositePlayerID),oppositePlayerID);
+        Ship ship = activeBoards.getShipOnField(activeRound.lastSunkField(oppositePlayerID), oppositePlayerID);
         return new GuaranteedMissGenerator().generateMisses(ship);
     }
 
