@@ -37,9 +37,7 @@ class Round {
 
     ShotsSummary getSecondPlayerShots(int playerID) {
         int oppositePlayerID = oppositePlayerID(playerID);
-
         List<ShotResult> shotResults = playersShots.get(oppositePlayerID);
-
         return new ShotsSummary(shotResults, checkIfLastShotIsWin(shotResults));
     }
 
@@ -51,19 +49,19 @@ class Round {
                 .orElse(null);
     }
 
-    private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
-        return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
-    }
-
     boolean isPlayerRound(int playerID) {
         return playerID == activePlayerID;
     }
 
-    private int oppositePlayerID(int currentPlayerID) {
+    int oppositePlayerID(int currentPlayerID) {
         return playersShots.keySet().stream()
                 .filter(id -> id != currentPlayerID)
                 .findFirst()
                 .get();
+    }
+
+    private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
+        return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
     }
 
     private Integer firstAddedPlayerId() {
