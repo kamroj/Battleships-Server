@@ -18,6 +18,7 @@ class Round {
     private ActiveBoards activeBoards;
     private Map<Integer, List<ShotResult>> playersShots;
     private int activePlayerID;
+    private int misses = 0;
 
     Round(ActiveBoards activeBoards, List<Integer> playersIDs) {
         this.activeBoards = activeBoards;
@@ -30,9 +31,14 @@ class Round {
 
         if (shotOutcome == ShotOutcome.MISS) {
             activePlayerID = oppositePlayerID(shot.getPlayerID());
+            misses++;
         }
 
         return new ShotResult(shotOutcome, shot.getField());
+    }
+
+    boolean isRoundOver() {
+        return misses == 2;
     }
 
     ShotsSummary getSecondPlayerShots(int playerID) {
