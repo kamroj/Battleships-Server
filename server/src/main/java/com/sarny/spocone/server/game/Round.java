@@ -27,7 +27,7 @@ class Round {
     }
 
     ShotResult handleShot(Shot shot) {
-        ShotOutcome shotOutcome = activeBoards.markShot(shot);
+        ShotOutcome shotOutcome = activeBoards.markShot(shot, oppositePlayerID(activePlayerID));
 
         if (shotOutcome == ShotOutcome.MISS) {
             activePlayerID = oppositePlayerID(shot.getPlayerID());

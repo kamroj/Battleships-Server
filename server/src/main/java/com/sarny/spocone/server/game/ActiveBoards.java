@@ -15,8 +15,8 @@ class ActiveBoards {
         this.boardsInGame = boardsInGame;
     }
 
-    ShotOutcome markShot(Shot shot) {
-        Board board = getPlayerBoard(shot.getPlayerID());
+    ShotOutcome markShot(Shot shot, int oppositePlayerID) {
+        Board board = getPlayerBoard(oppositePlayerID);
         return board.markShot(shot.getField());
     }
 

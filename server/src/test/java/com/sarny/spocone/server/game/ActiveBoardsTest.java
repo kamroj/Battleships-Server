@@ -38,7 +38,7 @@ public class ActiveBoardsTest {
         Shot shot = new Shot(1, 4);
 
         //Act
-        ShotOutcome shotResult = activeBoards.markShot(shot);
+        ShotOutcome shotResult = activeBoards.markShot(shot, 2);
 
         //Assert
         Assert.assertEquals(shotResult, ShotOutcome.MISS);
@@ -50,7 +50,7 @@ public class ActiveBoardsTest {
         Shot shot = new Shot(1, 3);
 
         //Act
-        ShotOutcome shotResult = activeBoards.markShot(shot);
+        ShotOutcome shotResult = activeBoards.markShot(shot, 2);
 
         //Assert
         Assert.assertEquals(shotResult, ShotOutcome.HIT);
@@ -64,9 +64,9 @@ public class ActiveBoardsTest {
         Shot thirdShot = new Shot(1, 3);
 
         //Act
-        activeBoards.markShot(firstShot);
-        activeBoards.markShot(secondShot);
-        ShotOutcome shotResult = activeBoards.markShot(thirdShot);
+        activeBoards.markShot(firstShot, 2);
+        activeBoards.markShot(secondShot, 2);
+        ShotOutcome shotResult = activeBoards.markShot(thirdShot, 2);
 
         //Assert
         Assert.assertEquals(shotResult, ShotOutcome.SUNK);
@@ -89,7 +89,7 @@ public class ActiveBoardsTest {
 
         //Act
         for (Shot shot : shots) {
-            shotResult = activeBoards.markShot(shot);
+            shotResult = activeBoards.markShot(shot, 2);
         }
 
         //Assert
