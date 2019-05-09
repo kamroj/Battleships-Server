@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.server.game.Game;
 import com.sarny.spocone.server.game.StubRegister;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class ShotController {
 
+    private static Logger logger = LogManager.getLogger(ShotController.class);
     private final Gson gson;
     private final ActiveGames activeGames;
     private StubRegister register;
@@ -41,12 +44,12 @@ class ShotController {
         if (id == null) {
             return;
         }
-        System.out.println("Register player with id " + id);
+        logger.info("Register player with id " + id);
         register.registerPlayer(id);
 
 
         if (register.isRegistrationOver()) {
-            System.out.println("Registration complete");
+            logger.info("Registration complete");
             activeGames.addNewGame(register.finalizeCreation(), register.player1Id, register.player2Id);
             register = new StubRegister();
         }
