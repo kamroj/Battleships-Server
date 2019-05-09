@@ -6,6 +6,7 @@ import com.sarny.spocone.server.game.Game;
 import com.sarny.spocone.server.game.StubRegister;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,21 +27,28 @@ class ShotController {
     }
 
     @PostMapping
-    private String fire(Shot shot) {
+    private String fire(@RequestBody Shot shot) {
         Game gameForPlayer = activeGames.findGameForPlayer(shot.getPlayerID());
+        if (gameForPlayer == null) {
+            return null;
+        }
         return gson.toJson(gameForPlayer.handleShot(shot));
     }
 
     // TODO - remove once ShipPlacementController is implemented
     @PostMapping(path = "/register")
-    public void stubRegistration(Integer id) {
+    public void stubRegistration(@RequestBody Integer id) {
         if (id == null) {
             return;
         }
+        System.out.println("Register player with id " + id);
         register.registerPlayer(id);
+
+
         if (register.isRegistrationOver()) {
+            System.out.println("Registration complete");
             activeGames.addNewGame(register.finalizeCreation(), register.player1Id, register.player2Id);
+            register = new StubRegister();
         }
-        register = new StubRegister();
     }
 }

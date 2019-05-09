@@ -12,7 +12,7 @@ import java.util.Map;
 @Component
 class ActiveGames {
 
-    Map<Integer, Game> activeGames = new HashMap<>();
+    private Map<Integer, Game> activeGames = new HashMap<>();
 
     Game findGameForPlayer(int playerId) {
         return activeGames.get(playerId);
