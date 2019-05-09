@@ -6,7 +6,7 @@ import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import java.util.Map;
 
 /**
- * @author Wojciech Makiela
+ * @author Kamil Rojek
  */
 class ActiveBoards {
     private Map<Integer, Board> boardsInGame;
