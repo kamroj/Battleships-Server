@@ -19,6 +19,9 @@ public class Game {
     private Round activeRound;
     private List<Integer> playersIDs;
 
+    // TODO delete when StubRegister class is deleted
+    Game(){}
+
     Game(ActiveBoards activeBoards, int firstPlayerID, int secondPlayerID) {
         this.activeBoards = activeBoards;
         this.playersIDs = new LinkedList<>(Arrays.asList(firstPlayerID, secondPlayerID));
@@ -46,7 +49,8 @@ public class Game {
     }
 
     Set<Integer> getGuaranteedMisses(int playerID){
-        Ship ship = activeBoards.getShipOnField(activeRound.lastSunkField(activeRound.oppositePlayerID(playerID))
+        int oppositePlayerID = activeRound.oppositePlayerID(playerID);
+        Ship ship = activeBoards.getShipOnField(activeRound.lastSunkField(oppositePlayerID),oppositePlayerID);
         return new GuaranteedMissGenerator().generateMisses(ship);
     }
 
