@@ -43,10 +43,11 @@ class Round {
         return new ShotsSummary(shotResults, checkIfLastShotIsWin(shotResults));
     }
 
-    ShotResult lastSunkField(int playerID) {
+    Integer lastSunkField(int playerID) {
         return playersShots.get(playerID).stream()
                 .filter(r -> r.getShotOutcome() == ShotOutcome.SUNK)
                 .reduce((first, second) -> second)
+                .map(ShotResult::getField)
                 .orElse(null);
     }
 
