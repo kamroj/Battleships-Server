@@ -10,7 +10,7 @@ import java.util.Set;
  */
 class GuaranteedMissGenerator {
 
-    private final int COLUMNS = 10;
+    private static final int COLUMNS = 10;
 
     Set<Integer> generateMisses(Ship ship) {
         Set<Integer> misses = new HashSet<>();

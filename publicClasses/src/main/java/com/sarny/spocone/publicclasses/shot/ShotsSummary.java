@@ -19,6 +19,11 @@ public class ShotsSummary {
         this.isGameOver = false;
     }
 
+    public ShotsSummary(List<ShotResult> shotResults, boolean isGameOver) {
+        this.shotResults = shotResults;
+        this.isGameOver = isGameOver;
+    }
+
     public List<ShotResult> getShotResults() {
         return shotResults;
     }
