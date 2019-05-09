@@ -1,9 +1,6 @@
 package com.sarny.spocone.server.game;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Hard coded for demo. Will be deleted once ShipPlacementController is implemented.
@@ -16,20 +13,22 @@ public class StubRegister {
     private Board forP1 = new Board(new ArrayList<>(Arrays.asList(
             new Ship(new ArrayList<>(Arrays.asList(1, 2, 3, 4))),
             new Ship(new ArrayList<>(Arrays.asList(31, 32))),
-            new Ship(new ArrayList<>(Arrays.asList(20, 21, 22)))
+            new Ship(new ArrayList<>(Arrays.asList(55, 56, 57)))
     )));
 
     private Board forP2 = new Board(new ArrayList<>(Arrays.asList(
-            new Ship(new ArrayList<>(Arrays.asList(1, 10, 20, 30))),
+            new Ship(new ArrayList<>(Arrays.asList(1, 11, 21, 31))),
             new Ship(new ArrayList<>(Arrays.asList(3, 13, 23))),
             new Ship(new ArrayList<>(Arrays.asList(6, 16)))
     )));
 
-    public void registerPlayer(int id) {
+    public List<Integer> registerPlayer(int id) {
         if (player1Id == null) {
             player1Id = id;
-        } else if (player2Id == null) {
+            return Arrays.asList(2,3,4,5,32,33,56,57,58);
+        } else {
             player2Id = id;
+            return Arrays.asList(2,12,22,32,4,14,24,7,17);
         }
     }
 

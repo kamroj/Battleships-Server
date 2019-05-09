@@ -64,8 +64,8 @@ public class ShotControllerTest {
         controller.stubRegistration(player2Id);
 
         // act
-        String actual = controller.fire(new Shot(player1Id, 11));
-        String expected = gson.toJson(new ShotResult(ShotOutcome.MISS, 11));
+        String actual = controller.fire(new Shot(player1Id, 13));
+        String expected = gson.toJson(new ShotResult(ShotOutcome.MISS, 12));
 
         // assert
         assertEquals(actual, expected);

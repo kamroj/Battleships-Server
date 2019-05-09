@@ -8,11 +8,10 @@ import com.sarny.spocone.server.game.StubRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,6 +34,7 @@ class ShotController {
 
     @PostMapping("/shot")
     String fire(@RequestBody Shot shot) {
+        shot = updateOffsetBetweenClientAndServerSide(shot);
         Game gameForPlayer = activeGames.findGameForPlayer(shot.getPlayerID());
         if (gameForPlayer == null) {
             return null;
@@ -42,35 +42,63 @@ class ShotController {
         return gson.toJson(gameForPlayer.handleShot(shot));
     }
 
-    @GetMapping("/turn")
-    boolean isPlayersTurn(@RequestBody Integer id) {
+    @GetMapping("/turn/{id}")
+    Boolean isPlayersTurn(@PathVariable Integer id) {
         Game gameForPlayer = activeGames.findGameForPlayer(id);
         if (gameForPlayer == null) return false;
         return gameForPlayer.isPlayerRound(id);
     }
 
-    @GetMapping("/summary")
-    ShotsSummary getSummaryOfOpponentsShots(@RequestBody Integer firstPlayerId) {
+    @GetMapping("/summary/{firstPlayerId}")
+    ShotsSummary getSummaryOfOpponentsShots(@PathVariable Integer firstPlayerId) {
         Game gameForPlayer = activeGames.findGameForPlayer(firstPlayerId);
         if (gameForPlayer == null) return null;
         return gameForPlayer.getOpponentsShots(firstPlayerId);
     }
 
-    @GetMapping("/misses")
-    Set<Integer> getGuaranteedMisses(@RequestBody Integer id) {
+    @GetMapping("/misses/{id}")
+    List<Integer> getGuaranteedMisses(@PathVariable Integer id) {
         Game gameForPlayer = activeGames.findGameForPlayer(id);
         if (gameForPlayer == null) return null;
-        return gameForPlayer.getGuaranteedMisses(id);
+        Set<Integer> guaranteedMisses = gameForPlayer.getGuaranteedMisses(id);
+        return updateOffsetBetweenClientAndServerSide(guaranteedMisses);
+    }
+
+    /**
+     * Client side enumerates fields starting from 1, while server starts from 0
+     * this method solves this problem by decrementing field id
+     *
+     * @param shot
+     * @return
+     */
+    private Shot updateOffsetBetweenClientAndServerSide(@RequestBody Shot shot) {
+        shot = new Shot(shot.getPlayerID(), shot.getField() - 1);
+        return shot;
+    }
+
+    /**
+     * Client side enumerates fields starting from 1, while server starts from 0
+     * this method solves this problem by incremening occupied indexes
+     *
+     * @param shot
+     * @return
+     */
+    private List<Integer> updateOffsetBetweenClientAndServerSide(Set<Integer> guaranteedMisses) {
+        List<Integer> guaranteedMissesWithUpdatedOffset = new ArrayList<>();
+        for (Integer n : guaranteedMisses) {
+            guaranteedMissesWithUpdatedOffset.add(n + 1);
+        }
+        return guaranteedMissesWithUpdatedOffset;
     }
 
     // TODO - remove once ShipPlacementController is implemented
     @PostMapping(path = "/register")
-    public void stubRegistration(@RequestBody Integer id) {
+    public List<Integer> stubRegistration(@RequestBody Integer id) {
         if (id == null) {
-            return;
+            return null;
         }
         logger.info("Register player with id " + id);
-        register.registerPlayer(id);
+        List<Integer> fieldsWithShips = register.registerPlayer(id);
 
 
         if (register.isRegistrationOver()) {
@@ -78,5 +106,7 @@ class ShotController {
             activeGames.addNewGame(register.finalizeCreation(), register.player1Id, register.player2Id);
             register = new StubRegister();
         }
+
+        return fieldsWithShips;
     }
 }
