@@ -22,7 +22,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(0)
                 .withShipsOfLength2(1)
                 .withShipsOfLength1(1)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
         shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(60, 61)));
@@ -40,7 +40,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(1)
                 .withShipsOfLength2(5)
                 .withShipsOfLength1(0)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
         shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(60, 61, 62)));
@@ -58,7 +58,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(2)
                 .withShipsOfLength2(0)
                 .withShipsOfLength1(0)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
         shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
@@ -76,7 +76,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(0)
                 .withShipsOfLength2(0)
                 .withShipsOfLength1(0)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
         shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
@@ -94,7 +94,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(0)
                 .withShipsOfLength2(0)
                 .withShipsOfLength1(0)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
         shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
@@ -112,7 +112,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(2)
                 .withShipsOfLength2(3)
                 .withShipsOfLength1(4)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act - Place all requested ships
         shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
@@ -155,7 +155,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(2)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         // assert
@@ -192,7 +192,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(2)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
@@ -232,7 +232,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(2)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
@@ -272,7 +272,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(2)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
@@ -312,7 +312,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(2)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
@@ -353,7 +353,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(2)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
@@ -395,7 +395,7 @@ public class ShipPlacementValidatorTest {
                 .withShipsOfLength3(3)
                 .withShipsOfLength2(2)
                 .withShipsOfLength1(3)
-                .withGuaranteedMissGenerator(new GuaranteedMissGenerator())
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {

@@ -10,10 +10,10 @@ import java.util.Set;
 class ShipPlacementValidator {
 
     private final Board board;
-    private final GuaranteedMissGenerator generator;
+    private final ShipNeighbouringFieldsGenerator generator;
     private final Map<Integer, Integer> shipsOfLengthToPlace;
 
-    private ShipPlacementValidator(HashMap<Integer, Integer> shipsOfLengthToPlace, Board board, GuaranteedMissGenerator generator) {
+    private ShipPlacementValidator(HashMap<Integer, Integer> shipsOfLengthToPlace, Board board, ShipNeighbouringFieldsGenerator generator) {
         this.shipsOfLengthToPlace = shipsOfLengthToPlace;
         this.board = board;
         this.generator = generator;
@@ -33,7 +33,7 @@ class ShipPlacementValidator {
         if (shipsToPlace <= 0) {
             return false;
         }
-        Set<Integer> fieldsAroundShip = generator.generateMisses(ship);
+        Set<Integer> fieldsAroundShip = generator.generateNeighbours(ship);
         fieldsAroundShip.addAll(ship.toHit);
 
         for (Integer field : fieldsAroundShip) {
@@ -55,7 +55,7 @@ class ShipPlacementValidator {
         private int length3 = 2;
         private int length2 = 3;
         private int length1 = 4;
-        private GuaranteedMissGenerator generator;
+        private ShipNeighbouringFieldsGenerator generator;
 
         @Override
         public WithShipsOfLength3 withShipsOfLength4(int ships) {
@@ -82,7 +82,7 @@ class ShipPlacementValidator {
         }
 
         @Override
-        public BuildShipPlacementValidator withGuaranteedMissGenerator(GuaranteedMissGenerator generator) {
+        public BuildShipPlacementValidator withGuaranteedMissGenerator(ShipNeighbouringFieldsGenerator generator) {
             this.generator = generator;
             return this;
         }
@@ -116,7 +116,7 @@ class ShipPlacementValidator {
     }
 
     interface WithGuaranteedMissGenerator {
-        BuildShipPlacementValidator withGuaranteedMissGenerator(GuaranteedMissGenerator generator);
+        BuildShipPlacementValidator withGuaranteedMissGenerator(ShipNeighbouringFieldsGenerator generator);
     }
 
     interface BuildShipPlacementValidator {

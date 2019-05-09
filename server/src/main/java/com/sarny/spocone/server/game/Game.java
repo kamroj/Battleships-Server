@@ -27,6 +27,13 @@ public class Game {
         createNewRound();
     }
 
+    /**
+     * Takes a {@link Shot} and performs it. If both contestants make their moves in one round,
+     * then create a new {@link Round}.
+     *
+     * @param shot made by the player
+     * @return {@link ShotResult} of shot executed on opponents {@link Board}
+     */
     public ShotResult handleShot(Shot shot) {
         ShotResult shotResult = activeRound.handleShot(shot);
 
@@ -38,20 +45,38 @@ public class Game {
         return shotResult;
     }
 
+    /**
+     * Informs about whether or not the player with the given ID can shot.
+     *
+     * @param playerID who needs to be checked
+     * @return current active players ID is equal to provided playerID
+     */
     public boolean isPlayerRound(int playerID) {
         return activeRound.isPlayerRound(playerID);
     }
 
+    /**
+     * Returns all opponent {@link ShotResult} in current {@link Round}.
+     *
+     * @param playerID who needs to check opponent shots
+     * @return summary of opponent shots
+     */
     public ShotsSummary getOpponentsShots(int playerID) {
         return activeRound.getOpponentsShots(playerID);
     }
 
+    /**
+     * Generates guaranteed misses for the last ship sunk by the player with given ID.
+     *
+     * @param playerID who needs to get guaranteed misses
+     * @return set of neighbouring fields
+     */
     public Set<Integer> getGuaranteedMisses(int playerID) {
-        Ship ship = getLasSunkShip(playerID);
-        return new GuaranteedMissGenerator().generateMisses(ship);
+        Ship ship = getLastSunkShip(playerID);
+        return new ShipNeighbouringFieldsGenerator().generateNeighbours(ship);
     }
 
-    private Ship getLasSunkShip(int playerID) {
+    private Ship getLastSunkShip(int playerID) {
         int oppositePlayerID = activeRound.oppositePlayerID(playerID);
         Integer fieldNumber = activeRound.lastSunkField(playerID);
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);

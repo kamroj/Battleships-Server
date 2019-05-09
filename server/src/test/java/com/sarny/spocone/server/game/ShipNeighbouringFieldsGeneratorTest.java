@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * @author Agnieszka Trzewik
  */
-public class GuaranteedMissGeneratorTest {
+public class ShipNeighbouringFieldsGeneratorTest {
 
     @DataProvider
     public static Object[][] dprov_shipFieldsAndProperMisses() {
@@ -27,10 +27,10 @@ public class GuaranteedMissGeneratorTest {
     }
 
     @Test(dataProvider = "dprov_shipFieldsAndProperMisses")
-    public void testGenerateMisses_whenShipsGenerateProperly_returnTrue(List<Integer> shipFields, Set<Integer> properMisses) {
+    public void testGenerateMisses_whenShipsGenerateProperly_returnTrue(List<Integer> shipFields, Set<Integer> properNeighbours) {
         Ship ship = new Ship(Collections.emptyList());
         ship.hit = shipFields;
-        Set<Integer> misses = new GuaranteedMissGenerator().generateMisses(ship);
-        assert misses.containsAll(properMisses) && properMisses.containsAll(misses);
+        Set<Integer> neighbours = new ShipNeighbouringFieldsGenerator().generateNeighbours(ship);
+        assert neighbours.containsAll(properNeighbours) && properNeighbours.containsAll(neighbours);
     }
 }

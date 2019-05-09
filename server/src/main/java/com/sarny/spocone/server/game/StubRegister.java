@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Hard coded for demo. Will be deleted once ShipPlacementController is implemented.
+ *
  * @author Wojciech Makiela
  */
 public class StubRegister {
