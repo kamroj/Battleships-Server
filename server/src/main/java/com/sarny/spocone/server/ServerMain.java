@@ -1,10 +1,15 @@
 package com.sarny.spocone.server;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
- * @author Kamil Rojek
+ * @author Wojciech Makiela
  */
-class ServerMain {
+@SpringBootApplication
+public class ServerMain {
+
     public static void main(String[] args) {
-        System.out.println("hello ");
+        SpringApplication.run(ServerMain.class, args);
     }
 }
