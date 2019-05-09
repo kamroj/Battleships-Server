@@ -15,6 +15,9 @@ public class ShipDTO {
         this.shotDownFields = shotDownFields;
     }
 
+    public ShipDTO() {
+    }
+
     public List<Integer> getShotDownFields() {
         return shotDownFields;
     }

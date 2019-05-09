@@ -16,6 +16,9 @@ public class ShotResult {
         this.field = field;
     }
 
+    public ShotResult() {
+    }
+
     public ShotOutcome getShotOutcome() {
         return shotOutcome;
     }
