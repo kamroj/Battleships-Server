@@ -11,16 +11,18 @@ import java.util.Set;
 class ShipNeighbouringFieldsGenerator {
 
     private static final int COLUMNS = 10;
+    private static final int SMALLEST_INDEX_OF_BOARD = 0;
+    private static final int BIGGEST_INDEX_OF_BOARD = 99;
 
     Set<Integer> generateNeighbours(Ship ship) {
         Set<Integer> neighbours = new HashSet<>();
         List<Integer> occupiedFields = getOccupiedFields(ship);
 
         for (Integer field : occupiedFields) {
-            if (field != (((field / COLUMNS) * COLUMNS) + COLUMNS - 1)) {
+            if (fieldIsNotOnTheRightEdgeOfBoard(field)) {
                 generateNeighboursFromRightSideOfAField(field, neighbours, ship.hit);
             }
-            if (field != ((field / COLUMNS) * COLUMNS)) {
+            if (fieldIsNotOnTheLeftEdgeOfBoard(field)) {
                 generateNeighboursFromLeftSideOfAField(field, neighbours, ship.hit);
             }
             generateNeighboursAboveAndUnderAField(field, neighbours, ship.hit);
@@ -52,14 +54,22 @@ class ShipNeighbouringFieldsGenerator {
 
     private void addNeighbourIfNotAShip(int neighbour, Set<Integer> neighbours, List<Integer> ship) {
         if (!ship.contains(neighbour)) {
-            addNeighbourIfOnABoard(neighbour, neighbours);
+            addNeighbourIfIsNotAShipOnABoard(neighbour, neighbours);
         }
     }
 
-    private void addNeighbourIfOnABoard(int neighbour, Set<Integer> neighbours) {
-        if (neighbour >= 0 && neighbour < 100) {
+    private void addNeighbourIfIsNotAShipOnABoard(int neighbour, Set<Integer> neighbours) {
+        if (neighbour >= SMALLEST_INDEX_OF_BOARD && neighbour <= BIGGEST_INDEX_OF_BOARD) {
             neighbours.add(neighbour);
         }
+    }
+
+    private boolean fieldIsNotOnTheLeftEdgeOfBoard(Integer field) {
+        return field != ((field / COLUMNS) * COLUMNS);
+    }
+
+    private boolean fieldIsNotOnTheRightEdgeOfBoard(Integer field) {
+        return field != (((field / COLUMNS) * COLUMNS) + COLUMNS - 1);
     }
 
     private List<Integer> getOccupiedFields(Ship ship) {

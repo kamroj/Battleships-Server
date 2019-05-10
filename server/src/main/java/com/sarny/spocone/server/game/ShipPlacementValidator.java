@@ -13,7 +13,7 @@ class ShipPlacementValidator {
     private final ShipNeighbouringFieldsGenerator generator;
     private final Map<Integer, Integer> shipsOfLengthToPlace;
 
-    private ShipPlacementValidator(HashMap<Integer, Integer> shipsOfLengthToPlace, Board board, ShipNeighbouringFieldsGenerator generator) {
+    private ShipPlacementValidator(Map<Integer, Integer> shipsOfLengthToPlace, Board board, ShipNeighbouringFieldsGenerator generator) {
         this.shipsOfLengthToPlace = shipsOfLengthToPlace;
         this.board = board;
         this.generator = generator;
@@ -51,33 +51,33 @@ class ShipPlacementValidator {
 
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
 
-        private int length4 = 1;
-        private int length3 = 2;
-        private int length2 = 3;
-        private int length1 = 4;
+        private int shipLength4 = 1;
+        private int shipLength3 = 2;
+        private int shipLength2 = 3;
+        private int shipLength1 = 4;
         private ShipNeighbouringFieldsGenerator generator;
 
         @Override
         public WithShipsOfLength3 withShipsOfLength4(int ships) {
-            length4 = ships;
+            shipLength4 = ships;
             return this;
         }
 
         @Override
         public WithShipsOfLength2 withShipsOfLength3(int ships) {
-            length3 = ships;
+            shipLength3 = ships;
             return this;
         }
 
         @Override
         public WithShipsOfLength1 withShipsOfLength2(int ships) {
-            length2 = ships;
+            shipLength2 = ships;
             return this;
         }
 
         @Override
         public WithGuaranteedMissGenerator withShipsOfLength1(int ships) {
-            length1 = ships;
+            shipLength1 = ships;
             return this;
         }
 
@@ -90,10 +90,10 @@ class ShipPlacementValidator {
         @Override
         public ShipPlacementValidator forBoard(Board board) {
             HashMap<Integer, Integer> shipsOfLengthToPlace = new HashMap<>();
-            shipsOfLengthToPlace.put(4, length4);
-            shipsOfLengthToPlace.put(3, length3);
-            shipsOfLengthToPlace.put(2, length2);
-            shipsOfLengthToPlace.put(1, length1);
+            shipsOfLengthToPlace.put(4, shipLength4);
+            shipsOfLengthToPlace.put(3, shipLength3);
+            shipsOfLengthToPlace.put(2, shipLength2);
+            shipsOfLengthToPlace.put(1, shipLength1);
             return new ShipPlacementValidator(shipsOfLengthToPlace, board, generator);
         }
     }

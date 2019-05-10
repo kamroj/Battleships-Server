@@ -80,13 +80,13 @@ class ShotController {
      * Client side enumerates fields starting from 1, while server starts from 0
      * this method solves this problem by incremening occupied indexes
      *
-     * @param shot
+     * @param guaranteedMisses
      * @return
      */
     private List<Integer> updateOffsetBetweenClientAndServerSide(Set<Integer> guaranteedMisses) {
         List<Integer> guaranteedMissesWithUpdatedOffset = new ArrayList<>();
-        for (Integer n : guaranteedMisses) {
-            guaranteedMissesWithUpdatedOffset.add(n + 1);
+        for (Integer miss : guaranteedMisses) {
+            guaranteedMissesWithUpdatedOffset.add(miss + 1);
         }
         return guaranteedMissesWithUpdatedOffset;
     }
