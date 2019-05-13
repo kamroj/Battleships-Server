@@ -13,9 +13,18 @@ class Board {
     private List<Ship> ships;
     private List<Ship> sunkShips;
 
+    Board() {
+        this.ships = new ArrayList<>();
+        sunkShips = new ArrayList<>();
+    }
+
     Board(List<Ship> ships) {
         this.ships = ships;
         sunkShips = new ArrayList<>();
+    }
+
+    void placeShip(Ship ship) {
+        ships.add(ship);
     }
 
     ShotOutcome markShot(int fieldNumber) {
@@ -27,10 +36,12 @@ class Board {
             if (ship.isOnField(fieldNumber))
                 return ship;
         }
+
         for (Ship ship : sunkShips) {
             if (ship.isOnField(fieldNumber))
                 return ship;
         }
+
         return null;
     }
 
