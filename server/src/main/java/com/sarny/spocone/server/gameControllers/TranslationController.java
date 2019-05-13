@@ -23,10 +23,10 @@ class TranslationController {
     }
 
     @GetMapping("/language/{code}")
-    ResponseEntity<Map<String, String>> isPlayersTurn(@PathVariable String code) {
-        TranslationProvider.Translation translation = translationProvider.getTranslation(code);
+    ResponseEntity<Map<String, String>> getTranslationForCode(@PathVariable String code) {
+        TranslationProvider.Translation translation = translationProvider.getTranslation(code.toUpperCase());
         return translation != null ?
-                new ResponseEntity<>(translation.translation, HttpStatus.OK) :
+                new ResponseEntity<>(translation.asMap, HttpStatus.OK) :
                 new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 

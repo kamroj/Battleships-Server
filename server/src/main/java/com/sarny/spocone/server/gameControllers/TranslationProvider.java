@@ -12,24 +12,27 @@ import java.util.ResourceBundle;
 @Component
 class TranslationProvider {
 
-    private Map<String, Translation> supportedLanguages; // Key is language ISO 639-1 code - ect "pl", "en"
+    private Map<String, Translation> loadedTranslations;    // Key is language ISO 639-1 code - ect "pl", "en"
 
     public TranslationProvider() {
-        supportedLanguages = new HashMap<>();
-        ResourceBundle bundle = ResourceBundle.getBundle("pl");
-        supportedLanguages.put("pl", new Translation(bundle));
+        loadedTranslations = new HashMap<>();
+        String[] supportedLanguages = {"PL", "EN"}; // Language ISO 639-1 code
+        for (String languageCode : supportedLanguages) {
+            ResourceBundle bundle = ResourceBundle.getBundle(languageCode);
+            loadedTranslations.put(languageCode, new Translation(bundle));
+        }
     }
 
     Translation getTranslation(String code) {
-        return supportedLanguages.get(code);
+        return loadedTranslations.get(code);
     }
 
     class Translation {
-        Map<String, String> translation;
+        Map<String, String> asMap;
 
         Translation(ResourceBundle bundle) {
-            translation = new HashMap<>();
-            bundle.keySet().forEach(key -> translation.put(key, bundle.getString(key)));
+            asMap = new HashMap<>();
+            bundle.keySet().forEach(key -> asMap.put(key, bundle.getString(key)));
         }
     }
 }
