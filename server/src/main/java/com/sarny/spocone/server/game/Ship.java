@@ -1,6 +1,7 @@
 package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
+import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
 import java.util.ArrayList;
@@ -18,6 +19,17 @@ class Ship {
     Ship(List<Integer> fields) {
         toHit = fields;
         hit = new ArrayList<>();
+    }
+
+    public Ship(ShipPlacementData shipData) {
+        toHit = new ArrayList<>();
+        hit = new ArrayList<>();
+        int offsetBetweenFields = shipData.isHorizontally() ? 1 : 10; // move 1 to right (1), or 1 down (10)
+        int field = shipData.getField();
+        for (int length = 0; length < shipData.getShipLength(); length++) {
+            toHit.add(field);
+            field += offsetBetweenFields;
+        }
     }
 
     boolean isOnField(int fieldNumber) {
@@ -59,6 +71,6 @@ class Ship {
 
     @Override
     public String toString() {
-        return "Ship{" + "toHit=" + toHit + ", hit=" + hit +'}';
+        return "Ship{" + "toHit=" + toHit + ", hit=" + hit + '}';
     }
 }
