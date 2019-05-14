@@ -161,7 +161,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${version.springframework.boot}</version>                <configuration>
+                <version>${version.springframework.boot}</version>
+                <configuration>
                     <mainClass>com.sarny.spocone.server.ServerMain</mainClass>
                 </configuration>
                 <executions>
