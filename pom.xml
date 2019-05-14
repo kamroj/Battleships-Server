@@ -34,6 +34,39 @@
         <version.plugin.maven.jar>3.1.0</version.plugin.maven.jar>
         <version.plugin.maven.compiler>3.8.0</version.plugin.maven.compiler>
         <version.plugin.maven.resources>3.1.0</version.plugin.maven.resources>
+        <version.plugin.maven.site>3.7.1</version.plugin.maven.site>
+
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${version.plugin.maven.site}</version>
+                <configuration>
+                    <port>9000</port>
+                    <tempWebappDirectory>${basedir}/target/site/tempdir</tempWebappDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.9</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-convergence</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
