@@ -38,12 +38,12 @@ public class GameInitializer {
         return ship.asDTO();
     }
 
-    boolean areBothPlayersDone() {
+    public boolean areBothPlayersDone() {
         return boardInitializers.get(FIRST_PLAYER_ID).isBoardReady() &&
                 boardInitializers.get(SECOND_PLAYER_ID).isBoardReady();
     }
 
-    Game generateGame() throws InvalidBoardCreationException {
+    public Game generateGame() throws InvalidBoardCreationException {
         Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
 
         for (Integer playerID : boardInitializers.keySet()) {
@@ -56,7 +56,7 @@ public class GameInitializer {
     }
 
     //Temp solution - when random or manual ship placement will be done this method should be removed
-    Game generateStandardGame() throws InvalidShipPlacementException {
+    public Game generateStandardGame() throws InvalidShipPlacementException {
         Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
 
         for (Integer playerID : boardInitializers.keySet()) {
