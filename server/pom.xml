@@ -130,11 +130,11 @@
                                     <limits>
                                         <limit>
                                             <counter>INSTRUCTION</counter>
-                                            <minimum>0.95</minimum>
+                                            <minimum>0.6</minimum>
                                         </limit>
                                         <limit>
                                             <counter>METHOD</counter>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.6</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -142,7 +142,7 @@
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
-                                            <minimum>0.80</minimum>
+                                            <minimum>0.6</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
