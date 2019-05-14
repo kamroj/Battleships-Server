@@ -32,7 +32,6 @@
         <version.plugin.maven.compiler>3.8.0</version.plugin.maven.compiler>
         <version.plugin.maven.resources>3.1.0</version.plugin.maven.resources>
         <version.plugin.maven.site>3.7.1</version.plugin.maven.site>
-        <version.maven.plugin.reports>3.0.0</version.maven.plugin.reports>
         <version.plugin.spotbugs>3.1.11</version.plugin.spotbugs>
         <version.plugin.checkstyle>3.0.0</version.plugin.checkstyle>
         <version.plugin.jdepend>2.0</version.plugin.jdepend>
@@ -110,12 +109,6 @@
     </build>
     <reporting>
         <plugins>
-            <!--Warning for not specified version of this-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${version.maven.plugin.reports}</version>
-            </plugin>
             <!--Give warnings about illegal reflection access (using groovy plugin with this problem) - tracked issues-->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>

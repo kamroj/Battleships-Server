@@ -27,13 +27,14 @@
         <version.jacoco>0.8.3</version.jacoco>
         <version.log4j>2.11.2</version.log4j>
         <version.springframework.boot>2.1.4.RELEASE</version.springframework.boot>
+        <version.springframework.web>5.1.6.RELEASE</version.springframework.web>
         <!-- plugin versions should go here, so below they can be omitted -->
+        <version.plugin.google.code.gson>2.8.5</version.plugin.google.code.gson>
         <version.plugin.maven.enforcer>3.0.0-M2</version.plugin.maven.enforcer>
         <version.plugin.maven.jar>3.1.0</version.plugin.maven.jar>
         <version.plugin.maven.compiler>3.8.0</version.plugin.maven.compiler>
         <version.plugin.maven.resources>3.1.0</version.plugin.maven.resources>
         <version.plugin.maven.site>3.7.1</version.plugin.maven.site>
-        <version.maven.plugin.reports>3.0.0</version.maven.plugin.reports>
         <version.plugin.spotbugs>3.1.11</version.plugin.spotbugs>
         <version.plugin.checkstyle>3.0.0</version.plugin.checkstyle>
         <version.plugin.jdepend>2.0</version.plugin.jdepend>
@@ -90,12 +91,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.1.6.RELEASE</version>
+            <version>${version.springframework.web}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.5</version>
+            <version>${version.plugin.google.code.gson}</version>
         </dependency>
     </dependencies>
 
@@ -177,12 +178,7 @@
     </build>
     <reporting>
         <plugins>
-            <!--Warning for not specified version of this-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${version.maven.plugin.reports}</version>
-            </plugin>
+
             <!--Give warnings about illegal reflection access (using groovy plugin with this problem) - tracked issues-->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
