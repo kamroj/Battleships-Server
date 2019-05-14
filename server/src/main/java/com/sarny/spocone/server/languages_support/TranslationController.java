@@ -1,4 +1,4 @@
-package com.sarny.spocone.server.gameControllers;
+package com.sarny.spocone.server.languages_support;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,12 @@ import java.util.Map;
 class TranslationController {
 
     private TranslationProvider translationProvider;
+    private SupportedLanguages supportedLanguages;
 
     @Autowired
-    public TranslationController(TranslationProvider translationProvider) {
+    public TranslationController(TranslationProvider translationProvider, SupportedLanguages supportedLanguages) {
         this.translationProvider = translationProvider;
+        this.supportedLanguages = supportedLanguages;
     }
 
     @GetMapping("/language/{code}")
@@ -30,4 +32,12 @@ class TranslationController {
                 new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping("/language")
+    ResponseEntity<Map<String, String>> getAllSupportedTranslations() {
+        Map<String, String> translations = supportedLanguages.asMap();
+        return translations != null ?
+                new ResponseEntity<>(translations, HttpStatus.OK) :
+                new ResponseEntity<>(null, HttpStatus.valueOf(503)); // 503 - Service Unavailable
+
+    }
 }
