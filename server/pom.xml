@@ -26,6 +26,7 @@
         <version.mockito>2.26.0</version.mockito>
         <version.jacoco>0.8.3</version.jacoco>
         <version.log4j>2.11.2</version.log4j>
+        <version.springframework.boot>2.1.4.RELEASE</version.springframework.boot>
         <!-- plugin versions should go here, so below they can be omitted -->
         <version.plugin.maven.enforcer>3.0.0-M2</version.plugin.maven.enforcer>
         <version.plugin.maven.jar>3.1.0</version.plugin.maven.jar>
@@ -43,7 +44,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.1.4.RELEASE</version>
+                <version>${version.springframework.boot}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -96,7 +97,6 @@
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -105,22 +105,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${version.plugin.maven.enforcer}</version>
-                <executions>
-                    <execution>
-                        <id>enforce-maven</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireMavenVersion>
-                                    <!-- helps with plugin versions, so you are more up-to-date -->
-                                    <version>${version.maven}</version>
-                                </requireMavenVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <!--to create site-->
             <plugin>
@@ -175,20 +159,19 @@
                 <version>${version.plugin.maven.resources}</version>
             </plugin>
             <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.1.4.RELEASE</version>
-            <configuration>
-                <mainClass>com.sarny.spocone.server.ServerMain</mainClass>
-            </configuration>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>repackage</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${version.springframework.boot}</version>                <configuration>
+                    <mainClass>com.sarny.spocone.server.ServerMain</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <reporting>
