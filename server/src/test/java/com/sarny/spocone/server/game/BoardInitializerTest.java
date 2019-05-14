@@ -1,13 +1,15 @@
 package com.sarny.spocone.server.game;
 
-import static org.testng.Assert.*;
-
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Kamil Rojek
@@ -26,10 +28,10 @@ public class BoardInitializerTest {
         Ship ship = new Ship(Arrays.asList(1, 2, 3));
 
         //Act
-        Ship shipPlaced = boardInitializer.placeShip(ship);
+        ShipDTO shipDTO = boardInitializer.placeShip(ship);
 
         //Assert
-        assertEquals(shipPlaced, new Ship(Arrays.asList(1, 2, 3)));
+        assertEquals(shipDTO, new ShipDTO(Arrays.asList(1, 2, 3)));
     }
 
     @Test(expectedExceptions = InvalidShipPlacementException.class)
@@ -46,7 +48,7 @@ public class BoardInitializerTest {
     @Test
     public void testGenerate_validGenerationOfBoard_returnBoard() throws InvalidBoardCreationException, InvalidShipPlacementException {
         //Arrange
-                /*
+        /*
         1 O 2 2 O O 3 O O 3
         O O O O O O 3 O O 3
         1 O O O O O 3 O O 3
@@ -79,7 +81,7 @@ public class BoardInitializerTest {
         );
 
         //Act
-        for (Ship ship: defaultShips) {
+        for (Ship ship : defaultShips) {
             boardInitializer.placeShip(ship);
         }
         Board board = boardInitializer.generateBoard();
@@ -91,7 +93,7 @@ public class BoardInitializerTest {
     @Test(expectedExceptions = InvalidBoardCreationException.class)
     public void testGenerate_invalidGenerationOfBoard_returnBoard() throws InvalidBoardCreationException, InvalidShipPlacementException {
         //Arrange
-                /*
+        /*
         1 O 2 2 O O 3 O O 3
         O O O O O O 3 O O 3
         1 O O O O O 3 O O 3
@@ -110,10 +112,10 @@ public class BoardInitializerTest {
         );
 
         //Act
-        for (Ship ship: defaultShips) {
+        for (Ship ship : defaultShips) {
             boardInitializer.placeShip(ship);
         }
-        Board board = boardInitializer.generateBoard();
+        boardInitializer.generateBoard();
     }
 
     @Test

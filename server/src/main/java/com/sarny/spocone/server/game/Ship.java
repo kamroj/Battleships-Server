@@ -1,5 +1,6 @@
 package com.sarny.spocone.server.game;
 
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
 import java.util.ArrayList;
@@ -34,6 +35,13 @@ class Ship {
 
     int length() {
         return toHit.size() + hit.size();
+    }
+
+    ShipDTO asDTO() {
+        List<Integer> occupiedFields = new ArrayList<>(length());
+        occupiedFields.addAll(toHit);
+        occupiedFields.addAll(hit);
+        return new ShipDTO(occupiedFields);
     }
 
     @Override

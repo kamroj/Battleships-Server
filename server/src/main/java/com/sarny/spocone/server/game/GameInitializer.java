@@ -1,5 +1,7 @@
 package com.sarny.spocone.server.game;
 
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,10 +24,10 @@ public class GameInitializer {
         boardInitializators.put(SECOND_PLAYER_ID, new BoardInitializer());
     }
 
-    Ship placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
+    ShipDTO placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
         BoardInitializer boardInitializer = boardInitializators.get(playerID);
         boardInitializer.placeShip(ship);
-        return ship;
+        return ship.asDTO();
     }
 
     boolean areBothPlayersDone() {
