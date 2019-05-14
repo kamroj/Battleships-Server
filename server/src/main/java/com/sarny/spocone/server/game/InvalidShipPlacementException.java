@@ -3,7 +3,7 @@ package com.sarny.spocone.server.game;
 /**
  * @author Kamil Rojek
  */
-class InvalidShipPlacementException extends Exception {
+public class InvalidShipPlacementException extends Exception {
     InvalidShipPlacementException(String msg) {
         super(msg);
     }
