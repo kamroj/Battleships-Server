@@ -1,5 +1,6 @@
 package com.sarny.spocone.server.game;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.*;
@@ -11,6 +12,50 @@ import static org.testng.Assert.assertTrue;
  * @author Wojciech Makiela
  */
 public class ShipPlacementValidatorTest {
+
+    @DataProvider
+    public static Object[][] dprov_validateHorizontally_generateShipsNotInARow() {
+        return new Object[][]{
+                {Arrays.asList(8, 9, 10)},
+                {Arrays.asList(19, 20, 21)},
+                {Arrays.asList(98, 99, 100)},
+                {Arrays.asList(79, 80)},
+                {Arrays.asList(47, 48, 49, 50)}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] dprov_validateHorizontally_generateShipsInARow() {
+        return new Object[][]{
+                {Arrays.asList(8, 9)},
+                {Arrays.asList(17, 18, 19)},
+                {Arrays.asList(80, 81, 82)},
+                {Arrays.asList(55, 56)},
+                {Arrays.asList(47, 48, 49)}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] dprov_validateVertically_generateShipsNotOnTheBoard() {
+        return new Object[][]{
+                {Arrays.asList(70, 80, 90, 100)},
+                {Arrays.asList(83, 93, 103)},
+                {Arrays.asList(97, 107)},
+                {Collections.singletonList(101)},
+                {Arrays.asList(86, 96, 106)}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] dprov_validateVertically_generateShipsOnTheBoard() {
+        return new Object[][]{
+                {Arrays.asList(1, 11, 21)},
+                {Arrays.asList(66, 76, 86, 96)},
+                {Arrays.asList(40, 50)},
+                {Arrays.asList(5, 15, 25, 35)},
+                {Arrays.asList(43, 53, 63)}
+        };
+    }
 
     @Test
     public void testAllShipsPlaced_whenShipsOfLength1Remain_returnFalse() {
@@ -408,6 +453,82 @@ public class ShipPlacementValidatorTest {
         boolean redundantCanBePlaced = shipPlacementValidator.validate(redundantShip);
         // assert
         assertFalse(redundantCanBePlaced);
+
+    }
+
+    @Test(dataProvider = "dprov_validateHorizontally_generateShipsNotInARow")
+    public void testValidateHorizontally_whenPlacedShipIsNotInARow_returnFalse(List<Integer> fields) {
+        // arrange
+
+        List<Ship> placedShips = new ArrayList<>();
+        Board board = new Board(placedShips);
+        ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
+        ShipPlacementValidator shipPlacementValidator = builder
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
+                .forBoard(board);
+
+        // act
+        boolean shipWhichIsNotInARow = shipPlacementValidator.validateHorizontally(new Ship(fields));
+
+        // assert
+        assertFalse(shipWhichIsNotInARow);
+
+    }
+
+    @Test(dataProvider = "dprov_validateHorizontally_generateShipsInARow")
+    public void testValidateHorizontally_whenPlacedShipIsInARow_returnTrue(List<Integer> fields) {
+        // arrange
+
+        List<Ship> placedShips = new ArrayList<>();
+        Board board = new Board(placedShips);
+        ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
+        ShipPlacementValidator shipPlacementValidator = builder
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
+                .forBoard(board);
+
+        // act
+        boolean shipWhichIsInARow = shipPlacementValidator.validateHorizontally(new Ship(fields));
+
+        // assert
+        assertTrue(shipWhichIsInARow);
+
+    }
+
+    @Test(dataProvider = "dprov_validateVertically_generateShipsNotOnTheBoard")
+    public void testValidateVertically_whenPlacedShipIsNotInARow_returnFalse(List<Integer> fields) {
+        // arrange
+
+        List<Ship> placedShips = new ArrayList<>();
+        Board board = new Board(placedShips);
+        ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
+        ShipPlacementValidator shipPlacementValidator = builder
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
+                .forBoard(board);
+
+        // act
+        boolean shipWhichIsNotOnTheBoard = shipPlacementValidator.validateVertically(new Ship(fields));
+
+        // assert
+        assertFalse(shipWhichIsNotOnTheBoard);
+
+    }
+
+    @Test(dataProvider = "dprov_validateVertically_generateShipsOnTheBoard")
+    public void testValidateVertically_whenPlacedShipIsInARow_returnTrue(List<Integer> fields) {
+        // arrange
+
+        List<Ship> placedShips = new ArrayList<>();
+        Board board = new Board(placedShips);
+        ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
+        ShipPlacementValidator shipPlacementValidator = builder
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
+                .forBoard(board);
+
+        // act
+        boolean shipWhichIsOnTheBoard = shipPlacementValidator.validateVertically(new Ship(fields));
+
+        // assert
+        assertTrue(shipWhichIsOnTheBoard);
 
     }
 

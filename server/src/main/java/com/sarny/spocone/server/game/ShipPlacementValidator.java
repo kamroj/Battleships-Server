@@ -9,6 +9,9 @@ import java.util.Set;
  */
 class ShipPlacementValidator {
 
+    private static final int COLUMNS = 10;
+    private static final int BIGGEST_INDEX_OF_BOARD = 99;
+
     private final Board board;
     private final ShipNeighbouringFieldsGenerator generator;
     private final Map<Integer, Integer> shipsOfLengthToPlace;
@@ -44,10 +47,39 @@ class ShipPlacementValidator {
         return true;
     }
 
+    boolean validateHorizontally(Ship ship) {
+        return isInARow(ship) && validate(ship);
+    }
+
+    boolean validateVertically(Ship ship) {
+        return isOnTheBoard(ship) && validate(ship);
+    }
+
     void placeNewShip(Ship ship) {
         int previousRemainingShips = shipsOfLengthToPlace.get(ship.length());
         shipsOfLengthToPlace.put(ship.length(), previousRemainingShips - 1);
         board.placeShip(ship);
+    }
+
+    private boolean isInARow(Ship ship) {
+        int lastFieldInRow = getLastPossibleFieldInARowForAShip(getFirstFieldOfAShip(ship));
+        return getLastFieldOfAShip(ship) <= lastFieldInRow;
+    }
+
+    private boolean isOnTheBoard(Ship ship) {
+        return getLastFieldOfAShip(ship) <= BIGGEST_INDEX_OF_BOARD;
+    }
+
+    private int getLastPossibleFieldInARowForAShip(int firstFieldOfShip) {
+        return ((firstFieldOfShip / COLUMNS) * COLUMNS) + COLUMNS - 1;
+    }
+
+    private int getFirstFieldOfAShip(Ship ship) {
+        return ship.toHit.get(0);
+    }
+
+    private int getLastFieldOfAShip(Ship ship) {
+        return ship.toHit.get(ship.length() - 1);
     }
 
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
