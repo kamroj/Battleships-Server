@@ -27,7 +27,7 @@ public class ComputerEasyTest {
         assertTrue(shot.getField() >= 0 && shot.getField() < 100);
     }
 
-    @Test(invocationCount = 20)
+    @Test(invocationCount = 10)
     public void testGetID_returnID(){
         //Act
         Integer id = computer.getID();
