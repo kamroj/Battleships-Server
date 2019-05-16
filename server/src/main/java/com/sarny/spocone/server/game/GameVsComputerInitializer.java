@@ -10,12 +10,12 @@ import java.util.Map;
  *
  * @author Wojciech Makiela
  */
-class GameVsComputerInitializer extends GameInitializer {
+public class GameVsComputerInitializer extends GameInitializer {
 
     private AI ai;
     private Board aiBoard;
 
-    GameVsComputerInitializer(int firstPlayerID, int aiId, AI ai) {
+    public GameVsComputerInitializer(int firstPlayerID, int aiId, AI ai) {
         super(firstPlayerID, aiId);
         aiBoard = new Board();
         this.ai = ai;
