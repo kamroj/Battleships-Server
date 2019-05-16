@@ -44,9 +44,10 @@ class ShipPlacementValidator {
         return true;
     }
 
-    void placedNewShip(Ship ship) {
+    void placeNewShip(Ship ship) {
         int previousRemainingShips = shipsOfLengthToPlace.get(ship.length());
         shipsOfLengthToPlace.put(ship.length(), previousRemainingShips - 1);
+        board.placeShip(ship);
     }
 
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {

@@ -10,6 +10,7 @@ import java.util.*;
 public class StubRegister {
     public Integer player1Id = null;
     public Integer player2Id = null;
+
     private Board forP1 = new Board(new ArrayList<>(Arrays.asList(
             new Ship(new ArrayList<>(Arrays.asList(1, 2, 3, 4))),
             new Ship(new ArrayList<>(Arrays.asList(31, 32))),
@@ -42,5 +43,16 @@ public class StubRegister {
         playerBoardMap.put(player2Id, forP2);
         ActiveBoards activeBoards = new ActiveBoards(playerBoardMap);
         return new Game(activeBoards, player1Id, player2Id);
+    }
+
+    public Game finalizeCreationPlayerVsComputer() {
+        Map<Integer, Board> playerBoardMap = new HashMap<>();
+
+        AI computer = new ComputerEasy(AI.generateID());
+        playerBoardMap.put(player1Id, forP1);
+        playerBoardMap.put(computer.getID(), forP2);
+
+        ActiveBoards activeBoards = new ActiveBoards(playerBoardMap);
+        return new GamePlayerVSComputer(activeBoards, player1Id, computer);
     }
 }

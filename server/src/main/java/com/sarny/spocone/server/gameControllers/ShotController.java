@@ -25,6 +25,7 @@ class ShotController {
     private final ActiveGames activeGames;
     private StubRegister register;
 
+
     @Autowired
     public ShotController(ActiveGames activeGames) {
         this.activeGames = activeGames;
@@ -106,6 +107,19 @@ class ShotController {
             activeGames.addNewGame(register.finalizeCreation(), register.player1Id, register.player2Id);
             register = new StubRegister();
         }
+
+        return fieldsWithShips;
+    }
+
+    @PostMapping(path = "/ai")
+    public List<Integer> playAgainstComputer(@RequestBody Integer id) {
+        if (id == null)
+            return null;
+        logger.info("Player wants to play against computer " + id);
+        register.registerPlayer(id);
+        activeGames.addNewGame(register.finalizeCreationPlayerVsComputer(), register.player1Id);
+        List<Integer> fieldsWithShips = register.registerPlayer(id);
+        register = new StubRegister();
 
         return fieldsWithShips;
     }

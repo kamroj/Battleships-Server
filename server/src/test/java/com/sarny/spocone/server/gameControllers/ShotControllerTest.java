@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
+import com.sarny.spocone.server.game.ComputerEasy;
 import com.sarny.spocone.server.game.Game;
+import com.sarny.spocone.server.game.AI;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,7 +22,6 @@ public class ShotControllerTest {
     private ActiveGames activeGames;
     private ShotController controller;
     private Gson gson = new Gson();
-
 
     @BeforeMethod
     public void setUp() {
@@ -69,5 +70,36 @@ public class ShotControllerTest {
 
         // assert
         assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testPlayAgainstComputer_whenPlayerWantsToPlayAgainstComputer_createNewGameWithComputer(){
+        //Arrange
+        AI computer = new ComputerEasy(AI.generateID());
+
+        //Act
+        controller.stubRegistration(player1Id);
+        controller.stubRegistration(computer.getID());
+
+        //Assert
+        // assert
+        assertNotNull(activeGames.findGameForPlayer(player1Id));
+        assertNotNull(activeGames.findGameForPlayer(computer.getID()));
+    }
+
+    @Test
+    public void testSequence_whenPlayerPlaysAgainstComputer_canPlayTwoRounds(){
+        //Arrange
+        AI computer = new ComputerEasy(AI.generateID());
+
+        //Act
+        controller.stubRegistration(player1Id);
+        controller.stubRegistration(computer.getID());
+        controller.fire(new Shot(player1Id, 13));
+        String result = controller.fire(new Shot(player1Id, 14));
+        String expected = gson.toJson(new ShotResult(ShotOutcome.MISS, 13));
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

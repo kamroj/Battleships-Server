@@ -25,7 +25,7 @@ public class ShipPlacementValidatorTest {
                 .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(60, 61)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(60, 61)));
         // assert
         assertFalse(shipPlacementValidator.allShipsPlaced());
     }
@@ -43,7 +43,7 @@ public class ShipPlacementValidatorTest {
                 .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(60, 61, 62)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(60, 61, 62)));
         // assert
         assertFalse(shipPlacementValidator.allShipsPlaced());
     }
@@ -61,7 +61,7 @@ public class ShipPlacementValidatorTest {
                 .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
         // assert
         assertFalse(shipPlacementValidator.allShipsPlaced());
     }
@@ -79,7 +79,7 @@ public class ShipPlacementValidatorTest {
                 .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
         // assert
         assertFalse(shipPlacementValidator.allShipsPlaced());
     }
@@ -97,7 +97,7 @@ public class ShipPlacementValidatorTest {
                 .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
         // assert
         assertTrue(shipPlacementValidator.allShipsPlaced());
     }
@@ -115,16 +115,16 @@ public class ShipPlacementValidatorTest {
                 .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
                 .forBoard(board);
         // act - Place all requested ships
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(10, 11, 12)));
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(14, 15, 16)));
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(20, 21)));
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(23, 24)));
-        shipPlacementValidator.placedNewShip(new Ship(Arrays.asList(26, 27)));
-        shipPlacementValidator.placedNewShip(new Ship(Collections.singletonList(30)));
-        shipPlacementValidator.placedNewShip(new Ship(Collections.singletonList(40)));
-        shipPlacementValidator.placedNewShip(new Ship(Collections.singletonList(50)));
-        shipPlacementValidator.placedNewShip(new Ship(Collections.singletonList(60)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(1, 2, 3, 4)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(10, 11, 12)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(14, 15, 16)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(20, 21)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(23, 24)));
+        shipPlacementValidator.placeNewShip(new Ship(Arrays.asList(26, 27)));
+        shipPlacementValidator.placeNewShip(new Ship(Collections.singletonList(30)));
+        shipPlacementValidator.placeNewShip(new Ship(Collections.singletonList(40)));
+        shipPlacementValidator.placeNewShip(new Ship(Collections.singletonList(50)));
+        shipPlacementValidator.placeNewShip(new Ship(Collections.singletonList(60)));
         // assert
         assertTrue(shipPlacementValidator.allShipsPlaced());
     }
@@ -161,7 +161,7 @@ public class ShipPlacementValidatorTest {
         // assert
         for (Ship ship : shipsToPlace) {
             assertTrue(shipPlacementValidator.validate(ship), String.format("Tried to place ship: %s", ship.toString()));
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
             placedShips.add(ship);
         }
     }
@@ -185,7 +185,7 @@ public class ShipPlacementValidatorTest {
          */
 
         List<Ship> shipsToPlace = getShipsToPlace();
-        Board board = new Board(shipsToPlace);
+        Board board = new Board(new ArrayList<>(shipsToPlace));
         ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
         ShipPlacementValidator shipPlacementValidator = builder
                 .withShipsOfLength4(2)
@@ -196,7 +196,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
         }
 
         Ship redundantShip = new Ship(Arrays.asList(99, 98, 97, 96));
@@ -225,7 +225,7 @@ public class ShipPlacementValidatorTest {
          */
 
         List<Ship> shipsToPlace = getShipsToPlace();
-        Board board = new Board(shipsToPlace);
+        Board board = new Board(new ArrayList<>(shipsToPlace));
         ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
         ShipPlacementValidator shipPlacementValidator = builder
                 .withShipsOfLength4(2)
@@ -236,7 +236,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
         }
 
         Ship redundantShip = new Ship(Arrays.asList(99, 98, 97));
@@ -276,7 +276,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
         }
 
         Ship redundantShip = new Ship(Arrays.asList(99, 98));
@@ -316,7 +316,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
         }
 
         Ship redundantShip = new Ship(Collections.singletonList(99));
@@ -357,7 +357,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
             placedShips.add(ship);
         }
 
@@ -399,7 +399,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         for (Ship ship : shipsToPlace) {
-            shipPlacementValidator.placedNewShip(ship);
+            shipPlacementValidator.placeNewShip(ship);
             placedShips.add(ship);
         }
 

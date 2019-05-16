@@ -15,10 +15,10 @@ import java.util.*;
  */
 public class Game {
 
-    private ActiveBoards activeBoards;
-    private Stack<Round> rounds;
-    private Round activeRound;
-    private List<Integer> playersIDs;
+    protected ActiveBoards activeBoards;
+    protected Stack<Round> rounds;
+    protected Round activeRound;
+    protected List<Integer> playersIDs;
 
     Game(ActiveBoards activeBoards, int firstPlayerID, int secondPlayerID) {
         this.activeBoards = activeBoards;
@@ -82,7 +82,7 @@ public class Game {
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 
-    private void createNewRound() {
+    protected void createNewRound() {
         activeRound = new Round(activeBoards, playersIDs);
     }
 }

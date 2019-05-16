@@ -48,4 +48,9 @@ class Ship {
     public int hashCode() {
         return Objects.hash(toHit, hit);
     }
+
+    @Override
+    public String toString() {
+        return "Ship{" + "toHit=" + toHit + ", hit=" + hit +'}';
+    }
 }
