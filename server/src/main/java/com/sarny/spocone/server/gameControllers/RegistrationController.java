@@ -6,10 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Wojciech Makiela
  */
+@RestController
 class RegistrationController {
 
     private ActiveGameInitializers initializers;
@@ -26,7 +28,6 @@ class RegistrationController {
         if (id == null) {
             return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
-
         savePlayersRegistration(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
