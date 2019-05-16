@@ -13,9 +13,9 @@ import java.util.Map;
  * @see Game
  */
 public class GameInitializer {
-    private Map<Integer, BoardInitializer> boardInitializers = new LinkedHashMap<>();
-    private final int FIRST_PLAYER_ID;
-    private final int SECOND_PLAYER_ID;
+    Map<Integer, BoardInitializer> boardInitializers = new LinkedHashMap<>();
+    final int FIRST_PLAYER_ID;
+    final int SECOND_PLAYER_ID;
 
     public GameInitializer(int firstPlayerID, int secondPlayerID) {
         FIRST_PLAYER_ID = firstPlayerID;
