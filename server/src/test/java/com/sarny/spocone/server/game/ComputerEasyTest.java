@@ -18,7 +18,7 @@ public class ComputerEasyTest {
         computer = new ComputerEasy(AI.generateID());
     }
 
-    @Test(invocationCount = 20)
+    @Test(invocationCount = 200)
     public void testGenerateShot_returnFieldToFireInRange0To99(){
         //Act
         Shot shot = computer.generateShot();

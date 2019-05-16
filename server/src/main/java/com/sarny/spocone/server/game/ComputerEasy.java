@@ -32,7 +32,7 @@ public class ComputerEasy implements AI {
         int fieldToShot;
 
         do {
-            fieldToShot = ThreadLocalRandom.current().nextInt(0, 99);
+            fieldToShot = ThreadLocalRandom.current().nextInt(0, 100);
         } while (shots.contains(fieldToShot));
 
         shots.add(fieldToShot);
