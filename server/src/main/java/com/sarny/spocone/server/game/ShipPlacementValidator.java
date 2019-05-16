@@ -122,7 +122,7 @@ class ShipPlacementValidator {
 
         @Override
         public ShipPlacementValidator forBoard(Board board) {
-            HashMap<Integer, Integer> shipsOfLengthToPlace = new HashMap<>();
+            Map<Integer, Integer> shipsOfLengthToPlace = new HashMap<>();
             shipsOfLengthToPlace.put(4, shipLength4);
             shipsOfLengthToPlace.put(3, shipLength3);
             shipsOfLengthToPlace.put(2, shipLength2);

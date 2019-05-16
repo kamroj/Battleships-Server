@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Wojciech Makiela
@@ -34,6 +35,10 @@ class Rooms {
             return Optional.of(room);
         }
         return Optional.empty();
+    }
+
+    Set<Integer> available() {
+        return rooms.keySet();
     }
 
     class Room {

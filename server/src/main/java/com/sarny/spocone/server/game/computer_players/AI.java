@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public interface AI {
     Shot generateShot();
+
     Integer getID();
 
     static Integer generateID() {

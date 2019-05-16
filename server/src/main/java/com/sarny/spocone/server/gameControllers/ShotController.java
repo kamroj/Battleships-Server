@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
 import com.sarny.spocone.server.game.Game;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
