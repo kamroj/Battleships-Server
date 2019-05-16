@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,14 +24,31 @@ class RegistrationController {
         this.initializers = initializers;
     }
 
-    @PostMapping(path = "/register")
-    public ResponseEntity<Boolean> register(@RequestBody Integer id) {
+    @PostMapping(path = "/createRoom")
+    public ResponseEntity<Integer> createRoom(@RequestBody Integer id) {
         if (id == null) {
-            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         savePlayersRegistration(id);
-        return new ResponseEntity<>(true, HttpStatus.OK);
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
+
+    @PostMapping(path = "/joinRoom")
+    public ResponseEntity<Integer> joinRoom(@RequestParam("playerId") Integer playerId, @RequestParam("roomId") Integer roomId) {
+        if (playerId == null || roomId ==null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } //TODO after implementing Rooms.class implement logic here
+        return new ResponseEntity<>(1, HttpStatus.OK);
+    }
+
+   @PostMapping(path = "/playVersusAi")
+   public ResponseEntity<Integer> playVersusAi(@RequestBody Integer id) {
+      if (id == null) {
+         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+      }
+      //TODO after implementing Rooms.class implement logic here
+      return new ResponseEntity<>(1, HttpStatus.OK);
+   }
 
     private void savePlayersRegistration(@RequestBody Integer id) {
         if (player1Id == null) {

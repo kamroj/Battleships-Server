@@ -19,8 +19,8 @@ public class RegistrationControllerTest {
         RegistrationController registrationController = new RegistrationController(gameInitializers);
 
         // act
-        registrationController.register(1);
-        registrationController.register(2);
+        registrationController.createRoom(1);
+        registrationController.createRoom(2);
 
         // assert
         Mockito.verify(gameInitializers)
@@ -33,7 +33,7 @@ public class RegistrationControllerTest {
         RegistrationController registrationController = new RegistrationController(null);
 
         // act
-        ResponseEntity<Boolean> responseEntity = registrationController.register(null);
+        ResponseEntity<Integer> responseEntity = registrationController.createRoom(null);
         // assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);
     }
