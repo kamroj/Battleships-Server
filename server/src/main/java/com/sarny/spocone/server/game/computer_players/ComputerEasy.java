@@ -1,4 +1,4 @@
-package com.sarny.spocone.server.game;
+package com.sarny.spocone.server.game.computer_players;
 
 import com.sarny.spocone.publicclasses.shot.Shot;
 

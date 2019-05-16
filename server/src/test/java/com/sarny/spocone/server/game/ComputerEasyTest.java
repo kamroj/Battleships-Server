@@ -1,6 +1,8 @@
 package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.shot.Shot;
+import com.sarny.spocone.server.game.computer_players.AI;
+import com.sarny.spocone.server.game.computer_players.ComputerEasy;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
