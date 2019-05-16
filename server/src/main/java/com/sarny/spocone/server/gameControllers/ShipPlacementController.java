@@ -32,7 +32,6 @@ class ShipPlacementController {
 
     @PostMapping("/placeShip")
     ResponseEntity<ShipDTO> placeShip(@RequestBody ShipPlacementData placementData) {
-        System.out.println(placementData);
         if (placementData == null)
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
