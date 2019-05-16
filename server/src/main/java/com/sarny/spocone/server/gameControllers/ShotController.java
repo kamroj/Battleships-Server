@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
 import com.sarny.spocone.server.game.Game;
-import com.sarny.spocone.server.game.StubRegister;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,12 @@ class ShotController {
     private static Logger logger = LogManager.getLogger(ShotController.class);
     private final Gson gson;
     private final ActiveGames activeGames;
-    private StubRegister register;
 
 
     @Autowired
     public ShotController(ActiveGames activeGames) {
         this.activeGames = activeGames;
         gson = new Gson();
-        register = new StubRegister();
     }
 
     @PostMapping("/shot")
@@ -90,37 +87,5 @@ class ShotController {
             guaranteedMissesWithUpdatedOffset.add(miss + 1);
         }
         return guaranteedMissesWithUpdatedOffset;
-    }
-
-    // TODO - remove once ShipPlacementController is implemented
-    @PostMapping(path = "/register")
-    public List<Integer> stubRegistration(@RequestBody Integer id) {
-        if (id == null) {
-            return null;
-        }
-        logger.info("Register player with id " + id);
-        List<Integer> fieldsWithShips = register.registerPlayer(id);
-
-
-        if (register.isRegistrationOver()) {
-            logger.info("Registration complete");
-            activeGames.addNewGame(register.finalizeCreation(), register.player1Id, register.player2Id);
-            register = new StubRegister();
-        }
-
-        return fieldsWithShips;
-    }
-
-    @PostMapping(path = "/ai")
-    public List<Integer> playAgainstComputer(@RequestBody Integer id) {
-        if (id == null)
-            return null;
-        logger.info("Player wants to play against computer " + id);
-        register.registerPlayer(id);
-        activeGames.addNewGame(register.finalizeCreationPlayerVsComputer(), register.player1Id);
-        List<Integer> fieldsWithShips = register.registerPlayer(id);
-        register = new StubRegister();
-
-        return fieldsWithShips;
     }
 }

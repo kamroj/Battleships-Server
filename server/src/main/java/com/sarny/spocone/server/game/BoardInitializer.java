@@ -1,5 +1,7 @@
 package com.sarny.spocone.server.game;
 
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -18,10 +20,10 @@ class BoardInitializer {
                 .forBoard(board);
     }
 
-    Ship placeShip(Ship ship) throws InvalidShipPlacementException {
+    ShipDTO placeShip(Ship ship) throws InvalidShipPlacementException {
         if (shipPlacementValidator.validate(ship)) {
             shipPlacementValidator.placeNewShip(ship);
-            return ship;
+            return ship.asDTO();
         }
         throw new InvalidShipPlacementException("Ship " + ship.toString() + "cannot be placed on the board!");
     }
@@ -35,7 +37,7 @@ class BoardInitializer {
 
     Board generateStandardBoard() throws InvalidShipPlacementException {
         //Arrange
-                /*
+        /*
         1 O 2 2 O O 3 O O 3
         O O O O O O 3 O O 3
         1 O O O O O 3 O O 3
@@ -67,7 +69,7 @@ class BoardInitializer {
                 new Ship(Arrays.asList(60, 61, 62, 63))
         );
 
-        for (Ship ship: defaultShips) {
+        for (Ship ship : defaultShips) {
             placeShip(ship);
         }
 

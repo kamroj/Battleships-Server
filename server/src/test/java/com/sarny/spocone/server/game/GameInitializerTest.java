@@ -1,5 +1,6 @@
 package com.sarny.spocone.server.game;
 
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -29,10 +30,10 @@ public class GameInitializerTest {
         Ship ship = new Ship(Arrays.asList(1, 2, 3));
 
         //Act
-        Ship expectedShip = gameInitializer.placeShip(FIRST_PLAYER_ID, ship);
+        ShipDTO shipDTO = gameInitializer.placeShip(FIRST_PLAYER_ID, ship);
 
         //Assert
-        assertEquals(expectedShip, new Ship(Arrays.asList(1, 2, 3)));
+        assertEquals(shipDTO, new ShipDTO(Arrays.asList(1, 2, 3)));
     }
 
     @Test
@@ -48,7 +49,7 @@ public class GameInitializerTest {
     @Test
     public void testAreBothPlayersDone_secondPlayerHasNotFinishedBoardInitialization_returnFalse() throws InvalidShipPlacementException {
         //Arrange
-                /*
+        /*
         1 O 2 2 O O 3 O O 3
         O O O O O O 3 O O 3
         1 O O O O O 3 O O 3
@@ -98,7 +99,7 @@ public class GameInitializerTest {
     public void testGenerateGame_BothPlayersAreReady_returnGame() throws InvalidShipPlacementException, InvalidBoardCreationException {
         //Arrange
         //Arrange
-                /*
+        /*
         1 O 2 2 O O 3 O O 3
         O O O O O O 3 O O 3
         1 O O O O O 3 O O 3

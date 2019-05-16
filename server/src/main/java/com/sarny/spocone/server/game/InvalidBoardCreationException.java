@@ -3,7 +3,7 @@ package com.sarny.spocone.server.game;
 /**
  * @author Kamil Rojek
  */
-class InvalidBoardCreationException extends Exception {
+public class InvalidBoardCreationException extends Exception {
     InvalidBoardCreationException(String msg) {
         super(msg);
     }

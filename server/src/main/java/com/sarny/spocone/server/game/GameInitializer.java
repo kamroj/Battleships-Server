@@ -1,5 +1,8 @@
 package com.sarny.spocone.server.game;
 
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
+import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,34 +13,41 @@ import java.util.Map;
  * @see Game
  */
 public class GameInitializer {
-    private Map<Integer, BoardInitializer> boardInitializators = new LinkedHashMap<>();
+    private Map<Integer, BoardInitializer> boardInitializers = new LinkedHashMap<>();
     private final int FIRST_PLAYER_ID;
     private final int SECOND_PLAYER_ID;
 
-    GameInitializer(int firstPlayerID, int secondPlayerID) {
+    public GameInitializer(int firstPlayerID, int secondPlayerID) {
         FIRST_PLAYER_ID = firstPlayerID;
         SECOND_PLAYER_ID = secondPlayerID;
 
-        boardInitializators.put(FIRST_PLAYER_ID, new BoardInitializer());
-        boardInitializators.put(SECOND_PLAYER_ID, new BoardInitializer());
+        boardInitializers.put(FIRST_PLAYER_ID, new BoardInitializer());
+        boardInitializers.put(SECOND_PLAYER_ID, new BoardInitializer());
     }
 
-    Ship placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
-        BoardInitializer boardInitializer = boardInitializators.get(playerID);
+    public ShipDTO placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
+        BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
         boardInitializer.placeShip(ship);
-        return ship;
+        return ship.asDTO();
     }
 
-    boolean areBothPlayersDone() {
-        return boardInitializators.get(FIRST_PLAYER_ID).isBoardReady() &&
-                boardInitializators.get(SECOND_PLAYER_ID).isBoardReady();
+    public ShipDTO placeShip(int playerID, ShipPlacementData shipData) throws InvalidShipPlacementException {
+        Ship ship = new Ship(shipData);
+        BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
+        boardInitializer.placeShip(ship);
+        return ship.asDTO();
     }
 
-    Game generateGame() throws InvalidBoardCreationException {
+    public boolean areBothPlayersDone() {
+        return boardInitializers.get(FIRST_PLAYER_ID).isBoardReady() &&
+                boardInitializers.get(SECOND_PLAYER_ID).isBoardReady();
+    }
+
+    public Game generateGame() throws InvalidBoardCreationException {
         Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
 
-        for (Integer playerID : boardInitializators.keySet()) {
-            BoardInitializer boardInitializer = boardInitializators.get(playerID);
+        for (Integer playerID : boardInitializers.keySet()) {
+            BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
             boardsInGame.put(playerID, boardInitializer.generateBoard());
         }
 
@@ -46,11 +56,11 @@ public class GameInitializer {
     }
 
     //Temp solution - when random or manual ship placement will be done this method should be removed
-    Game generateStandardGame() throws InvalidShipPlacementException {
+    public Game generateStandardGame() throws InvalidShipPlacementException {
         Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
 
-        for (Integer playerID : boardInitializators.keySet()) {
-            BoardInitializer boardInitializer = boardInitializators.get(playerID);
+        for (Integer playerID : boardInitializers.keySet()) {
+            BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
             boardsInGame.put(playerID, boardInitializer.generateStandardBoard());
         }
 

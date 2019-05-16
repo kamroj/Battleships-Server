@@ -27,6 +27,10 @@ public class Game {
         createNewRound();
     }
 
+    public List<Integer> getPlayersIDs() {
+        return playersIDs;
+    }
+
     /**
      * Takes a {@link Shot} and performs it. If both contestants make their moves in one round,
      * then create a new {@link Round}.
