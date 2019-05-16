@@ -2,6 +2,7 @@ package com.sarny.spocone.server.gameControllers;
 
 import com.google.gson.Gson;
 import com.sarny.spocone.publicclasses.shot.Shot;
+import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
 import com.sarny.spocone.server.game.Game;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,36 +18,40 @@ import java.util.Set;
 @RestController
 class ShotController {
 
-    private final Gson gson;
     private final ActiveGames activeGames;
 
     @Autowired
     public ShotController(ActiveGames activeGames) {
         this.activeGames = activeGames;
-        gson = new Gson();
     }
 
     @PostMapping("/shot")
-    String fire(@RequestBody Shot shot) {
+    ResponseEntity<?> fire(@RequestBody Shot shot) {
         Game gameForPlayer = activeGames.findGameForPlayer(shot.getPlayerID());
         if (gameForPlayer == null) {
-            return null;
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return gson.toJson(gameForPlayer.handleShot(shot));
+        ShotResult shotResult = gameForPlayer.handleShot(shot);
+        return new ResponseEntity<>(shotResult, HttpStatus.OK);
     }
 
     @GetMapping("/turn/{id}")
-    Boolean isPlayersTurn(@PathVariable Integer id) {
+    ResponseEntity<?> isPlayersTurn(@PathVariable Integer id) {
         Game gameForPlayer = activeGames.findGameForPlayer(id);
-        if (gameForPlayer == null) return false;
-        return gameForPlayer.isPlayerRound(id);
+        if (gameForPlayer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+        boolean isPlayersRound = gameForPlayer.isPlayerRound(id);
+        return new ResponseEntity<>(isPlayersRound, HttpStatus.OK);
     }
 
     @GetMapping("/summary/{firstPlayerId}")
-    ShotsSummary getSummaryOfOpponentsShots(@PathVariable Integer firstPlayerId) {
+    ResponseEntity<ShotsSummary> getSummaryOfOpponentsShots(@PathVariable Integer firstPlayerId) {
         Game gameForPlayer = activeGames.findGameForPlayer(firstPlayerId);
-        if (gameForPlayer == null) return null;
-        return gameForPlayer.getOpponentsShots(firstPlayerId);
+
+        if (gameForPlayer == null)
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        ShotsSummary opponentsShots = gameForPlayer.getOpponentsShots(firstPlayerId);
+        return new ResponseEntity<>(opponentsShots, HttpStatus.OK);
     }
 
     @GetMapping("/misses/{id}")
