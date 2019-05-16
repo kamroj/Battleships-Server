@@ -19,7 +19,7 @@ class TranslationController {
     private SupportedLanguages supportedLanguages;
 
     @Autowired
-    public TranslationController(TranslationProvider translationProvider, SupportedLanguages supportedLanguages) {
+    TranslationController(TranslationProvider translationProvider, SupportedLanguages supportedLanguages) {
         this.translationProvider = translationProvider;
         this.supportedLanguages = supportedLanguages;
     }
