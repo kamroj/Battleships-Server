@@ -1,5 +1,7 @@
 package com.sarny.spocone.publicclasses.ship;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A class which provides information about who and where places a ship on a board.
  *
@@ -10,6 +12,7 @@ public class ShipPlacementData {
     private int playerID;
     private int field;
     private int shipLength;
+    @JsonProperty
     private boolean isHorizontally;
 
     public ShipPlacementData(int playerID, int field, int shipLength, boolean isHorizontally) {
@@ -36,5 +39,15 @@ public class ShipPlacementData {
 
     public boolean isHorizontally() {
         return isHorizontally;
+    }
+
+    @Override
+    public String toString() {
+        return "ShipPlacementData{" +
+                "playerID=" + playerID +
+                ", field=" + field +
+                ", shipLength=" + shipLength +
+                ", isHorizontally=" + isHorizontally +
+                '}';
     }
 }

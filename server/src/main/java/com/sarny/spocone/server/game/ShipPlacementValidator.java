@@ -9,6 +9,9 @@ import java.util.Set;
  */
 class ShipPlacementValidator {
 
+    private static final int COLUMNS = 10;
+    private static final int BIGGEST_INDEX_OF_BOARD = 99;
+
     private final Board board;
     private final ShipNeighbouringFieldsGenerator generator;
     private final Map<Integer, Integer> shipsOfLengthToPlace;
@@ -29,12 +32,12 @@ class ShipPlacementValidator {
     }
 
     boolean validate(Ship ship) {
-        int shipsToPlace = shipsOfLengthToPlace.get(ship.length());
-        if (shipsToPlace <= 0) {
-            return false;
-        }
+        return hasValidLength(ship) && isShipOnTheProperPositionOnTheBoard(ship) && isNotPlacedOnOtherShip(ship);
+    }
+
+    private boolean isNotPlacedOnOtherShip(Ship ship) {
         Set<Integer> fieldsAroundShip = generator.generateNeighbours(ship);
-        fieldsAroundShip.addAll(ship.toHit);
+        fieldsAroundShip.addAll(ship.fieldsToHit);
 
         for (Integer field : fieldsAroundShip) {
             if (board.getShipFromField(field) != null) {
@@ -44,9 +47,72 @@ class ShipPlacementValidator {
         return true;
     }
 
-    void placedNewShip(Ship ship) {
+    private boolean isShipOnTheProperPositionOnTheBoard(Ship ship) {
+        return isShipOfLength1WithProperPosition(ship) || isHorizontalWithValidPosition(ship) || isVerticalWithValidPosition(ship);
+    }
+
+    private boolean isVerticalWithValidPosition(Ship ship) {
+        return shipIsVertically(ship) && hasValidVerticalPosition(ship);
+    }
+
+    private boolean isHorizontalWithValidPosition(Ship ship) {
+        return shipIsHorizontally(ship) && hasValidHorizontalPosition(ship);
+    }
+
+    private boolean isShipOfLength1WithProperPosition(Ship ship) {
+        return (ship.length() == 1) && isOnTheBoard(ship);
+    }
+
+    private boolean hasValidLength(Ship ship) {
+        int shipsToPlace = shipsOfLengthToPlace.get(ship.length());
+        return shipsToPlace > 0;
+    }
+
+    void placeNewShip(Ship ship) {
         int previousRemainingShips = shipsOfLengthToPlace.get(ship.length());
         shipsOfLengthToPlace.put(ship.length(), previousRemainingShips - 1);
+        board.placeShip(ship);
+    }
+
+    private boolean hasValidHorizontalPosition(Ship ship) {
+        return isInARow(ship);
+    }
+
+    private boolean hasValidVerticalPosition(Ship ship) {
+        return isOnTheBoard(ship);
+    }
+
+    private boolean shipIsHorizontally(Ship ship) {
+        return shipIsNotOneMast(ship) && (ship.fieldsToHit.get(1) - ship.fieldsToHit.get(0) == 1);
+    }
+
+    private boolean shipIsVertically(Ship ship) {
+        return shipIsNotOneMast(ship) && (ship.fieldsToHit.get(1) - ship.fieldsToHit.get(0) == 10);
+    }
+
+    private boolean shipIsNotOneMast(Ship ship) {
+        return ship.length() > 1;
+    }
+
+    private boolean isInARow(Ship ship) {
+        int lastFieldInRow = getLastPossibleFieldInARowForAShip(getFirstFieldOfAShip(ship));
+        return getLastFieldOfAShip(ship) <= lastFieldInRow;
+    }
+
+    private boolean isOnTheBoard(Ship ship) {
+        return getLastFieldOfAShip(ship) <= BIGGEST_INDEX_OF_BOARD;
+    }
+
+    private int getLastPossibleFieldInARowForAShip(int firstFieldOfShip) {
+        return ((firstFieldOfShip / COLUMNS) * COLUMNS) + COLUMNS - 1;
+    }
+
+    private int getFirstFieldOfAShip(Ship ship) {
+        return ship.fieldsToHit.get(0);
+    }
+
+    private int getLastFieldOfAShip(Ship ship) {
+        return ship.fieldsToHit.get(ship.length() - 1);
     }
 
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
@@ -89,7 +155,7 @@ class ShipPlacementValidator {
 
         @Override
         public ShipPlacementValidator forBoard(Board board) {
-            HashMap<Integer, Integer> shipsOfLengthToPlace = new HashMap<>();
+            Map<Integer, Integer> shipsOfLengthToPlace = new HashMap<>();
             shipsOfLengthToPlace.put(4, shipLength4);
             shipsOfLengthToPlace.put(3, shipLength3);
             shipsOfLengthToPlace.put(2, shipLength2);

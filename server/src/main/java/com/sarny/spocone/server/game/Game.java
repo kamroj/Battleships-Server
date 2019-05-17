@@ -15,9 +15,9 @@ import java.util.*;
  */
 public class Game {
 
-    private ActiveBoards activeBoards;
+    ActiveBoards activeBoards;
     private Stack<Round> rounds;
-    private Round activeRound;
+    Round activeRound;
     private List<Integer> playersIDs;
 
     Game(ActiveBoards activeBoards, int firstPlayerID, int secondPlayerID) {
@@ -25,6 +25,10 @@ public class Game {
         this.playersIDs = new LinkedList<>(Arrays.asList(firstPlayerID, secondPlayerID));
         this.rounds = new Stack<>();
         createNewRound();
+    }
+
+    public List<Integer> getPlayersIDs() {
+        return playersIDs;
     }
 
     /**
@@ -62,7 +66,23 @@ public class Game {
      * @return summary of opponent shots
      */
     public ShotsSummary getOpponentsShots(int playerID) {
+        if (isFirstPlayer(playerID)) {
+            return summaryForFirstPlayer(playerID);
+        }
+        return summaryForSecondPlayer(playerID);
+    }
+
+    private ShotsSummary summaryForSecondPlayer(int playerID) {
         return activeRound.getOpponentsShots(playerID);
+    }
+
+    // History for first player is acquired from previous round
+    private ShotsSummary summaryForFirstPlayer(int playerID) {
+        return rounds.isEmpty() ? null : rounds.peek().getOpponentsShots(playerID);
+    }
+
+    private boolean isFirstPlayer(int playerID) {
+        return playersIDs.get(0) == playerID;
     }
 
     /**
@@ -77,8 +97,8 @@ public class Game {
     }
 
     private Ship getLastSunkShip(int playerID) {
-        int oppositePlayerID = activeRound.oppositePlayerID(playerID);
-        Integer fieldNumber = activeRound.lastSunkField(playerID);
+        int oppositePlayerID = activeRound.oppositePlayerId(playerID);
+        Integer fieldNumber = activeRound.getLastSunkField(playerID);
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 

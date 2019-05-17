@@ -1,4 +1,4 @@
-package com.sarny.spocone.server.gameControllers;
+package com.sarny.spocone.server.game_controllers;
 
 import com.sarny.spocone.server.game.Game;
 import org.springframework.stereotype.Component;
@@ -14,14 +14,13 @@ class ActiveGames {
 
     private Map<Integer, Game> activeGames = new HashMap<>();
 
-    Game findGameForPlayer(int playerId) {
+    Game findGameOfPlayer(int playerId) {
         return activeGames.get(playerId);
     }
 
-    void addNewGame(Game game, int... playersIds) {
-        for (int id : playersIds) {
+     void addNewGame(Game game) {
+        for (int id : game.getPlayersIDs()) {
             activeGames.put(id, game);
         }
     }
-
 }
