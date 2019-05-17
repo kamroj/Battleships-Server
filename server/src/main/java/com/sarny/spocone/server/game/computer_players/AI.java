@@ -2,17 +2,18 @@ package com.sarny.spocone.server.game.computer_players;
 
 import com.sarny.spocone.publicclasses.shot.Shot;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 /**
  * @author Kamil Rojek
  */
-public interface AI {
-    Shot generateShot();
+public abstract class AI {
 
-    Integer getID();
+    private static int nextId = 0;
 
-    static Integer generateID() {
-        return ThreadLocalRandom.current().nextInt(9999, 999999999);
+    public abstract Shot generateShot();
+
+    public abstract Integer getID();
+
+    public static Integer generateID() {
+        return nextId++;
     }
 }

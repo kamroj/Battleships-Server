@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author Kamil Rojek
  */
-public class ComputerEasy implements AI {
+public class ComputerEasy extends AI {
     private Set<Integer> shots = new HashSet<>();
     private final int ID;
 
