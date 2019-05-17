@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Wojciech Makiela
@@ -14,11 +13,15 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 class Rooms {
 
+    private final Object lock = new Object();
     private int nextRoomId = 0;
     private Map<Integer, Room> rooms = new HashMap<>();
 
     Optional<Room> register(int playerId) {
-        int roomId = nextRoomId++;
+        int roomId;
+        synchronized (lock) {
+            roomId = nextRoomId++;
+        }
         Room newRoom = new Room(roomId);
         newRoom.players.addPlayer(playerId);
         rooms.put(roomId, newRoom);
@@ -43,7 +46,9 @@ class Rooms {
     }
 
     Integer getRoomId() {
-        return nextRoomId;
+        synchronized (lock) {
+            return nextRoomId;
+        }
     }
 
     class Room {

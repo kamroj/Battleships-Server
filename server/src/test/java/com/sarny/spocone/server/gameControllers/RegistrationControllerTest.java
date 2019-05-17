@@ -4,6 +4,8 @@ import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.testng.Assert.assertEquals;
@@ -67,22 +69,29 @@ public class RegistrationControllerTest {
         assertEquals(responseEntity.getStatusCodeValue(), 400);
     }
 
-    @Test(invocationCount = 100, successPercentage = 90)
-    public void testCreatingRoom_when10000ThreadsCreatesRoom(){
+    @Test(invocationCount = 100)
+    public void testCreatingRoom_when10000ThreadsCreatesRoom() throws InterruptedException {
         //Arrange
         final int NUMBER_OF_THREADS = 100;
         Rooms rooms = new Rooms();
+        List<Thread> fakeRegisterCalls = new LinkedList<>();
+        for (int i = 0; i < NUMBER_OF_THREADS; i++) {
+            Thread thread = new Thread(new RegisterTest(rooms), "Fake register " + i);
+            fakeRegisterCalls.add(thread);
+        }
 
         //Act
-        for (int i = 0; i < NUMBER_OF_THREADS; i++) {
-            Thread thread = new Thread(new RegisterTest(rooms));
-            thread.start();
+        for (Thread fakeRegisterCall : fakeRegisterCalls) {
+            fakeRegisterCall.start();
+        }
+        for (Thread fakeRegisterCall : fakeRegisterCalls) {
+            fakeRegisterCall.join();
         }
 
         int numberOfRooms = rooms.getRoomId();
 
         //Assert
-        assertEquals(numberOfRooms, NUMBER_OF_THREADS - 1);
+        assertEquals(numberOfRooms, NUMBER_OF_THREADS);
     }
 
     class RegisterTest implements Runnable{
