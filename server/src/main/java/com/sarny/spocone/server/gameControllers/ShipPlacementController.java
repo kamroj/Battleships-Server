@@ -32,7 +32,7 @@ class ShipPlacementController {
 
     @PostMapping("/placeShip")
     ResponseEntity<ShipDTO> placeShip(@RequestBody ShipPlacementData placementData) {
-        if (placementData == null)
+        if (placementData == null || placementData.getShipLength() <= 0 || placementData.getShipLength() > 4)
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
         try {
