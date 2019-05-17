@@ -32,15 +32,7 @@ class ShipPlacementValidator {
     }
 
     boolean validate(Ship ship) {
-        if (hasInvalidLength(ship)) return false;
-
-        if (isShipOfLength1WithBadPosition(ship)) return false;
-
-        if (isHorizontalWithInvalidPosition(ship)) return false;
-
-        if (isVerticalWithInvalidPosition(ship)) return false;
-
-        return isNotPlacedOnOtherShip(ship);
+        return hasValidLength(ship) && isShipOnTheProperPositionOnTheBoard(ship) && isNotPlacedOnOtherShip(ship);
     }
 
     private boolean isNotPlacedOnOtherShip(Ship ship) {
@@ -55,27 +47,25 @@ class ShipPlacementValidator {
         return true;
     }
 
-    private boolean isVerticalWithInvalidPosition(Ship ship) {
-        if (shipIsVertically(ship)) {
-            return !hasValidVerticalPosition(ship);
-        }
-        return false;
+    private boolean isShipOnTheProperPositionOnTheBoard(Ship ship) {
+        return isShipOfLength1WithProperPosition(ship) || isHorizontalWithValidPosition(ship) || isVerticalWithValidPosition(ship);
     }
 
-    private boolean isHorizontalWithInvalidPosition(Ship ship) {
-        if (shipIsHorizontally(ship)) {
-            return !hasValidHorizontalPosition(ship);
-        }
-        return false;
+    private boolean isVerticalWithValidPosition(Ship ship) {
+        return shipIsVertically(ship) && hasValidVerticalPosition(ship);
     }
 
-    private boolean isShipOfLength1WithBadPosition(Ship ship) {
-        return (ship.length() == 1) && !isOnTheBoard(ship);
+    private boolean isHorizontalWithValidPosition(Ship ship) {
+        return shipIsHorizontally(ship) && hasValidHorizontalPosition(ship);
     }
 
-    private boolean hasInvalidLength(Ship ship) {
+    private boolean isShipOfLength1WithProperPosition(Ship ship) {
+        return (ship.length() == 1) && isOnTheBoard(ship);
+    }
+
+    private boolean hasValidLength(Ship ship) {
         int shipsToPlace = shipsOfLengthToPlace.get(ship.length());
-        return shipsToPlace <= 0;
+        return shipsToPlace > 0;
     }
 
     void placeNewShip(Ship ship) {
