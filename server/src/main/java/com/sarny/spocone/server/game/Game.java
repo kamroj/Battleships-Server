@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class Game {
 
-    protected ActiveBoards activeBoards;
+    ActiveBoards activeBoards;
     private Stack<Round> rounds;
     Round activeRound;
     private List<Integer> playersIDs;
@@ -97,8 +97,8 @@ public class Game {
     }
 
     private Ship getLastSunkShip(int playerID) {
-        int oppositePlayerID = activeRound.oppositePlayerID(playerID);
-        Integer fieldNumber = activeRound.lastSunkField(playerID);
+        int oppositePlayerID = activeRound.oppositePlayerId(playerID);
+        Integer fieldNumber = activeRound.getLastSunkField(playerID);
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 

@@ -30,14 +30,15 @@ class RegistrationController {
     }
 
     @PostMapping(path = "/createRoom")
-    ResponseEntity<Integer> createRoom(@RequestBody Integer id) {
-        if (id == null) {
+    ResponseEntity<Integer> createRoom(@RequestBody Integer playerId) {
+        if (playerId == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        Optional<Rooms.Room> register = rooms.register(id);
-        logger.info(String.format("Player with id %d created new game room", id));
+        Optional<Rooms.Room> register = rooms.register(playerId);
+        logger.info(String.format("Player with playerId %d created new game room", playerId));
 
-        return register.map(room -> new ResponseEntity<>(room.id, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
+        return register.map(room -> new ResponseEntity<>(room.id, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST));
 
     }
 
@@ -49,7 +50,8 @@ class RegistrationController {
     }
 
     @PostMapping(path = "/joinRoom")
-    ResponseEntity<Integer> joinRoom(@RequestParam("playerId") Integer playerId, @RequestParam("roomId") Integer roomId) {
+    ResponseEntity<Integer> joinRoom(@RequestParam("playerId") Integer playerId,
+                                     @RequestParam("roomId") Integer roomId) {
         if (playerId == null || roomId == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

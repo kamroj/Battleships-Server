@@ -20,12 +20,12 @@ class ShipNeighbouringFieldsGenerator {
 
         for (Integer field : occupiedFields) {
             if (fieldIsNotOnTheRightEdgeOfBoard(field)) {
-                generateNeighboursFromRightSideOfAField(field, neighbours, ship.hit);
+                generateNeighboursFromRightSideOfAField(field, neighbours, ship.fieldsAlreadyHit);
             }
             if (fieldIsNotOnTheLeftEdgeOfBoard(field)) {
-                generateNeighboursFromLeftSideOfAField(field, neighbours, ship.hit);
+                generateNeighboursFromLeftSideOfAField(field, neighbours, ship.fieldsAlreadyHit);
             }
-            generateNeighboursAboveAndUnderAField(field, neighbours, ship.hit);
+            generateNeighboursAboveAndUnderAField(field, neighbours, ship.fieldsAlreadyHit);
 
         }
         return neighbours;
@@ -74,8 +74,8 @@ class ShipNeighbouringFieldsGenerator {
 
     private List<Integer> getOccupiedFields(Ship ship) {
         List<Integer> occupiedFields = new ArrayList<>();
-        occupiedFields.addAll(ship.toHit);
-        occupiedFields.addAll(ship.hit);
+        occupiedFields.addAll(ship.fieldsToHit);
+        occupiedFields.addAll(ship.fieldsAlreadyHit);
         return occupiedFields;
     }
 }

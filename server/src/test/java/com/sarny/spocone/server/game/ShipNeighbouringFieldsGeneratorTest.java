@@ -30,7 +30,7 @@ public class ShipNeighbouringFieldsGeneratorTest {
     @Test(dataProvider = "dprov_shipFieldsAndProperMisses")
     public void testGenerateMisses_whenShipsGenerateProperly_returnTrue(List<Integer> shipFields, Set<Integer> properNeighbours) {
         Ship ship = new Ship(Collections.emptyList());
-        ship.hit = shipFields;
+        ship.fieldsAlreadyHit = shipFields;
         Set<Integer> neighbours = new ShipNeighbouringFieldsGenerator().generateNeighbours(ship);
         Assert.assertTrue(neighbours.containsAll(properNeighbours) && properNeighbours.containsAll(neighbours));
     }

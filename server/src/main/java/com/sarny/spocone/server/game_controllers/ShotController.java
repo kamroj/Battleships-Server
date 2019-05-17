@@ -26,7 +26,7 @@ class ShotController {
 
     @PostMapping("/shot")
     ResponseEntity<?> fire(@RequestBody Shot shot) {
-        Game gameForPlayer = activeGames.findGameForPlayer(shot.getPlayerID());
+        Game gameForPlayer = activeGames.findGameOfPlayer(shot.getPlayerID());
         if (gameForPlayer == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -34,18 +34,18 @@ class ShotController {
         return new ResponseEntity<>(shotResult, HttpStatus.OK);
     }
 
-    @GetMapping("/turn/{id}")
-    ResponseEntity<?> isPlayersTurn(@PathVariable Integer id) {
-        Game gameForPlayer = activeGames.findGameForPlayer(id);
+    @GetMapping("/turn/{playerId}")
+    ResponseEntity<?> isPlayersTurn(@PathVariable Integer playerId) {
+        Game gameForPlayer = activeGames.findGameOfPlayer(playerId);
         if (gameForPlayer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
-        boolean isPlayersRound = gameForPlayer.isPlayerRound(id);
+        boolean isPlayersRound = gameForPlayer.isPlayerRound(playerId);
         return new ResponseEntity<>(isPlayersRound, HttpStatus.OK);
     }
 
     @GetMapping("/summary/{firstPlayerId}")
     ResponseEntity<ShotsSummary> getSummaryOfOpponentsShots(@PathVariable Integer firstPlayerId) {
-        Game gameForPlayer = activeGames.findGameForPlayer(firstPlayerId);
+        Game gameForPlayer = activeGames.findGameOfPlayer(firstPlayerId);
 
         if (gameForPlayer == null)
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -53,11 +53,11 @@ class ShotController {
         return new ResponseEntity<>(opponentsShots, HttpStatus.OK);
     }
 
-    @GetMapping("/misses/{id}")
-    ResponseEntity<?> getGuaranteedMisses(@PathVariable Integer id) {
-        Game gameForPlayer = activeGames.findGameForPlayer(id);
+    @GetMapping("/misses/{playerId}")
+    ResponseEntity<?> getGuaranteedMisses(@PathVariable Integer playerId) {
+        Game gameForPlayer = activeGames.findGameOfPlayer(playerId);
         if (gameForPlayer == null) return null;
-        Set<Integer> guaranteedMisses = gameForPlayer.getGuaranteedMisses(id);
+        Set<Integer> guaranteedMisses = gameForPlayer.getGuaranteedMisses(playerId);
         return new ResponseEntity<>(guaranteedMisses, HttpStatus.OK);
     }
 

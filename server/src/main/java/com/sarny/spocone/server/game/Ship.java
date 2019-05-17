@@ -13,46 +13,52 @@ import java.util.Objects;
  */
 class Ship {
 
-    List<Integer> toHit;
-    List<Integer> hit;
+    List<Integer> fieldsToHit;
+    List<Integer> fieldsAlreadyHit;
 
     Ship(List<Integer> fields) {
-        toHit = fields;
-        hit = new ArrayList<>();
+        fieldsToHit = fields;
+        fieldsAlreadyHit = new ArrayList<>();
     }
 
     public Ship(ShipPlacementData shipData) {
-        toHit = new ArrayList<>();
-        hit = new ArrayList<>();
+        fieldsToHit = new ArrayList<>();
+        fieldsAlreadyHit = new ArrayList<>();
+        updateOccupiedFieldsAccordingToShipPlacementData(shipData);
+    }
+
+    private void updateOccupiedFieldsAccordingToShipPlacementData(ShipPlacementData shipData) {
         int offsetBetweenFields = shipData.isHorizontally() ? 1 : 10; // move 1 to right (1), or 1 down (10)
-        int field = shipData.getField();
-        for (int length = 0; length < shipData.getShipLength(); length++) {
-            toHit.add(field);
-            field += offsetBetweenFields;
+        int nextOccupiedFieldId = shipData.getField();
+        int fieldsToOccupy = shipData.getShipLength();
+
+        while (length() < fieldsToOccupy) {
+            fieldsToHit.add(nextOccupiedFieldId);
+            nextOccupiedFieldId += offsetBetweenFields;
         }
     }
 
     boolean isOnField(int fieldNumber) {
-        return toHit.contains(fieldNumber) || hit.contains(fieldNumber);
+        return fieldsToHit.contains(fieldNumber) || fieldsAlreadyHit.contains(fieldNumber);
     }
 
     ShotOutcome fire(int fieldNumber) {
-        if (toHit.contains(fieldNumber)) {
-            toHit.remove(Integer.valueOf(fieldNumber)); //Used Integer.valueOf cause fieldNumber is treated as Index
-            hit.add(fieldNumber);
-            return toHit.isEmpty() ? ShotOutcome.SUNK : ShotOutcome.HIT;
+        if (fieldsToHit.contains(fieldNumber)) {
+            fieldsToHit.remove(Integer.valueOf(fieldNumber)); //Used Integer.valueOf cause fieldNumber is treated as Index
+            fieldsAlreadyHit.add(fieldNumber);
+            return fieldsToHit.isEmpty() ? ShotOutcome.SUNK : ShotOutcome.HIT;
         }
         return ShotOutcome.MISS;
     }
 
     int length() {
-        return toHit.size() + hit.size();
+        return fieldsToHit.size() + fieldsAlreadyHit.size();
     }
 
     ShipDTO asDTO() {
         List<Integer> occupiedFields = new ArrayList<>(length());
-        occupiedFields.addAll(toHit);
-        occupiedFields.addAll(hit);
+        occupiedFields.addAll(fieldsToHit);
+        occupiedFields.addAll(fieldsAlreadyHit);
         return new ShipDTO(occupiedFields);
     }
 
@@ -66,11 +72,11 @@ class Ship {
 
     @Override
     public int hashCode() {
-        return Objects.hash(toHit, hit);
+        return Objects.hash(fieldsToHit, fieldsAlreadyHit);
     }
 
     @Override
     public String toString() {
-        return "Ship{" + "toHit=" + toHit + ", hit=" + hit + '}';
+        return "Ship{" + "fieldsToHit=" + fieldsToHit + ", fieldsAlreadyHit=" + fieldsAlreadyHit + '}';
     }
 }

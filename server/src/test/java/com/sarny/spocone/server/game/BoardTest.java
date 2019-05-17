@@ -61,9 +61,9 @@ public class BoardTest {
         Board board = new Board(ships);
 
         //Act
-        board.markShot(ships.get(0).toHit.get(0));
-        board.markShot(ships.get(0).toHit.get(0));
-        ShotOutcome markResult = board.markShot(ships.get(0).toHit.get(0));
+        board.markShot(ships.get(0).fieldsToHit.get(0));
+        board.markShot(ships.get(0).fieldsToHit.get(0));
+        ShotOutcome markResult = board.markShot(ships.get(0).fieldsToHit.get(0));
 
         //Assert
         Assert.assertEquals(markResult, ShotOutcome.SUNK);

@@ -29,7 +29,6 @@ public class ShipPlacementRandomlyTest {
 
         // assert
         assertTrue(shipPlacementValidator.allShipsPlaced());
-
     }
 
     @Test

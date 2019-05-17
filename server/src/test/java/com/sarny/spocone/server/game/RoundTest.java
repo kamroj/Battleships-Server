@@ -108,7 +108,7 @@ public class RoundTest {
         round.handleShot(firstShot);
         round.handleShot(secondShot);
         round.handleShot(thirdShot);
-        int fieldNumber = round.lastSunkField(FIRST_PLAYER_ID);
+        int fieldNumber = round.getLastSunkField(FIRST_PLAYER_ID);
 
         //Assert
         assertEquals(fieldNumber, 3);

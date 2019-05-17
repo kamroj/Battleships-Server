@@ -37,7 +37,7 @@ class ShipPlacementValidator {
 
     private boolean isNotPlacedOnOtherShip(Ship ship) {
         Set<Integer> fieldsAroundShip = generator.generateNeighbours(ship);
-        fieldsAroundShip.addAll(ship.toHit);
+        fieldsAroundShip.addAll(ship.fieldsToHit);
 
         for (Integer field : fieldsAroundShip) {
             if (board.getShipFromField(field) != null) {
@@ -83,11 +83,11 @@ class ShipPlacementValidator {
     }
 
     private boolean shipIsHorizontally(Ship ship) {
-        return shipIsNotOneMast(ship) && (ship.toHit.get(1) - ship.toHit.get(0) == 1);
+        return shipIsNotOneMast(ship) && (ship.fieldsToHit.get(1) - ship.fieldsToHit.get(0) == 1);
     }
 
     private boolean shipIsVertically(Ship ship) {
-        return shipIsNotOneMast(ship) && (ship.toHit.get(1) - ship.toHit.get(0) == 10);
+        return shipIsNotOneMast(ship) && (ship.fieldsToHit.get(1) - ship.fieldsToHit.get(0) == 10);
     }
 
     private boolean shipIsNotOneMast(Ship ship) {
@@ -108,11 +108,11 @@ class ShipPlacementValidator {
     }
 
     private int getFirstFieldOfAShip(Ship ship) {
-        return ship.toHit.get(0);
+        return ship.fieldsToHit.get(0);
     }
 
     private int getLastFieldOfAShip(Ship ship) {
-        return ship.toHit.get(ship.length() - 1);
+        return ship.fieldsToHit.get(ship.length() - 1);
     }
 
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {

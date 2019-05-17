@@ -14,7 +14,7 @@ class ActiveGames {
 
     private Map<Integer, Game> activeGames = new HashMap<>();
 
-    Game findGameForPlayer(int playerId) {
+    Game findGameOfPlayer(int playerId) {
         return activeGames.get(playerId);
     }
 
@@ -23,5 +23,4 @@ class ActiveGames {
             activeGames.put(id, game);
         }
     }
-
 }

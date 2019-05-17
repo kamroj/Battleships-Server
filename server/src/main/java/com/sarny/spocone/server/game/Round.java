@@ -20,17 +20,17 @@ class Round {
 
     private ActiveBoards activeBoards;
     private Map<Integer, List<ShotResult>> playersShots;
-    private int activePlayerID;
+    private int activePlayerId;
     private int misses = 0;
 
-    Round(ActiveBoards activeBoards, List<Integer> playersIDs) {
+    Round(ActiveBoards activeBoards, List<Integer> playersIds) {
         this.activeBoards = activeBoards;
-        this.activePlayerID = playersIDs.get(FIRST_PLAYER_INDEX);
-        initializePlayersShotsContainer(playersIDs);
+        this.activePlayerId = playersIds.get(FIRST_PLAYER_INDEX);
+        initializePlayersShotsContainer(playersIds);
     }
 
     ShotResult handleShot(Shot shot) {
-        ShotOutcome shotOutcome = activeBoards.markShot(shot, oppositePlayerID(activePlayerID));
+        ShotOutcome shotOutcome = activeBoards.markShot(shot, oppositePlayerId(activePlayerId));
         updateRoundData(shot, shotOutcome);
         return new ShotResult(shotOutcome, shot.getField());
     }
@@ -39,14 +39,14 @@ class Round {
         return misses == 2;
     }
 
-    ShotsSummary getOpponentsShots(int playerID) {
-        int oppositePlayerID = oppositePlayerID(playerID);
-        List<ShotResult> shotResults = playersShots.get(oppositePlayerID);
+    ShotsSummary getOpponentsShots(int playerId) {
+        int oppositePlayerId = oppositePlayerId(playerId);
+        List<ShotResult> shotResults = playersShots.get(oppositePlayerId);
         return new ShotsSummary(shotResults, checkIfLastShotIsWin(shotResults));
     }
 
-    Integer lastSunkField(int playerID) {
-        return playersShots.get(playerID).stream()
+    Integer getLastSunkField(int playerId) {
+        return playersShots.get(playerId).stream()
                 .filter(shotResult -> shotResult.getShotOutcome() == ShotOutcome.SUNK ||
                         shotResult.getShotOutcome() == ShotOutcome.WIN)
                 .reduce((first, second) -> second)
@@ -54,23 +54,23 @@ class Round {
                 .orElse(null);
     }
 
-    boolean isPlayerRound(int playerID) {
-        return playerID == activePlayerID;
+    boolean isPlayerRound(int playerId) {
+        return playerId == activePlayerId;
     }
 
     private void updateRoundData(Shot shot, ShotOutcome shotOutcome) {
         ShotResult shotResult = new ShotResult(shotOutcome, shot.getField());
-        playersShots.get(activePlayerID).add(shotResult);
+        playersShots.get(activePlayerId).add(shotResult);
 
         if (shotOutcome == ShotOutcome.MISS) {
-            activePlayerID = oppositePlayerID(shot.getPlayerID());
+            activePlayerId = oppositePlayerId(shot.getPlayerID());
             misses++;
         }
     }
 
-    int oppositePlayerID(int currentPlayerID) {
+    int oppositePlayerId(int currentPlayerId) {
         return playersShots.keySet().stream()
-                .filter(id -> id != currentPlayerID)
+                .filter(id -> id != currentPlayerId)
                 .findFirst()
                 .get();
     }
@@ -79,8 +79,8 @@ class Round {
         return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
     }
 
-    private void initializePlayersShotsContainer(List<Integer> playersIDs) {
+    private void initializePlayersShotsContainer(List<Integer> playersIds) {
         playersShots = new LinkedHashMap<>();
-        playersIDs.forEach(id -> playersShots.put(id, new ArrayList<>()));
+        playersIds.forEach(id -> playersShots.put(id, new ArrayList<>()));
     }
 }

@@ -24,7 +24,7 @@ public class ShipPlacementRandomly {
     private Random random;
 
     @Autowired
-    public ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
+    ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
         this.shipPlacementValidator = shipPlacementValidator;
         this.random = new Random();
     }
