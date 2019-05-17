@@ -37,8 +37,7 @@ public class ShipPlacementRandomlyTest {
         // arrange
         ShipPlacementValidator shipPlacementValidator = mock(ShipPlacementValidator.class);
 
-        when(shipPlacementValidator.hasValidHorizontalPosition(ArgumentMatchers.any(Ship.class))).thenReturn(true);
-        when(shipPlacementValidator.hasValidVerticalPosition(ArgumentMatchers.any(Ship.class))).thenReturn(true);
+        when(shipPlacementValidator.validate(ArgumentMatchers.any(Ship.class))).thenReturn(true);
 
 
         ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly(shipPlacementValidator);
@@ -48,39 +47,7 @@ public class ShipPlacementRandomlyTest {
 
         // assert
         Collection<Invocation> invocations = mockingDetails(shipPlacementValidator).getInvocations();
-        long validationCalls = invocations.stream().filter(invocation -> invocation.toString().contains("hasValid")).count();
+        long validationCalls = invocations.stream().filter(invocation -> invocation.toString().contains("validate")).count();
         assertEquals(validationCalls, 10);
     }
-
-    @Test(invocationCount = 20)
-    public void testPlaceAllShips_whenShipsCanBePlacedOnlyVertically_returnTrue() {
-        // arrange
-        ShipPlacementValidator shipPlacementValidator = mock(ShipPlacementValidator.class);
-
-        when(shipPlacementValidator.hasValidHorizontalPosition(ArgumentMatchers.any(Ship.class)))
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(true);
-        when(shipPlacementValidator.hasValidVerticalPosition(ArgumentMatchers.any(Ship.class)))
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(false)
-                .thenReturn(true);
-
-        ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly(shipPlacementValidator);
-
-        // act
-        shipPlacementRandomly.placeAllShipsRandomly();
-
-        // assert
-        Collection<Invocation> invocations = mockingDetails(shipPlacementValidator).getInvocations();
-        long verticalValidationCalls = invocations.stream().filter(invocation -> invocation.toString().contains("Vertically")).count();
-        long horizontalValidationCalls = invocations.stream().filter(invocation -> invocation.toString().contains("Horizontally")).count();
-        assertTrue(verticalValidationCalls == 0 || verticalValidationCalls >= 5);
-        assertTrue(horizontalValidationCalls == 0 || horizontalValidationCalls >= 5);
-    }
-
 }
