@@ -16,9 +16,9 @@ import java.util.*;
 public class Game {
 
     protected ActiveBoards activeBoards;
-    protected Stack<Round> rounds;
-    protected Round activeRound;
-    protected List<Integer> playersIDs;
+    private Stack<Round> rounds;
+    Round activeRound;
+    private List<Integer> playersIDs;
 
     Game(ActiveBoards activeBoards, int firstPlayerID, int secondPlayerID) {
         this.activeBoards = activeBoards;
@@ -66,10 +66,23 @@ public class Game {
      * @return summary of opponent shots
      */
     public ShotsSummary getOpponentsShots(int playerID) {
-        if (playersIDs.get(0) == playerID) {
-            return rounds.isEmpty() ? null : rounds.peek().getOpponentsShots(playerID);
+        if (isFirstPlayer(playerID)) {
+            return summaryForFirstPlayer(playerID);
         }
+        return summaryForSecondPlayer(playerID);
+    }
+
+    private ShotsSummary summaryForSecondPlayer(int playerID) {
         return activeRound.getOpponentsShots(playerID);
+    }
+
+    // History for first player is acquired from previous round
+    private ShotsSummary summaryForFirstPlayer(int playerID) {
+        return rounds.isEmpty() ? null : rounds.peek().getOpponentsShots(playerID);
+    }
+
+    private boolean isFirstPlayer(int playerID) {
+        return playersIDs.get(0) == playerID;
     }
 
     /**
@@ -89,7 +102,7 @@ public class Game {
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 
-    protected void createNewRound() {
+    private void createNewRound() {
         activeRound = new Round(activeBoards, playersIDs);
     }
 }
