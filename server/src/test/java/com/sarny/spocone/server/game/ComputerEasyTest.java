@@ -6,6 +6,9 @@ import com.sarny.spocone.server.game.computer_players.ComputerEasy;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.testng.Assert.*;
 
 /**
@@ -19,31 +22,23 @@ public class ComputerEasyTest {
     public void setUp() {
         computer = new ComputerEasy(AI.generateID());
     }
+    
+    @Test(invocationCount = 100)
+    public void testGenerateFieldToShot_whenCalledMultipleTimes_returnUniqueShotObjects(){
+        // arrange
+        Set<Shot> generatedShots = new HashSet<>();
+        boolean duplicatesFound = false;
+        int shotsToGenerate = 50;
 
-    @Test(invocationCount = 200)
-    public void testGenerateShot_returnFieldToFireInRange0To99(){
-        //Act
-        Shot shot = computer.generateShot();
-
-        //Assert
-        assertTrue(shot.getField() >= 0 && shot.getField() < 100);
-    }
-
-    @Test(invocationCount = 10)
-    public void testGetID_returnID(){
-        //Act
-        Integer id = computer.getID();
-
-        //Assert
-        assertNotNull(id);
-    }
-
-    @Test(invocationCount = 20)
-    public void testGenerateShot_returnShot(){
-        //Act
-        Shot shot = computer.generateShot();
-
-        //Assert
-        assertNotNull(shot);
+        // act
+        for(int i = shotsToGenerate; i > 0; i--) {
+            Shot shot = computer.generateShot();
+            if (!generatedShots.add(shot)) {
+                duplicatesFound = true;
+            }
+        }
+        
+        // assert
+        assertFalse(duplicatesFound);
     }
 }

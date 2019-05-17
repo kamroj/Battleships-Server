@@ -37,7 +37,6 @@ public class ComputerEasy extends AI {
 
         shots.add(fieldToShot);
 
-        System.out.println("COMPUTER :: SHOOTING " + fieldToShot);
         return fieldToShot;
     }
 }
