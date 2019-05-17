@@ -468,7 +468,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         // act
-        boolean shipWhichIsNotInARow = shipPlacementValidator.validateHorizontally(new Ship(fields));
+        boolean shipWhichIsNotInARow = shipPlacementValidator.hasValidHorizontalPosition(new Ship(fields));
 
         // assert
         assertFalse(shipWhichIsNotInARow);
@@ -487,7 +487,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         // act
-        boolean shipWhichIsInARow = shipPlacementValidator.validateHorizontally(new Ship(fields));
+        boolean shipWhichIsInARow = shipPlacementValidator.hasValidHorizontalPosition(new Ship(fields));
 
         // assert
         assertTrue(shipWhichIsInARow);
@@ -506,7 +506,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         // act
-        boolean shipWhichIsNotOnTheBoard = shipPlacementValidator.validateVertically(new Ship(fields));
+        boolean shipWhichIsNotOnTheBoard = shipPlacementValidator.hasValidVerticalPosition(new Ship(fields));
 
         // assert
         assertFalse(shipWhichIsNotOnTheBoard);
@@ -525,7 +525,7 @@ public class ShipPlacementValidatorTest {
                 .forBoard(board);
 
         // act
-        boolean shipWhichIsOnTheBoard = shipPlacementValidator.validateVertically(new Ship(fields));
+        boolean shipWhichIsOnTheBoard = shipPlacementValidator.hasValidVerticalPosition(new Ship(fields));
 
         // assert
         assertTrue(shipWhichIsOnTheBoard);

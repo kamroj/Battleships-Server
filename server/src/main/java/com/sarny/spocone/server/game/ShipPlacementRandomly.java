@@ -60,7 +60,7 @@ public class ShipPlacementRandomly {
             ship = new Ship(fields);
 
         }
-        while (!shipPlacementValidator.validateHorizontally(ship));
+        while (!shipPlacementValidator.hasValidHorizontalPosition(ship));
         shipPlacementValidator.placeNewShip(ship);
     }
 
@@ -75,7 +75,7 @@ public class ShipPlacementRandomly {
             ship = new Ship(fields);
 
         }
-        while (!shipPlacementValidator.validateVertically(ship));
+        while (!shipPlacementValidator.hasValidVerticalPosition(ship));
         shipPlacementValidator.placeNewShip(ship);
     }
 

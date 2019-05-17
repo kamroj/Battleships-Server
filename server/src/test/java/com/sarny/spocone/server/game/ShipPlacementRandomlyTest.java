@@ -1,18 +1,11 @@
 package com.sarny.spocone.server.game;
 
 import org.mockito.ArgumentMatchers;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 import org.mockito.invocation.Invocation;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
@@ -44,8 +37,8 @@ public class ShipPlacementRandomlyTest {
         // arrange
         ShipPlacementValidator shipPlacementValidator = mock(ShipPlacementValidator.class);
 
-        when(shipPlacementValidator.validateHorizontally(ArgumentMatchers.any(Ship.class))).thenReturn(true);
-        when(shipPlacementValidator.validateVertically(ArgumentMatchers.any(Ship.class))).thenReturn(true);
+        when(shipPlacementValidator.hasValidHorizontalPosition(ArgumentMatchers.any(Ship.class))).thenReturn(true);
+        when(shipPlacementValidator.hasValidVerticalPosition(ArgumentMatchers.any(Ship.class))).thenReturn(true);
 
 
         ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly(shipPlacementValidator);
@@ -64,13 +57,13 @@ public class ShipPlacementRandomlyTest {
         // arrange
         ShipPlacementValidator shipPlacementValidator = mock(ShipPlacementValidator.class);
 
-        when(shipPlacementValidator.validateHorizontally(ArgumentMatchers.any(Ship.class)))
+        when(shipPlacementValidator.hasValidHorizontalPosition(ArgumentMatchers.any(Ship.class)))
                 .thenReturn(false)
                 .thenReturn(false)
                 .thenReturn(false)
                 .thenReturn(false)
                 .thenReturn(true);
-        when(shipPlacementValidator.validateVertically(ArgumentMatchers.any(Ship.class)))
+        when(shipPlacementValidator.hasValidVerticalPosition(ArgumentMatchers.any(Ship.class)))
                 .thenReturn(false)
                 .thenReturn(false)
                 .thenReturn(false)

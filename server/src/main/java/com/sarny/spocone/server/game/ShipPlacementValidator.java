@@ -36,12 +36,23 @@ class ShipPlacementValidator {
         if (shipsToPlace <= 0) {
             return false;
         }
-        if (!(shipIsHorizontally(ship) && validateHorizontally(ship))){
-            return false;
+//        if (!(shipIsHorizontally(ship) && hasValidHorizontalPosition(ship))){
+//            return false;
+//        }
+        if (shipIsHorizontally(ship)) {
+            if (!hasValidHorizontalPosition(ship)) {
+                return false;
+            }
         }
 
-        if (!(shipIsVertically(ship) && validateVertically(ship))){
-            return false;
+//        if (!(shipIsVertically(ship) && hasValidVerticalPosition(ship))){
+//            return false;
+//        }
+
+        if (shipIsVertically(ship)) {
+            if (!hasValidVerticalPosition(ship)) {
+                return false;
+            }
         }
         Set<Integer> fieldsAroundShip = generator.generateNeighbours(ship);
         fieldsAroundShip.addAll(ship.toHit);
@@ -60,11 +71,11 @@ class ShipPlacementValidator {
         board.placeShip(ship);
     }
 
-    boolean validateHorizontally(Ship ship) {
+    boolean hasValidHorizontalPosition(Ship ship) {
         return isInARow(ship);
     }
 
-    boolean validateVertically(Ship ship) {
+    boolean hasValidVerticalPosition(Ship ship) {
         return isOnTheBoard(ship);
     }
 
