@@ -85,9 +85,9 @@ class ShipPlacementValidator {
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
 
         private int shipLength4 = 1;
-        private int shipLength3 = 2;
-        private int shipLength2 = 3;
-        private int shipLength1 = 4;
+        private int shipLength3 = 0;
+        private int shipLength2 = 0;
+        private int shipLength1 = 0;
         private ShipNeighbouringFieldsGenerator generator;
 
         @Override

@@ -66,6 +66,9 @@ public class Game {
      * @return summary of opponent shots
      */
     public ShotsSummary getOpponentsShots(int playerID) {
+        if (playersIDs.get(0) == playerID) {
+            return rounds.isEmpty() ? null : rounds.peek().getOpponentsShots(playerID);
+        }
         return activeRound.getOpponentsShots(playerID);
     }
 
