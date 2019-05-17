@@ -32,12 +32,12 @@ public class ShipPlacementRandomly {
     void placeAllShipsRandomly() {
         for (int shipLength = MAX_SHIP_LENGTH; shipLength > 0; shipLength--) {
             for (int i = 0; i < numberOfGivenShipsToPlaceOnTheBoard(shipLength); i++) {
-                placeShipRandomly(shipLength);
+                placeShipInRandomDirection(shipLength);
             }
         }
     }
 
-    private void placeShipRandomly(int shipLength) {
+    private void placeShipInRandomDirection(int shipLength) {
         int choiceForHorOrVer = random.nextInt(NUMBER_OF_POSSIBLE_DIRECTIONS);
         switch (choiceForHorOrVer) {
             case 0:
