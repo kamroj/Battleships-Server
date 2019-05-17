@@ -1,6 +1,5 @@
 package com.sarny.spocone.server.gameControllers;
 
-import com.google.gson.Gson;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;

@@ -32,27 +32,18 @@ class ShipPlacementValidator {
     }
 
     boolean validate(Ship ship) {
-        int shipsToPlace = shipsOfLengthToPlace.get(ship.length());
-        if (shipsToPlace <= 0) {
-            return false;
-        }
+        if (hasInvalidLength(ship)) return false;
 
-        if ((ship.length() == 1) && !isOnTheBoard(ship)) {
-            return false;
-        }
+        if (isShipOfLength1WithBadPosition(ship)) return false;
 
-        if (shipIsHorizontally(ship)) {
-            if (!hasValidHorizontalPosition(ship)) {
-                return false;
-            }
-        }
+        if (isHorizontalWithInvalidPosition(ship)) return false;
 
-        if (shipIsVertically(ship)) {
-            if (!hasValidVerticalPosition(ship)) {
-                return false;
-            }
-        }
+        if (isVerticalWithInvalidPosition(ship)) return false;
 
+        return isNotPlacedOnOtherShip(ship);
+    }
+
+    private boolean isNotPlacedOnOtherShip(Ship ship) {
         Set<Integer> fieldsAroundShip = generator.generateNeighbours(ship);
         fieldsAroundShip.addAll(ship.toHit);
 
@@ -62,6 +53,29 @@ class ShipPlacementValidator {
             }
         }
         return true;
+    }
+
+    private boolean isVerticalWithInvalidPosition(Ship ship) {
+        if (shipIsVertically(ship)) {
+            return !hasValidVerticalPosition(ship);
+        }
+        return false;
+    }
+
+    private boolean isHorizontalWithInvalidPosition(Ship ship) {
+        if (shipIsHorizontally(ship)) {
+            return !hasValidHorizontalPosition(ship);
+        }
+        return false;
+    }
+
+    private boolean isShipOfLength1WithBadPosition(Ship ship) {
+        return (ship.length() == 1) && !isOnTheBoard(ship);
+    }
+
+    private boolean hasInvalidLength(Ship ship) {
+        int shipsToPlace = shipsOfLengthToPlace.get(ship.length());
+        return shipsToPlace <= 0;
     }
 
     void placeNewShip(Ship ship) {
