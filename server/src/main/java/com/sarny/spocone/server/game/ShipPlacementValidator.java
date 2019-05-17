@@ -36,6 +36,13 @@ class ShipPlacementValidator {
         if (shipsToPlace <= 0) {
             return false;
         }
+        if (!(shipIsHorizontally(ship) && validateHorizontally(ship))){
+            return false;
+        }
+
+        if (!(shipIsVertically(ship) && validateVertically(ship))){
+            return false;
+        }
         Set<Integer> fieldsAroundShip = generator.generateNeighbours(ship);
         fieldsAroundShip.addAll(ship.toHit);
 
@@ -47,18 +54,30 @@ class ShipPlacementValidator {
         return true;
     }
 
-    boolean validateHorizontally(Ship ship) {
-        return isInARow(ship) && validate(ship);
-    }
-
-    boolean validateVertically(Ship ship) {
-        return isOnTheBoard(ship) && validate(ship);
-    }
-
     void placeNewShip(Ship ship) {
         int previousRemainingShips = shipsOfLengthToPlace.get(ship.length());
         shipsOfLengthToPlace.put(ship.length(), previousRemainingShips - 1);
         board.placeShip(ship);
+    }
+
+    boolean validateHorizontally(Ship ship) {
+        return isInARow(ship);
+    }
+
+    boolean validateVertically(Ship ship) {
+        return isOnTheBoard(ship);
+    }
+
+    private boolean shipIsHorizontally(Ship ship){
+        return shipIsNotOneMast(ship) && (ship.toHit.get(1) - ship.toHit.get(0) == 1);
+    }
+
+    private boolean shipIsVertically(Ship ship){
+        return shipIsNotOneMast(ship) && (ship.toHit.get(1) - ship.toHit.get(0) == 10);
+    }
+
+    private boolean shipIsNotOneMast(Ship ship){
+        return ship.length() > 1;
     }
 
     private boolean isInARow(Ship ship) {
@@ -85,9 +104,9 @@ class ShipPlacementValidator {
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
 
         private int shipLength4 = 1;
-        private int shipLength3 = 0;
-        private int shipLength2 = 0;
-        private int shipLength1 = 0;
+        private int shipLength3 = 2;
+        private int shipLength2 = 3;
+        private int shipLength1 = 4;
         private ShipNeighbouringFieldsGenerator generator;
 
         @Override
