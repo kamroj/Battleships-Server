@@ -21,7 +21,7 @@ class RegistrationController {
 
     private ActiveGameInitializers initializers;
     private Rooms rooms;
-    private static Logger logger = LogManager.getLogger(RegistrationController.class);
+    private Logger logger = LogManager.getLogger(RegistrationController.class);
 
     @Autowired
     RegistrationController(ActiveGameInitializers initializers, Rooms rooms) {

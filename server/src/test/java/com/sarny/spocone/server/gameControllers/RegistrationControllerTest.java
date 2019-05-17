@@ -4,6 +4,8 @@ import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -63,5 +65,36 @@ public class RegistrationControllerTest {
 
         // assert
         assertEquals(responseEntity.getStatusCodeValue(), 400);
+    }
+
+    @Test(invocationCount = 100, successPercentage = 90)
+    public void testCreatingRoom_when10000ThreadsCreatesRoom(){
+        //Arrange
+        final int NUMBER_OF_THREADS = 100;
+        Rooms rooms = new Rooms();
+
+        //Act
+        for (int i = 0; i < NUMBER_OF_THREADS; i++) {
+            Thread thread = new Thread(new RegisterTest(rooms));
+            thread.start();
+        }
+
+        int numberOfRooms = rooms.getRoomId();
+
+        //Assert
+        assertEquals(numberOfRooms, NUMBER_OF_THREADS - 1);
+    }
+
+    class RegisterTest implements Runnable{
+        private Rooms rooms;
+
+        RegisterTest(Rooms rooms) {
+            this.rooms = rooms;
+        }
+
+        @Override
+        public void run() {
+            rooms.register(ThreadLocalRandom.current().nextInt(0, 999999999));
+        }
     }
 }

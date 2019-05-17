@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Wojciech Makiela
@@ -39,6 +40,10 @@ class Rooms {
 
     Set<Integer> available() {
         return rooms.keySet();
+    }
+
+    Integer getRoomId() {
+        return nextRoomId;
     }
 
     class Room {
