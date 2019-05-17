@@ -42,7 +42,7 @@ public class GameVsComputerInitializerTest {
         assertTrue(areReady);
     }
 
-    @Test
+    @Test(invocationCount = 10000)
     public void testGenerateGame_whenHumanPlayerFinishedPlacingShips_returnValidBoardForAI() throws InvalidBoardCreationException, InvalidShipPlacementException {
         // arrange
         int AI_ID = 2;
