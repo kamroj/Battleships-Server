@@ -118,12 +118,4 @@ public class BoardInitializerTest {
         boardInitializer.generateBoard();
     }
 
-    @Test
-    public void testGenerateStandardBoard_validGeneration_returnBoard() throws InvalidShipPlacementException {
-        //Arrange
-        Board board = boardInitializer.generateStandardBoard();
-
-        //Act
-        assertNotNull(board);
-    }
 }
