@@ -82,7 +82,7 @@ public class GameInitializerTest {
         boolean result = gameInitializer.areBothPlayersDone();
 
         //Assert
-        assertFalse(false);
+        assertFalse(result);
     }
 
     @Test
