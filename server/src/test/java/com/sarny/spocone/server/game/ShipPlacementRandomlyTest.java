@@ -48,7 +48,7 @@ public class ShipPlacementRandomlyTest {
 
         // assert
         Collection<Invocation> invocations = mockingDetails(shipPlacementValidator).getInvocations();
-        long validationCalls = invocations.stream().filter(invocation -> invocation.toString().contains("validate")).count();
+        long validationCalls = invocations.stream().filter(invocation -> invocation.toString().contains("hasValid")).count();
         assertEquals(validationCalls, 10);
     }
 
