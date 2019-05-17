@@ -1,4 +1,4 @@
-package com.sarny.spocone.server.gameControllers;
+package com.sarny.spocone.server.game_controllers;
 
 import com.sarny.spocone.server.game.GameInitializer;
 import org.testng.annotations.Test;

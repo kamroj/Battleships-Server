@@ -1,4 +1,4 @@
-package com.sarny.spocone.server.gameControllers;
+package com.sarny.spocone.server.game_controllers;
 
 import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;

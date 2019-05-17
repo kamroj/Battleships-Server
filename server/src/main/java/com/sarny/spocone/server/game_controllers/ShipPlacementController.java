@@ -1,4 +1,4 @@
-package com.sarny.spocone.server.gameControllers;
+package com.sarny.spocone.server.game_controllers;
 
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
@@ -21,8 +21,8 @@ import java.util.List;
 @RestController
 class ShipPlacementController {
 
-    private ActiveGameInitializers initializers;
-    private ActiveGames activeGames;
+    private final ActiveGameInitializers initializers;
+    private final ActiveGames activeGames;
 
     @Autowired
     public ShipPlacementController(ActiveGameInitializers initializers, ActiveGames activeGames) {
@@ -49,12 +49,16 @@ class ShipPlacementController {
         GameInitializer initializerForPlayer = initializers.getInitializerForPlayer(playerId);
         if (initializerForPlayer.areBothPlayersDone()) {
             Game game = initializerForPlayer.generateGame();
-            List<Integer> playersIDs = game.getPlayersIDs();
-            Integer p1Id = playersIDs.get(0);
-            Integer p2Id = playersIDs.get(1);
-            activeGames.addNewGame(game, p1Id, p2Id);
-            initializers.removeInitializerForPlayers(p1Id, p2Id);
+            activeGames.addNewGame(game);
+            removeInitializerForPlayers(game);
         }
+    }
+
+    private void removeInitializerForPlayers(Game game) {
+        List<Integer> playersIDs = game.getPlayersIDs();
+        Integer playerOneId = playersIDs.get(0);
+        Integer playerTwoId = playersIDs.get(1);
+        initializers.removeInitializerForPlayers(playerOneId, playerTwoId);
     }
 
     private ResponseEntity<ShipDTO> placeShipAndReturnItsDTO(@RequestBody ShipPlacementData placementData) throws InvalidShipPlacementException {
