@@ -37,16 +37,6 @@ public class GameInitializerTest {
     }
 
     @Test
-    public void testAreBothPlayersDone_bothPlayersDoneInitializing_returnTrue() throws InvalidShipPlacementException {
-        //Act
-        gameInitializer.generateStandardGame();
-        boolean result = gameInitializer.areBothPlayersDone();
-
-        //Assert
-        assertTrue(result);
-    }
-
-    @Test
     public void testAreBothPlayersDone_secondPlayerHasNotFinishedBoardInitialization_returnFalse() throws InvalidShipPlacementException {
         //Arrange
         /*

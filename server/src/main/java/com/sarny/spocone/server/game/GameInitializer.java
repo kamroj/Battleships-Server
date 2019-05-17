@@ -55,17 +55,4 @@ public class GameInitializer {
         return new Game(activeBoards, FIRST_PLAYER_ID, SECOND_PLAYER_ID);
     }
 
-    //Temp solution - when random or manual ship placement will be done this method should be removed
-    public Game generateStandardGame() throws InvalidShipPlacementException {
-        Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
-
-        for (Integer playerID : boardInitializers.keySet()) {
-            BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
-            boardsInGame.put(playerID, boardInitializer.generateStandardBoard());
-        }
-
-        ActiveBoards activeBoards = new ActiveBoards(boardsInGame);
-        return new Game(activeBoards, FIRST_PLAYER_ID, SECOND_PLAYER_ID);
-    }
-
 }
