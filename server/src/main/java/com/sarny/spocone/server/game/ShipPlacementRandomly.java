@@ -9,7 +9,8 @@ import java.util.*;
  */
 public class ShipPlacementRandomly {
 
-    private static final int COLUMNS = 10;
+    private static final int NUMBER_TO_MOVE_VERTICALLY = 10;
+    private static final int NUMBER_TO_MOVE_HORIZONTALLY = 1;
     private static final int BOARD_CAPACITY = 100;
     private static final int NUMBER_OF_POSSIBLE_DIRECTIONS = 2;
     private static final int MAX_SHIP_LENGTH = 4;
@@ -40,37 +41,21 @@ public class ShipPlacementRandomly {
         int choiceForHorOrVer = random.nextInt(NUMBER_OF_POSSIBLE_DIRECTIONS);
         switch (choiceForHorOrVer) {
             case 0:
-                placeShipRandomlyAndHorizontally(shipLength);
+                placeShipRandomly(shipLength, NUMBER_TO_MOVE_HORIZONTALLY);
                 break;
             case 1:
-                placeShipRandomlyAndVertically(shipLength);
+                placeShipRandomly(shipLength, NUMBER_TO_MOVE_VERTICALLY);
                 break;
         }
     }
 
-
-    private void placeShipRandomlyAndHorizontally(int shipLength) {
+    private void placeShipRandomly(int shipLength, int numberToMoveForward) {
         Ship ship;
         do {
             List<Integer> fields = new ArrayList<>();
             int field = getRandomFieldOfTheBoard();
             for (int i = 0; i < shipLength; i++) {
-                fields.add(field + i);
-            }
-            ship = new Ship(fields);
-
-        }
-        while (!shipPlacementValidator.validate(ship));
-        shipPlacementValidator.placeNewShip(ship);
-    }
-
-    private void placeShipRandomlyAndVertically(int shipLength) {
-        Ship ship;
-        do {
-            List<Integer> fields = new ArrayList<>();
-            int field = getRandomFieldOfTheBoard();
-            for (int i = 0; i < shipLength; i++) {
-                fields.add(field + (i * COLUMNS));
+                fields.add(field + (i * numberToMoveForward));
             }
             ship = new Ship(fields);
 
