@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author Kamil Rojek
  */
-class Ship {
+public class Ship {
 
     List<Integer> fieldsToHit;
     List<Integer> fieldsAlreadyHit;

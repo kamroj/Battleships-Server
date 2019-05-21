@@ -2,16 +2,11 @@ package com.sarny.spocone.server.game_controllers;
 
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
-import com.sarny.spocone.server.game.Game;
-import com.sarny.spocone.server.game.GameInitializer;
-import com.sarny.spocone.server.game.InvalidBoardCreationException;
-import com.sarny.spocone.server.game.InvalidShipPlacementException;
+import com.sarny.spocone.server.game.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +35,22 @@ class ShipPlacementController {
             moveGameToActiveGamesIfFinalized(placementData);
             return shipDTOResponseEntity;
         } catch (InvalidShipPlacementException | InvalidBoardCreationException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/placeShipsRandomly/{playerId}")
+    ResponseEntity<List<ShipDTO>> placeShipsRandomly(@PathVariable Integer playerId) throws InvalidShipPlacementException {
+        if (playerId == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly();
+            List<Ship> ships = shipPlacementRandomly.generateRandomShipList();
+            List<ShipDTO> shipsDTO = initializers.getInitializerForPlayer(playerId).placeShip(playerId, ships);
+            moveGameToActiveGamesIfFinalized(new ShipPlacementData(playerId, 1 , 1, true)); //todo zrobić coś z tym
+            return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+        } catch (InvalidBoardCreationException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }

@@ -1,5 +1,6 @@
 package com.sarny.spocone.server.game;
 
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -20,13 +21,30 @@ public class ShipPlacementRandomly {
     private int numberOfShipLength2 = 3;
     private int numberOfShipLength1 = 4;
 
+    private List<Ship> randomlyPlacedShips;
     private ShipPlacementValidator shipPlacementValidator;
     private Random random;
 
     @Autowired
-    ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
+    public ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
+        randomlyPlacedShips = new ArrayList<>();
         this.shipPlacementValidator = shipPlacementValidator;
         this.random = new Random();
+    }
+
+    @Autowired
+    public ShipPlacementRandomly() {
+        randomlyPlacedShips = new ArrayList<>();
+        ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
+        shipPlacementValidator = builder
+                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
+                .forBoard(new Board());
+        this.random = new Random();
+    }
+
+    public List<Ship> generateRandomShipList() {
+        placeAllShipsRandomly();
+        return randomlyPlacedShips;
     }
 
     void placeAllShipsRandomly() {
@@ -58,10 +76,10 @@ public class ShipPlacementRandomly {
                 fields.add(field + (i * numberToMoveForward));
             }
             ship = new Ship(fields);
-
         }
         while (!shipPlacementValidator.validate(ship));
         shipPlacementValidator.placeNewShip(ship);
+        randomlyPlacedShips.add(ship);
     }
 
     private int getRandomFieldOfTheBoard() {
