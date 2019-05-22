@@ -32,7 +32,7 @@ class ShipPlacementController {
 
         try {
             ResponseEntity<ShipDTO> shipDTOResponseEntity = placeShipAndReturnItsDTO(placementData);
-            moveGameToActiveGamesIfFinalized(placementData);
+            moveGameToActiveGamesIfFinalized(placementData.getPlayerID());
             return shipDTOResponseEntity;
         } catch (InvalidShipPlacementException | InvalidBoardCreationException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
