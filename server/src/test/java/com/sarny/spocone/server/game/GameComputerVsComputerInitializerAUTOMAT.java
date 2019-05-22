@@ -5,35 +5,26 @@ import com.sarny.spocone.server.game.computer_players.ComputerEasy;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 /**
  * @author Kamil Rojek
  */
-public class GameComputerVsComputerInitializerTest {
-    private AI firstComputer;
-    private AI secondComputer;
+public class GameComputerVsComputerInitializerAUTOMAT {
     private GameComputerVsComputer game;
-
+    private int gameNumber = 0;
 
     @BeforeMethod
     public void setUp() {
-        firstComputer = new ComputerEasy(AI.generateID());
-        secondComputer = new ComputerEasy(AI.generateID());
+        gameNumber++;
+        AI firstComputer = new ComputerEasy(AI.generateID());
+        AI secondComputer = new ComputerEasy(AI.generateID());
 
         GameComputerVsComputerInitializer initializer = new GameComputerVsComputerInitializer(firstComputer, secondComputer);
         game = initializer.generateGame();
     }
 
-    @Test
-    public void testRunAutomaticGame__(){
-        //Arrange
+    @Test(invocationCount = 10)
+    public void runAutomaticGame(){
+        System.out.printf("Game number: %d\n\n", gameNumber);
         game.runAutomaticGame();
-
-        //Act
-
-
-        //Assert
-
     }
 }

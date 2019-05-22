@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
  */
 class Board {
 
-    private List<Ship> ships;
-    private List<Ship> sunkShips;
+    List<Ship> ships;
+    List<Ship> sunkShips;
 
     Board() {
         this.ships = new ArrayList<>();

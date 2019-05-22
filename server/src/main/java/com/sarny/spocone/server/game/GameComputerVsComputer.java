@@ -4,6 +4,8 @@ import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.server.game.computer_players.AI;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Kamil Rojek
@@ -11,14 +13,17 @@ import com.sarny.spocone.server.game.computer_players.AI;
 class GameComputerVsComputer extends Game {
     private AI firstComputer;
     private AI secondComputer;
+    private BoardDrawer boardDrawer;
+    private Logger logger = LogManager.getLogger(GameComputerVsComputer.class);
 
     GameComputerVsComputer(ActiveBoards activeBoards, AI firstComputer, AI secondComputer) {
         super(activeBoards, firstComputer.getID(), secondComputer.getID());
         this.firstComputer = firstComputer;
         this.secondComputer = secondComputer;
+        boardDrawer = new BoardDrawer(activeBoards);
     }
 
-    public void runAutomaticGame() {
+    void runAutomaticGame() {
         ShotResult shotResult;
         boolean firstComputerRound = true;
         do {
@@ -37,8 +42,19 @@ class GameComputerVsComputer extends Game {
         do {
             Shot shot = computer.generateShot();
             shotResult = activeRound.handleShot(shot);
+
+            if (shotResult.getShotOutcome() == ShotOutcome.SUNK ||
+                    shotResult.getShotOutcome() == ShotOutcome.WIN) {
+                printBoards(computer);
+            }
         } while (shotResult.getShotOutcome() != ShotOutcome.MISS
                 && shotResult.getShotOutcome() != ShotOutcome.WIN);
+
         return shotResult;
+    }
+
+    private void printBoards(AI whoseTurn) {
+        logger.info("TURN :: " + whoseTurn.getID());
+        logger.info("\n" + boardDrawer.draw());
     }
 }
