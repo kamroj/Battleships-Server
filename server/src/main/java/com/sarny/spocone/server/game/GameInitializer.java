@@ -1,0 +1,58 @@
+package com.sarny.spocone.server.game;
+
+import com.sarny.spocone.publicclasses.ship.ShipDTO;
+import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * Class responsible for providing new {@link Game} objects.
+ *
+ * @author Kamil Rojek
+ * @see Game
+ */
+public class GameInitializer {
+    Map<Integer, BoardInitializer> boardInitializers = new LinkedHashMap<>();
+    final int FIRST_PLAYER_ID;
+    final int SECOND_PLAYER_ID;
+
+    public GameInitializer(int firstPlayerID, int secondPlayerID) {
+        FIRST_PLAYER_ID = firstPlayerID;
+        SECOND_PLAYER_ID = secondPlayerID;
+
+        boardInitializers.put(FIRST_PLAYER_ID, new BoardInitializer());
+        boardInitializers.put(SECOND_PLAYER_ID, new BoardInitializer());
+    }
+
+    public ShipDTO placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
+        BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
+        boardInitializer.placeShip(ship);
+        return ship.asDTO();
+    }
+
+    public ShipDTO placeShip(int playerID, ShipPlacementData shipData) throws InvalidShipPlacementException {
+        Ship ship = new Ship(shipData);
+        BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
+        boardInitializer.placeShip(ship);
+        return ship.asDTO();
+    }
+
+    public boolean areBothPlayersDone() {
+        return boardInitializers.get(FIRST_PLAYER_ID).isBoardReady() &&
+                boardInitializers.get(SECOND_PLAYER_ID).isBoardReady();
+    }
+
+    public Game generateGame() throws InvalidBoardCreationException {
+        Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
+
+        for (Integer playerID : boardInitializers.keySet()) {
+            BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
+            boardsInGame.put(playerID, boardInitializer.generateBoard());
+        }
+
+        ActiveBoards activeBoards = new ActiveBoards(boardsInGame);
+        return new Game(activeBoards, FIRST_PLAYER_ID, SECOND_PLAYER_ID);
+    }
+
+}
