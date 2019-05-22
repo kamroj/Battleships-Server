@@ -4,14 +4,15 @@ import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author Kamil Rojek
  */
 class Board {
 
-    private List<Ship> ships;
-    private List<Ship> sunkShips;
+    List<Ship> ships;
+    List<Ship> sunkShips;
 
     Board() {
         this.ships = new ArrayList<>();
@@ -63,4 +64,5 @@ class Board {
     private ShotOutcome checkIfWin() {
         return ships.isEmpty() ? ShotOutcome.WIN : ShotOutcome.SUNK;
     }
+
 }

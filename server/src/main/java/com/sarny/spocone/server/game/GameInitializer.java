@@ -3,7 +3,7 @@ package com.sarny.spocone.server.game;
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
 
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.Map;
 
 /**
@@ -29,6 +29,16 @@ public class GameInitializer {
         BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
         boardInitializer.placeShip(ship);
         return ship.asDTO();
+    }
+
+    public List<ShipDTO> placeShip(int playerID, List<Ship> ships) throws InvalidShipPlacementException {
+        BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
+        List<ShipDTO> shipsDTO = new ArrayList<>();
+        for (Ship ship: ships) {
+            boardInitializer.placeShip(ship);
+            shipsDTO.add(ship.asDTO());
+        }
+        return shipsDTO;
     }
 
     public ShipDTO placeShip(int playerID, ShipPlacementData shipData) throws InvalidShipPlacementException {
