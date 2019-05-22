@@ -7,15 +7,14 @@ class TextMessage extends Message {
 
     private final String messageContent;
 
-    public TextMessage(String sentBy, String messageContent) {
-        super(sentBy, "[%s]: %s");
+    TextMessage(String sentBy, String messageContent) {
+        super(sentBy, "MESSAGE_TEXT_MESSAGE");
         this.messageContent = messageContent;
     }
 
     @Override
-    public String asString() {
-        return String.format(this.format, sentBy, messageContent);
+    public String asString(String language) {
+        return String.format(formatForLanguage(language), sentBy, messageContent);
     }
-
 
 }

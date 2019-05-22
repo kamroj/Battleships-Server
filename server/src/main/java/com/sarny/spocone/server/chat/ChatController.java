@@ -25,7 +25,7 @@ class ChatController {
     private ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
         // TODO messages are only in English. Add Multiple languages support
 
-        List<String> chatMessagesAsStrings = chatService.getChatMessagesAsStrings(playerId, gameId);
+        List<String> chatMessagesAsStrings = chatService.getChatMessagesAsStrings(playerId, gameId, language);
         return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
 
     }

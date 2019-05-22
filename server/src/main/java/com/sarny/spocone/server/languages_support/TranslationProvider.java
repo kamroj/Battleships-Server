@@ -1,5 +1,7 @@
 package com.sarny.spocone.server.languages_support;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +19,21 @@ import java.util.ResourceBundle;
  * @author Wojciech Makiela
  */
 @Component
-class TranslationProvider {
+public class TranslationProvider {
 
+    private static Logger logger = LogManager.getLogger(TranslationProvider.class);
     private SupportedLanguages supportedLanguages;
     private Map<String, Translation> loadedTranslations;
 
     @Autowired
-    TranslationProvider(SupportedLanguages supportedLanguages) {
+    public TranslationProvider(SupportedLanguages supportedLanguages) {
         this.supportedLanguages = supportedLanguages;
+        loadedTranslations = new HashMap<>();
+        loadTranslations();
+    }
+
+    public TranslationProvider() {
+        this.supportedLanguages = new SupportedLanguages();
         loadedTranslations = new HashMap<>();
         loadTranslations();
     }
@@ -34,6 +43,15 @@ class TranslationProvider {
             ResourceBundle bundle = ResourceBundle.getBundle(languageCode);
             loadedTranslations.put(languageCode.toUpperCase(), new Translation(bundle));
         }
+    }
+
+    public String getValueForKeyForGivenLanguage(String language, String key) {
+        Translation translation = loadedTranslations.get(language.toUpperCase());
+        if (translation == null) {
+            logger.warn("Searched for key " + key + " in unsupported translation {" + language + "}.");
+            return "Unsupported Language";
+        }
+        return translation.asMap.get(key);
     }
 
     Translation getTranslation(String code) {

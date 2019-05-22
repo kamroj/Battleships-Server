@@ -1,8 +1,10 @@
 package com.sarny.spocone.server.game_controllers;
 
 import com.sarny.spocone.publicclasses.shot.Shot;
+import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
+import com.sarny.spocone.server.chat.ChatService;
 import com.sarny.spocone.server.game.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +20,12 @@ import java.util.Set;
 class ShotController {
 
     private final ActiveGames activeGames;
+    private final ChatService chatService;
 
     @Autowired
-    public ShotController(ActiveGames activeGames) {
+    public ShotController(ActiveGames activeGames, ChatService chatService) {
         this.activeGames = activeGames;
+        this.chatService = chatService;
     }
 
     @PostMapping("/shot")
@@ -31,7 +35,15 @@ class ShotController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         ShotResult shotResult = gameForPlayer.handleShot(shot);
+        addShotSummaryToChat(shot, shotResult);
         return new ResponseEntity<>(shotResult, HttpStatus.OK);
+    }
+
+    private void addShotSummaryToChat(@RequestBody Shot shot, ShotResult shotResult) {
+        chatService.playerShot(shot.getPlayerID(), shotResult);
+        if (shotResult.getShotOutcome() == ShotOutcome.MISS) {
+            chatService.playersTurnEnded(shot.getPlayerID());
+        }
     }
 
     @GetMapping("/turn/{playerId}")

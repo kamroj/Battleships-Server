@@ -15,7 +15,7 @@ import java.util.Map;
  * @author Wojciech Makiela
  */
 @Component
-class ChatService implements MessageFactory {
+public class ChatService implements MessageFactory {
 
     private final DefaultMessageFactory defaultMessageFactory;
     private Map<Integer, Chat> chatRooms; // Key is corresponding Game id;
@@ -25,13 +25,13 @@ class ChatService implements MessageFactory {
         defaultMessageFactory = new DefaultMessageFactory();
     }
 
-    List<String> getChatMessagesAsStrings(int playerId, int roomId) {
+    List<String> getChatMessagesAsStrings(int playerId, int roomId, String language) {
         Chat chat = getChatOrCreateIfNotOpenedYet(roomId);
-        addInfoPlayerJoinsRoomifRequired(playerId, chat);
-        return chat.asListOfStrings();
+        addInfoPlayerJoinsRoomIfRequired(playerId, chat);
+        return chat.asListOfStrings(language);
     }
 
-    private void addInfoPlayerJoinsRoomifRequired(int playerId, Chat chat) {
+    private void addInfoPlayerJoinsRoomIfRequired(int playerId, Chat chat) {
         if (!chat.hasUser(playerId)) {
             Message message = playerJoined(playerId);
             chat.addNewMessage(message);
@@ -55,7 +55,7 @@ class ChatService implements MessageFactory {
             throw new IllegalArgumentException("Put message in nonexistent chat room");
         }
         chat.addNewMessage(message);
-        return chat.asListOfStrings();
+        return chat.asListOfStrings(messageFromUser.language);
     }
 
     @Override
@@ -64,8 +64,8 @@ class ChatService implements MessageFactory {
     }
 
     @Override
-    public Message playersTurn(int playerId) {
-        return defaultMessageFactory.playersTurn(playerId);
+    public Message playersTurnEnded(int playerId) {
+        return defaultMessageFactory.playersTurnEnded(playerId);
     }
 
     @Override

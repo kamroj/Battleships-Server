@@ -16,7 +16,7 @@ public class DefaultMessageFactory implements MessageFactory {
     }
 
     @Override
-    public Message playersTurn(int playerId) {
+    public Message playersTurnEnded(int playerId) {
         return new PlayersTurn(SERVER, playerId);
     }
 

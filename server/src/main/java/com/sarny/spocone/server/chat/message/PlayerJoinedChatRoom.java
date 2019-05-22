@@ -8,12 +8,12 @@ class PlayerJoinedChatRoom extends Message {
     private final String playerId;
 
     public PlayerJoinedChatRoom(String sentBy, String playerId) {
-        super(sentBy, "[%s]: Player %s joined!");
+        super(sentBy, "MESSAGE_JOIN");
         this.playerId = playerId;
     }
 
     @Override
-    public String asString() {
-        return String.format(format, sentBy, playerId);
+    public String asString(String language) {
+        return String.format(formatForLanguage(language), sentBy, playerId);
     }
 }

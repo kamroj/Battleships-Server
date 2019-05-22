@@ -8,12 +8,12 @@ class PlayersTurn extends Message {
     private final int playerId;
 
     public PlayersTurn(String sentBy, int playerId) {
-        super(sentBy, "[%s]: Now it's players %d turn");
+        super(sentBy, "MESSAGE_TURN");
         this.playerId = playerId;
     }
 
     @Override
-    public String asString() {
-        return String.format(this.format, sentBy, playerId);
+    public String asString(String language) {
+        return String.format(formatForLanguage(language), sentBy, playerId);
     }
 }

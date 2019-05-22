@@ -23,10 +23,10 @@ class Chat {
         }
     }
 
-    List<String> asListOfStrings() {
+    List<String> asListOfStrings(String language) {
         List<String> asList = new ArrayList<>();
         for (Message message : messages) {
-            asList.add(message.asString());
+            asList.add(message.asString(language));
         }
         return asList;
     }

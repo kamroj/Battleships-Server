@@ -13,14 +13,14 @@ class PlayerShot extends Message {
     private final String playerId;
 
     public PlayerShot(String sentBy, String playerId, ShotResult result) {
-        super(sentBy, "[%s]: Player %s shot field %d : %s");
+        super(sentBy, "MESSAGE_SHOT");
         field = result.getField();
         shotOutcome = result.getShotOutcome();
         this.playerId = playerId;
     }
 
     @Override
-    public String asString() {
-        return String.format(this.format, sentBy, playerId, field, shotOutcome);
+    public String asString(String language) {
+        return String.format(formatForLanguage(language), sentBy, playerId, field, shotOutcomeInLanguage(language, shotOutcome));
     }
 }

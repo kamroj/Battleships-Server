@@ -8,7 +8,7 @@ import com.sarny.spocone.publicclasses.shot.ShotResult;
 public interface MessageFactory {
     Message playerShot(int playerId, ShotResult result);
 
-    Message playersTurn(int playerId);
+    Message playersTurnEnded(int playerId);
 
     Message textMessage(int playerId, String textMessageContent);
 
