@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Container for player message.
  * playerId - who sent message.
- * gameId - chat rooms are created for Game objects, thus they sare id.
+ * gameId - chat rooms are created for Game objects, thus they share id.
  * textMessage - content of message itself.
  * language - code of language in which Server communicates should be displayed
  *
