@@ -4,10 +4,7 @@ import com.sarny.spocone.publicclasses.chat.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,14 +24,20 @@ class ChatController {
     @GetMapping(path = "/chat/{gameId}/{playerId}/{language}")
     private ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
         // TODO messages are only in English. Add Multiple languages support
+
         List<String> chatMessagesAsStrings = chatService.getChatMessagesAsStrings(playerId, gameId);
         return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
+
     }
 
-    @PutMapping(path = "/chat")
-    private ResponseEntity<?> putNewChatMessage(ChatMessage message) {
+    @PostMapping(path = "/chat")
+    private ResponseEntity<?> postNewChatMessage(@RequestBody ChatMessage message) {
         // TODO messages are only in English. Add Multiple languages support
-        List<String> chatMessagesAsStrings = chatService.putNewMessage(message);
-        return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
+        try {
+            List<String> chatMessagesAsStrings = chatService.putNewMessage(message);
+            return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }
