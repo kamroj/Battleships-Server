@@ -18,7 +18,9 @@ class ActiveBoards {
 
     ShotOutcome markShot(Shot shot, int oppositePlayerID) {
         Board board = getPlayerBoard(oppositePlayerID);
-        return board.markShot(shot.getField());
+        ShotOutcome shotOutcome = board.markShot(shot.getField());
+        board.toString();
+        return shotOutcome;
     }
 
     Ship getShipOnField(int fieldNumber, int playerID) {

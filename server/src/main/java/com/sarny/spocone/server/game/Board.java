@@ -4,6 +4,7 @@ import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author Kamil Rojek
@@ -62,5 +63,25 @@ class Board {
 
     private ShotOutcome checkIfWin() {
         return ships.isEmpty() ? ShotOutcome.WIN : ShotOutcome.SUNK;
+    }
+
+    @Override
+    public String toString() {
+        int[] ints = IntStream.rangeClosed(0, 99).toArray();
+        System.out.println("---------------------------");
+        for (int i : ints) {
+            Ship shipFromField = getShipFromField(i);
+            if (shipFromField == null) {
+                System.out.print(" ");
+            } else if (ships.contains(shipFromField)) {
+                System.out.print("s");
+            } else {
+                System.out.print("x");
+            }
+            if (i % 10 == 9) {
+                System.out.println();
+            }
+        }
+        return "Board{}";
     }
 }
