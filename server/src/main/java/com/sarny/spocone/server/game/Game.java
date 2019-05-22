@@ -16,7 +16,7 @@ import java.util.*;
 public class Game {
 
     ActiveBoards activeBoards;
-    private Stack<Round> rounds;
+    Stack<Round> rounds;
     Round activeRound;
     private List<Integer> playersIDs;
 
@@ -102,7 +102,7 @@ public class Game {
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 
-    private void createNewRound() {
+    void createNewRound() {
         activeRound = new Round(activeBoards, playersIDs);
     }
 }

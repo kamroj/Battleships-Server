@@ -27,6 +27,10 @@ class GamePlayerVSComputer extends Game {
                 aiShot = activeRound.handleShot(shot);
             } while (aiShot.getShotOutcome() != ShotOutcome.MISS);
         }
+
+        rounds.add(activeRound);
+        createNewRound();
+
         return shotResult;
     }
 }
