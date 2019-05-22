@@ -29,8 +29,7 @@ class GameComputerVsComputer extends Game {
                 shotResult = playRound(secondComputer);
                 firstComputerRound = true;
             }
-            //System.out.println("SHOT RESULT " + shotResult.getShotOutcome());
-        } while (shotResult.getShotOutcome() != ShotOutcome.SUNK); //todo zmienić na WIN
+        } while (shotResult.getShotOutcome() != ShotOutcome.WIN);
     }
 
     private ShotResult playRound(AI computer) {
@@ -38,8 +37,8 @@ class GameComputerVsComputer extends Game {
         do {
             Shot shot = computer.generateShot();
             shotResult = activeRound.handleShot(shot);
-            System.out.println(shotResult.getField() + " : " + shotResult.getShotOutcome());
-        } while (shotResult.getShotOutcome() != ShotOutcome.WIN);
+        } while (shotResult.getShotOutcome() != ShotOutcome.MISS
+                && shotResult.getShotOutcome() != ShotOutcome.WIN);
         return shotResult;
     }
 }

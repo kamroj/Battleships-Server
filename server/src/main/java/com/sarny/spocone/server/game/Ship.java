@@ -67,7 +67,8 @@ public class Ship {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ship ship = (Ship) o;
-        return this.length() == ship.length();
+        return Objects.equals(fieldsToHit, ship.fieldsToHit) &&
+                Objects.equals(fieldsAlreadyHit, ship.fieldsAlreadyHit);
     }
 
     @Override

@@ -28,10 +28,6 @@ class GameComputerVsComputerInitializer extends GameInitializer {
 
         boardsInGame.put(firstComputer.getID(), firstComputerBoard);
         boardsInGame.put(secondComputer.getID(), secondComputerBoard);
-        System.out.println("Board AI 1: ");
-        firstComputerBoard.toString();
-        System.out.println("Board AI 2: ");
-        secondComputerBoard.toString();
 
         ActiveBoards activeBoards = new ActiveBoards(boardsInGame);
         return new GameComputerVsComputer(activeBoards, firstComputer, secondComputer);
@@ -45,17 +41,3 @@ class GameComputerVsComputerInitializer extends GameInitializer {
         new ShipPlacementRandomly(defaultBoardValidator).placeAllShipsRandomly();
     }
 }
-
-/*
-0123456789
-   s    ss
-     s
-     s s
-s    s s
-       s
-       s
-  sss    s
-       s s
-    ss
-s
- */
