@@ -32,7 +32,7 @@ class ShipPlacementController {
 
         try {
             ResponseEntity<ShipDTO> shipDTOResponseEntity = placeShipAndReturnItsDTO(placementData);
-            moveGameToActiveGamesIfFinalized(placementData);
+            moveGameToActiveGamesIfFinalized(placementData.getPlayerID());
             return shipDTOResponseEntity;
         } catch (InvalidShipPlacementException | InvalidBoardCreationException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -48,15 +48,14 @@ class ShipPlacementController {
             ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly();
             List<Ship> ships = shipPlacementRandomly.generateRandomShipList();
             List<ShipDTO> shipsDTO = initializers.getInitializerForPlayer(playerId).placeShip(playerId, ships);
-            moveGameToActiveGamesIfFinalized(new ShipPlacementData(playerId, 1 , 1, true)); //todo zrobić coś z tym
+            moveGameToActiveGamesIfFinalized(playerId);
             return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
         } catch (InvalidBoardCreationException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    private void moveGameToActiveGamesIfFinalized(ShipPlacementData placementData) throws InvalidBoardCreationException {
-        int playerId = placementData.getPlayerID();
+    private void moveGameToActiveGamesIfFinalized(Integer playerId) throws InvalidBoardCreationException {
         GameInitializer initializerForPlayer = initializers.getInitializerForPlayer(playerId);
         if (initializerForPlayer.areBothPlayersDone()) {
             Game game = initializerForPlayer.generateGame();

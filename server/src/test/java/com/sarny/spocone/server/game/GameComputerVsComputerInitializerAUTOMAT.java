@@ -22,7 +22,8 @@ public class GameComputerVsComputerInitializerAUTOMAT {
         game = initializer.generateGame();
     }
 
-    @Test(invocationCount = 10)
+    @Test(enabled = false)
+    //@Test(invocationCount = 10)
     public void runAutomaticGame(){
         System.out.printf("Game number: %d\n\n", gameNumber);
         game.runAutomaticGame();
