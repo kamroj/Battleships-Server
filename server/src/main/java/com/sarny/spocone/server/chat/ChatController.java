@@ -17,14 +17,12 @@ class ChatController {
     private ChatService chatService;
 
     @Autowired
-    public ChatController(ChatService chatService) {
+    ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
 
     @GetMapping(path = "/chat/{gameId}/{playerId}/{language}")
     ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
-        // TODO messages are only in English. Add Multiple languages support
-
         List<String> chatMessagesAsStrings = chatService.getChatMessagesAsStrings(playerId, gameId, language);
         return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
 
@@ -32,7 +30,6 @@ class ChatController {
 
     @PostMapping(path = "/chat")
     private ResponseEntity<?> postNewChatMessage(@RequestBody ChatMessage message) {
-        // TODO messages are only in English. Add Multiple languages support
         try {
             List<String> chatMessagesAsStrings = chatService.addUserMessageAndGetChat(message);
             return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);

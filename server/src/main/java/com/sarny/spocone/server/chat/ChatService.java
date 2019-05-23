@@ -75,7 +75,7 @@ public class ChatService {
         putNewServerMessage(message, gameId);
     }
 
-    public List<String> addUserMessageAndGetChat(ChatMessage chatMessage) {
+    List<String> addUserMessageAndGetChat(ChatMessage chatMessage) {
         Message message = defaultMessageFactory.textMessage(chatMessage.playerId, chatMessage.textMessage);
         return putNewUserMessage(message, chatMessage.gameId, chatMessage.language);
     }
