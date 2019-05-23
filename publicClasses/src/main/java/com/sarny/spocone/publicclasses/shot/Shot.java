@@ -13,6 +13,12 @@ public class Shot {
     private int field;
     private int gameId;
 
+    public Shot(int playerId, int field, int gameId) {
+        this.playerId = playerId;
+        this.field = field;
+        this.gameId = gameId;
+    }
+
     public Shot(int playerId, int field) {
         this.playerId = playerId;
         this.field = field;
