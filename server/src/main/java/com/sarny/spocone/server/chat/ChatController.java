@@ -34,7 +34,7 @@ class ChatController {
     private ResponseEntity<?> postNewChatMessage(@RequestBody ChatMessage message) {
         // TODO messages are only in English. Add Multiple languages support
         try {
-            List<String> chatMessagesAsStrings = chatService.putNewMessage(message);
+            List<String> chatMessagesAsStrings = chatService.addUserMessageAndGetChat(message);
             return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

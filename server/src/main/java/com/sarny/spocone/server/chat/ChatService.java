@@ -4,7 +4,6 @@ import com.sarny.spocone.publicclasses.chat.ChatMessage;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.server.chat.message.DefaultMessageFactory;
 import com.sarny.spocone.server.chat.message.Message;
-import com.sarny.spocone.server.chat.message.MessageFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -15,7 +14,7 @@ import java.util.Map;
  * @author Wojciech Makiela
  */
 @Component
-public class ChatService implements MessageFactory {
+public class ChatService {
 
     private final DefaultMessageFactory defaultMessageFactory;
     private Map<Integer, Chat> chatRooms; // Key is corresponding Game id;
@@ -48,33 +47,45 @@ public class ChatService implements MessageFactory {
         return chat;
     }
 
-    List<String> putNewMessage(ChatMessage messageFromUser) {
-        Message message = textMessage(messageFromUser.playerId, messageFromUser.textMessage);
-        Chat chat = chatRooms.get(messageFromUser.gameId);
+    List<String> putNewUserMessage(Message message, int gameId, String language) {
+        Chat chat = chatRooms.get(gameId);
         if (chat == null) {
             throw new IllegalArgumentException("Put message in nonexistent chat room");
         }
         chat.addNewMessage(message);
-        return chat.asListOfStrings(messageFromUser.language);
+        return chat.asListOfStrings(language);
     }
 
-    @Override
-    public Message playerShot(int playerId, ShotResult result) {
-        return defaultMessageFactory.playerShot(playerId, result);
+    void putNewServerMessage(Message message, int gameId) {
+        Chat chat = chatRooms.get(gameId);
+        if (chat == null) {
+            throw new IllegalArgumentException("Put message in nonexistent chat room");
+        }
+        chat.addNewMessage(message);
     }
 
-    @Override
-    public Message playersTurnEnded(int playerId) {
-        return defaultMessageFactory.playersTurnEnded(playerId);
+
+    public void addPlayerShotMessage(int playerId, ShotResult result, int gameId) {
+        Message message = defaultMessageFactory.playerShot(playerId, result);
+        putNewServerMessage(message, gameId);
     }
 
-    @Override
-    public Message textMessage(int playerId, String textMessageContent) {
-        return defaultMessageFactory.textMessage(playerId, textMessageContent);
+    public void addTurnEndedMessage(int playerId, int gameId) {
+        Message message = defaultMessageFactory.playersTurnEnded(playerId);
+        putNewServerMessage(message, gameId);
     }
 
-    @Override
-    public Message playerJoined(int playerId) {
+    public List<String> addUserMessageAndGetChat(ChatMessage chatMessage) {
+        Message message = defaultMessageFactory.textMessage(chatMessage.playerId, chatMessage.textMessage);
+        return putNewUserMessage(message, chatMessage.gameId, chatMessage.language);
+    }
+
+    private Message playerJoined(int playerId) {
         return defaultMessageFactory.playerJoined(playerId);
+    }
+
+    public void addGameEndedMessage(int gameId) {
+        Message message = defaultMessageFactory.gameEnded();
+        putNewServerMessage(message, gameId);
     }
 }
