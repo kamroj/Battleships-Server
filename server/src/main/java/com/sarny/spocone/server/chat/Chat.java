@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * @author Wojciech Makiela
@@ -13,7 +14,7 @@ import java.util.List;
 class Chat {
 
     private static final int MAX_NUMBER_OF_MESSAGES = 20;
-    private Deque<Message> messages = new LinkedList<>();
+    private Deque<Message> messages = new LinkedBlockingDeque<>();
     private List<Integer> usersInChatRoom = new ArrayList<>();
 
     void addNewMessage(Message message) {
@@ -31,11 +32,11 @@ class Chat {
         return asList;
     }
 
-    public boolean hasUser(int playerId) {
+    boolean hasUser(int playerId) {
         return usersInChatRoom.contains(playerId);
     }
 
-    public void addUser(int playerId) {
+    void addUser(int playerId) {
         usersInChatRoom.add(playerId);
     }
 }
