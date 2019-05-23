@@ -63,7 +63,7 @@ class Round {
         playersShots.get(activePlayerId).add(shotResult);
 
         if (shotOutcome == ShotOutcome.MISS) {
-            activePlayerId = oppositePlayerId(shot.getPlayerID());
+            activePlayerId = oppositePlayerId(shot.getPlayerId());
             misses++;
         }
     }

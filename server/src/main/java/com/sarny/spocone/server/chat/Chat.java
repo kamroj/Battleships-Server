@@ -12,7 +12,7 @@ import java.util.List;
  */
 class Chat {
 
-    private static final int MAX_NUMBER_OF_MESSAGES = 10;
+    private static final int MAX_NUMBER_OF_MESSAGES = 20;
     private Deque<Message> messages = new LinkedList<>();
     private List<Integer> usersInChatRoom = new ArrayList<>();
 

@@ -13,4 +13,6 @@ public interface MessageFactory {
     Message textMessage(int playerId, String textMessageContent);
 
     Message playerJoined(int playerId);
+
+    Message gameEnded();
 }

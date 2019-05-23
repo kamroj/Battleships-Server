@@ -31,4 +31,9 @@ public class DefaultMessageFactory implements MessageFactory {
         String playerIdAsString = String.valueOf(playerId);
         return new PlayerJoinedChatRoom(SERVER, playerIdAsString);
     }
+
+    @Override
+    public Message gameEnded() {
+        return new GameEndedMessage(SERVER);
+    }
 }

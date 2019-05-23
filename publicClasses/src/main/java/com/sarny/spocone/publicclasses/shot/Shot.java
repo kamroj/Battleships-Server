@@ -9,23 +9,34 @@ import java.util.Objects;
  */
 public class Shot {
 
-    private int playerID;
+    private int playerId;
     private int field;
+    private int gameId;
 
-    public Shot(int playerID, int field) {
-        this.playerID = playerID;
+    public Shot(int playerId, int field, int gameId) {
+        this.playerId = playerId;
+        this.field = field;
+        this.gameId = gameId;
+    }
+
+    public Shot(int playerId, int field) {
+        this.playerId = playerId;
         this.field = field;
     }
 
     public Shot() {
     }
 
-    public int getPlayerID() {
-        return playerID;
+    public int getPlayerId() {
+        return playerId;
     }
 
     public int getField() {
         return field;
+    }
+
+    public int getGameId() {
+        return gameId;
     }
 
     @Override
@@ -33,12 +44,12 @@ public class Shot {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Shot shot = (Shot) o;
-        return playerID == shot.playerID &&
+        return playerId == shot.playerId &&
                 field == shot.field;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerID, field);
+        return Objects.hash(playerId, field);
     }
 }

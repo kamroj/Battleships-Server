@@ -22,7 +22,7 @@ class ChatController {
     }
 
     @GetMapping(path = "/chat/{gameId}/{playerId}/{language}")
-    private ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
+    ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
         // TODO messages are only in English. Add Multiple languages support
 
         List<String> chatMessagesAsStrings = chatService.getChatMessagesAsStrings(playerId, gameId, language);
@@ -34,7 +34,7 @@ class ChatController {
     private ResponseEntity<?> postNewChatMessage(@RequestBody ChatMessage message) {
         // TODO messages are only in English. Add Multiple languages support
         try {
-            List<String> chatMessagesAsStrings = chatService.putNewMessage(message);
+            List<String> chatMessagesAsStrings = chatService.addUserMessageAndGetChat(message);
             return new ResponseEntity<>(chatMessagesAsStrings, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
