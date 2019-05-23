@@ -22,7 +22,7 @@ class ChatController {
     }
 
     @GetMapping(path = "/chat/{gameId}/{playerId}/{language}")
-    private ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
+    ResponseEntity<?> getChatMessages(@PathVariable int playerId, @PathVariable int gameId, @PathVariable String language) {
         // TODO messages are only in English. Add Multiple languages support
 
         List<String> chatMessagesAsStrings = chatService.getChatMessagesAsStrings(playerId, gameId, language);
