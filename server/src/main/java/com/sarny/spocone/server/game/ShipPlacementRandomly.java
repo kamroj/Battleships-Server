@@ -1,6 +1,5 @@
 package com.sarny.spocone.server.game;
 
-import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -57,13 +56,11 @@ public class ShipPlacementRandomly {
 
     private void placeShipInRandomDirection(int shipLength) {
         int choiceForHorOrVer = random.nextInt(NUMBER_OF_POSSIBLE_DIRECTIONS);
-        switch (choiceForHorOrVer) {
-            case 0:
-                placeShipRandomly(shipLength, NUMBER_TO_MOVE_HORIZONTALLY);
-                break;
-            case 1:
-                placeShipRandomly(shipLength, NUMBER_TO_MOVE_VERTICALLY);
-                break;
+        if (choiceForHorOrVer == 0) {
+            placeShipRandomly(shipLength, NUMBER_TO_MOVE_HORIZONTALLY);
+
+        } else {
+            placeShipRandomly(shipLength, NUMBER_TO_MOVE_VERTICALLY);
         }
     }
 

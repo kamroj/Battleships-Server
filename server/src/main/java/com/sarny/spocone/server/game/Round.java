@@ -47,8 +47,8 @@ class Round {
 
     Integer getLastSunkField(int playerId) {
         return playersShots.get(playerId).stream()
-                .filter(shotResult -> shotResult.getShotOutcome() == ShotOutcome.SUNK ||
-                        shotResult.getShotOutcome() == ShotOutcome.WIN)
+                .filter(shotResult -> shotResult.getShotOutcome() == ShotOutcome.SUNK
+                        || shotResult.getShotOutcome() == ShotOutcome.WIN)
                 .reduce((first, second) -> second)
                 .map(ShotResult::getField)
                 .orElse(null);

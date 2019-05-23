@@ -4,7 +4,7 @@ import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author Wojciech Makiela
@@ -14,7 +14,7 @@ public class DefaultMessageFactoryTest {
     DefaultMessageFactory messageFactory = new DefaultMessageFactory();
 
     @Test
-    public void testPlayerShot_whenPassedValidData_returnMessageObjectRepresentingShot(){
+    public void testPlayerShot_whenPassedValidData_returnMessageObjectRepresentingShot() {
         // arrange
         int playerId = 1;
         int field = 20;

@@ -18,7 +18,7 @@ class ActiveGames {
         return activeGames.get(playerId);
     }
 
-     void addNewGame(Game game) {
+    void addNewGame(Game game) {
         for (int id : game.getPlayersIDs()) {
             activeGames.put(id, game);
         }

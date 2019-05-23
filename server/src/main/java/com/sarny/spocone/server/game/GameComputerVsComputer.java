@@ -43,8 +43,8 @@ class GameComputerVsComputer extends Game {
             Shot shot = computer.generateShot();
             shotResult = activeRound.handleShot(shot);
 
-            if (shotResult.getShotOutcome() == ShotOutcome.SUNK ||
-                    shotResult.getShotOutcome() == ShotOutcome.WIN) {
+            if (shotResult.getShotOutcome() == ShotOutcome.SUNK
+                    || shotResult.getShotOutcome() == ShotOutcome.WIN) {
                 printBoards(computer);
             }
         } while (shotResult.getShotOutcome() != ShotOutcome.MISS

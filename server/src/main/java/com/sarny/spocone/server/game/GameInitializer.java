@@ -3,7 +3,9 @@ package com.sarny.spocone.server.game;
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,9 +15,9 @@ import java.util.Map;
  * @see Game
  */
 public class GameInitializer {
-    Map<Integer, BoardInitializer> boardInitializers = new LinkedHashMap<>();
     final int FIRST_PLAYER_ID;
     final int SECOND_PLAYER_ID;
+    Map<Integer, BoardInitializer> boardInitializers = new LinkedHashMap<>();
 
     public GameInitializer(int firstPlayerID, int secondPlayerID) {
         FIRST_PLAYER_ID = firstPlayerID;
@@ -34,7 +36,7 @@ public class GameInitializer {
     public List<ShipDTO> placeShip(int playerID, List<Ship> ships) throws InvalidShipPlacementException {
         BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
         List<ShipDTO> shipsDTO = new ArrayList<>();
-        for (Ship ship: ships) {
+        for (Ship ship : ships) {
             boardInitializer.placeShip(ship);
             shipsDTO.add(ship.asDTO());
         }
@@ -49,16 +51,16 @@ public class GameInitializer {
     }
 
     public boolean areBothPlayersDone() {
-        return boardInitializers.get(FIRST_PLAYER_ID).isBoardReady() &&
-                boardInitializers.get(SECOND_PLAYER_ID).isBoardReady();
+        return boardInitializers.get(FIRST_PLAYER_ID).isBoardReady()
+                && boardInitializers.get(SECOND_PLAYER_ID).isBoardReady();
     }
 
     public Game generateGame() throws InvalidBoardCreationException {
         Map<Integer, Board> boardsInGame = new LinkedHashMap<>();
 
-        for (Integer playerID : boardInitializers.keySet()) {
-            BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
-            boardsInGame.put(playerID, boardInitializer.generateBoard());
+        for (Map.Entry<Integer, BoardInitializer> playerID : boardInitializers.entrySet()) {
+            BoardInitializer boardInitializer = this.boardInitializers.get(playerID.getKey());
+            boardsInGame.put(playerID.getKey(), boardInitializer.generateBoard());
         }
 
         ActiveBoards activeBoards = new ActiveBoards(boardsInGame);

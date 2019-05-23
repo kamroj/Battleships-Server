@@ -9,11 +9,11 @@ public abstract class AI {
 
     private static int nextId = 0;
 
-    public abstract Shot generateShot();
-
-    public abstract Integer getID();
-
     public static Integer generateID() {
         return nextId++;
     }
+
+    public abstract Shot generateShot();
+
+    public abstract Integer getID();
 }
