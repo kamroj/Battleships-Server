@@ -5,6 +5,8 @@ import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.server.game.computer_players.AI;
 
+import java.util.Set;
+
 /**
  * @author Kamil Rojek
  */
@@ -32,5 +34,17 @@ class GamePlayerVSComputer extends Game {
         createNewRound();
 
         return shotResult;
+    }
+
+    @Override
+    public Set<Integer> getGuaranteedMisses(int playerID) {
+        Ship ship = getLastSunkShip(playerID);
+        return new ShipNeighbouringFieldsGenerator().generateNeighbours(ship);
+    }
+
+    private Ship getLastSunkShip(int playerID) {
+        int oppositePlayerID = activeRound.oppositePlayerId(playerID);
+        Integer fieldNumber = rounds.peek().getLastSunkField(playerID);
+        return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 }
