@@ -30,7 +30,7 @@ class ShotController {
 
     @PostMapping("/shot")
     ResponseEntity<?> fire(@RequestBody Shot shot) {
-        Game gameForPlayer = activeGames.findGameOfPlayer(shot.getPlayerID());
+        Game gameForPlayer = activeGames.findGameOfPlayer(shot.getPlayerId());
         if (gameForPlayer == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -39,10 +39,15 @@ class ShotController {
         return new ResponseEntity<>(shotResult, HttpStatus.OK);
     }
 
-    private void addShotSummaryToChat(@RequestBody Shot shot, ShotResult shotResult) {
-        chatService.playerShot(shot.getPlayerID(), shotResult);
+    private void addShotSummaryToChat(Shot shot, ShotResult shotResult) {
+        int gameId = shot.getGameId();
+        int playerId = shot.getPlayerId();
+        chatService.addPlayerShotMessage(playerId, shotResult, gameId);
+
         if (shotResult.getShotOutcome() == ShotOutcome.MISS) {
-            chatService.playersTurnEnded(shot.getPlayerID());
+            chatService.addTurnEndedMessage(playerId, gameId);
+        } else if (shotResult.getShotOutcome() == ShotOutcome.WIN) {
+            chatService.addGameEndedMessage(gameId);
         }
     }
 
