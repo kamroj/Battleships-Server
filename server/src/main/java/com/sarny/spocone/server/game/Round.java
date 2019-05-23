@@ -76,6 +76,9 @@ class Round {
     }
 
     private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
+        if (shotResults.isEmpty()) {
+            return false;
+        }
         return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
     }
 
