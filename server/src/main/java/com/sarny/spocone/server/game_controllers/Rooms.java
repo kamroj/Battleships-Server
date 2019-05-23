@@ -47,7 +47,7 @@ class Rooms {
 
     Integer getRoomId() {
         synchronized (lock) {
-            return nextRoomId;
+            return nextRoomId++;
         }
     }
 
