@@ -2,6 +2,9 @@ package com.sarny.spocone.server.game;
 
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author Kamil Rojek
  */
@@ -23,6 +26,12 @@ class BoardInitializer {
         }
         throw new InvalidShipPlacementException("Ship " + ship.toString()
                 + "cannot be placed on the board!");
+    }
+
+    List<ShipDTO> placeShipsRandomly() {
+        ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly(shipPlacementValidator);
+        List<Ship> ships = shipPlacementRandomly.finishRandomPlacement();
+        return ships.stream().map(Ship::asDTO).collect(Collectors.toList());
     }
 
     Board generateBoard() throws InvalidBoardCreationException {

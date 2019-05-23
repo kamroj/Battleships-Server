@@ -41,13 +41,11 @@ class ShipPlacementController {
 
     @GetMapping("/placeShipsRandomly/{playerId}")
     ResponseEntity<List<ShipDTO>> placeShipsRandomly(@PathVariable Integer playerId) throws InvalidShipPlacementException {
-        if (playerId == null) {
+        if (playerId == null || initializers.getInitializerForPlayer(playerId) == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         try {
-            ShipPlacementRandomly shipPlacementRandomly = new ShipPlacementRandomly();
-            List<Ship> ships = shipPlacementRandomly.generateRandomShipList();
-            List<ShipDTO> shipsDTO = initializers.getInitializerForPlayer(playerId).placeShip(playerId, ships);
+            List<ShipDTO> shipsDTO = initializers.getInitializerForPlayer(playerId).placeShipsRandomly(playerId);
             moveGameToActiveGamesIfFinalized(playerId);
             return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
         } catch (InvalidBoardCreationException e) {

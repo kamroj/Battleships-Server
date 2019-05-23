@@ -115,6 +115,10 @@ class ShipPlacementValidator {
         return ship.fieldsToHit.get(ship.length() - 1);
     }
 
+    int leftToPlaceOfLength(int shipLength) {
+        return shipsOfLengthToPlace.get(shipLength);
+    }
+
     interface WithShipsOfLength4 {
         WithShipsOfLength3 withShipsOfLength4(int ships);
     }

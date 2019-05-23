@@ -41,8 +41,13 @@ public class ShipPlacementRandomly {
         this.random = new Random();
     }
 
-    public List<Ship> generateRandomShipList() {
-        placeAllShipsRandomly();
+    List<Ship> finishRandomPlacement() {
+        randomlyPlacedShips = new ArrayList<>();
+        for (int shipLength = MAX_SHIP_LENGTH; shipLength > 0; shipLength--) {
+            for (int i = shipPlacementValidator.leftToPlaceOfLength(shipLength); i > 0; i--) {
+                placeShipInRandomDirection(shipLength);
+            }
+        }
         return randomlyPlacedShips;
     }
 

@@ -27,20 +27,15 @@ public class GameInitializer {
         boardInitializers.put(SECOND_PLAYER_ID, new BoardInitializer());
     }
 
-    public ShipDTO placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
+    ShipDTO placeShip(int playerID, Ship ship) throws InvalidShipPlacementException {
         BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
         boardInitializer.placeShip(ship);
         return ship.asDTO();
     }
 
-    public List<ShipDTO> placeShip(int playerID, List<Ship> ships) throws InvalidShipPlacementException {
+    public List<ShipDTO> placeShipsRandomly(int playerID) throws InvalidShipPlacementException {
         BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
-        List<ShipDTO> shipsDTO = new ArrayList<>();
-        for (Ship ship : ships) {
-            boardInitializer.placeShip(ship);
-            shipsDTO.add(ship.asDTO());
-        }
-        return shipsDTO;
+        return boardInitializer.placeShipsRandomly();
     }
 
     public ShipDTO placeShip(int playerID, ShipPlacementData shipData) throws InvalidShipPlacementException {
