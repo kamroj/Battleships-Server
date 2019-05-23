@@ -3,8 +3,6 @@ package com.sarny.spocone.server.game;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**

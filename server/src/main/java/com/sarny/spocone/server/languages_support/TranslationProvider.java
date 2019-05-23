@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 /**
  * Loads translations for languages specified in {@link SupportedLanguages} from .properties files
- *
+ * <p>
  * Map structure:
  * Key: language code (ISO 639-1 standard)
  * Value: {@link Translation} - 1 to 1 representation of .properties file content
@@ -58,7 +58,7 @@ public class TranslationProvider {
         return loadedTranslations.get(code.toUpperCase());
     }
 
-    class Translation {
+    static class Translation {
         Map<String, String> asMap;
 
         Translation(ResourceBundle bundle) {

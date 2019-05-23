@@ -21,6 +21,7 @@ class PlayerShot extends Message {
 
     @Override
     public String asString(String language) {
-        return String.format(formatForLanguage(language), sentBy, playerId, field, shotOutcomeInLanguage(language, shotOutcome));
+        return String.format(formatForLanguage(language), sentBy, playerId, field,
+                shotOutcomeInLanguage(language, shotOutcome));
     }
 }

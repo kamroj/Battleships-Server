@@ -21,7 +21,8 @@ class BoardInitializer {
             shipPlacementValidator.placeNewShip(ship);
             return ship.asDTO();
         }
-        throw new InvalidShipPlacementException("Ship " + ship.toString() + "cannot be placed on the board!");
+        throw new InvalidShipPlacementException("Ship " + ship.toString()
+                + "cannot be placed on the board!");
     }
 
     Board generateBoard() throws InvalidBoardCreationException {

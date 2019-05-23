@@ -51,7 +51,7 @@ class Rooms {
         }
     }
 
-    class Room {
+    static class Room {
         int id;
         PairOfPlayers players;
 
@@ -61,7 +61,7 @@ class Rooms {
         }
     }
 
-    class PairOfPlayers {
+    static class PairOfPlayers {
         Integer firstPlayerId;
         Integer secondPlayerId;
 

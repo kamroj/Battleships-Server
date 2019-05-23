@@ -94,7 +94,7 @@ public class RegistrationControllerTest {
         assertEquals(numberOfRooms, NUMBER_OF_THREADS);
     }
 
-    class RegisterTest implements Runnable{
+    class RegisterTest implements Runnable {
         private Rooms rooms;
 
         RegisterTest(Rooms rooms) {

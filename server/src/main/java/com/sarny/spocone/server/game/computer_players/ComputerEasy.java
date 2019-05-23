@@ -10,8 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Kamil Rojek
  */
 public class ComputerEasy extends AI {
-    private Set<Integer> shots = new HashSet<>();
     private final int ID;
+    private Set<Integer> shots = new HashSet<>();
 
     public ComputerEasy(int ID) {
         this.ID = ID;

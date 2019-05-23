@@ -67,8 +67,8 @@ public class Ship {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ship ship = (Ship) o;
-        return Objects.equals(fieldsToHit, ship.fieldsToHit) &&
-                Objects.equals(fieldsAlreadyHit, ship.fieldsAlreadyHit);
+        return Objects.equals(fieldsToHit, ship.fieldsToHit)
+                && Objects.equals(fieldsAlreadyHit, ship.fieldsAlreadyHit);
     }
 
     @Override
