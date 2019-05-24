@@ -15,4 +15,6 @@ public interface MessageFactory {
     Message playerJoined(int playerId);
 
     Message gameEnded();
+
+    Message playerDisconnected(int disconnectedPlayerId);
 }

@@ -4,6 +4,7 @@ import com.sarny.spocone.publicclasses.chat.ChatMessage;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.server.chat.message.DefaultMessageFactory;
 import com.sarny.spocone.server.chat.message.Message;
+import com.sarny.spocone.server.chat.message.MessageFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Component
 public class ChatService {
 
-    private final DefaultMessageFactory defaultMessageFactory;
+    private final MessageFactory defaultMessageFactory;
     private Map<Integer, Chat> chatRooms; // Key is corresponding Game id;
 
     public ChatService() {
@@ -86,6 +87,11 @@ public class ChatService {
 
     public void addGameEndedMessage(int gameId) {
         Message message = defaultMessageFactory.gameEnded();
+        putNewServerMessage(message, gameId);
+    }
+
+    public void playerDisconnected(Integer gameId, int disconnectedPlayerId) {
+        Message message = defaultMessageFactory.playerDisconnected(disconnectedPlayerId);
         putNewServerMessage(message, gameId);
     }
 }

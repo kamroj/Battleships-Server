@@ -36,4 +36,10 @@ public class DefaultMessageFactory implements MessageFactory {
     public Message gameEnded() {
         return new GameEndedMessage(SERVER);
     }
+
+    @Override
+    public Message playerDisconnected(int disconnectedPlayerId) {
+        return new PlayerDisconnectedMessage(SERVER, disconnectedPlayerId);
+
+    }
 }
