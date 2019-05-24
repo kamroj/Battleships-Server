@@ -30,8 +30,9 @@ class ShotController {
 
     @PostMapping("/shot")
     ResponseEntity<?> fire(@RequestBody Shot shot) {
-        Game gameForPlayer = activeGames.findGameOfPlayer(shot.getPlayerId());
-        if (gameForPlayer == null) {
+        Game gameForPlayer;
+        if ((shot == null) || (shot.getField() < 0) ||
+                (((gameForPlayer = activeGames.findGameOfPlayer(shot.getPlayerId()))) == null)) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         ShotResult shotResult = gameForPlayer.handleShot(shot);
