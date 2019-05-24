@@ -9,8 +9,8 @@ import com.sarny.spocone.server.game.support_class.PlayerDisconnectedException;
 import java.util.*;
 
 /**
- * Provides set of functions allowing conducting single game
- * Package private constructor prevents instantiating Game without using GameInitializer
+ * Provides set of functions allowing conducting single game.
+ * Package private constructor prevents instantiating Game without using GameInitializer.
  *
  * @author Wojciech Makiela
  * @author Agnieszka Trzewik

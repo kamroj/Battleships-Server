@@ -56,7 +56,7 @@ class ShotController {
     @GetMapping("/turn/{playerId}/{gameId}")
     ResponseEntity<?> isPlayersTurn(@PathVariable Integer playerId, @PathVariable Integer gameId) {
         Game gameForPlayer = activeGames.findGameOfPlayer(playerId);
-        if (gameForPlayer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        if (gameForPlayer == null) return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 
         try {
             boolean isPlayersRound = gameForPlayer.isPlayerRound(playerId);

@@ -1,12 +1,14 @@
 package com.sarny.spocone.server.game.support_class;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Controls players activity during game.
+ * When player is inactive longer than 30 seconds, {@link PlayerDisconnectedException} is thrown.
+ *
  * @author Wojciech Makiela
  */
 public class GameTimeoutChecker {
@@ -22,6 +24,12 @@ public class GameTimeoutChecker {
         updatePlayersActivity(SECOND_PLAYER);
     }
 
+    /**
+     * Update players latest activity and check if opponent is inactive - if so, throw {@link PlayerDisconnectedException}.
+     *
+     * @param playerId
+     * @throws PlayerDisconnectedException
+     */
     public void playerWithIdTookAction(int playerId) throws PlayerDisconnectedException {
         updatePlayersActivity(playerId);
         int opponentId = getOpponentId(playerId);
@@ -35,10 +43,7 @@ public class GameTimeoutChecker {
     }
 
     private int getOpponentId(int playerId) {
-        if (playerId == FIRST_PLAYER) {
-            return SECOND_PLAYER;
-        }
-        return FIRST_PLAYER;
+        return playerId == FIRST_PLAYER ? SECOND_PLAYER : FIRST_PLAYER;
     }
 
     private boolean opponentIsInactive(int opponentId) {

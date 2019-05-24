@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * Basic AI implementation - randomly shoot till miss.
+ *
  * @author Kamil Rojek
  */
 public class ComputerEasy extends AI {
@@ -17,6 +19,11 @@ public class ComputerEasy extends AI {
         this.ID = ID;
     }
 
+    /**
+     * Generates random shot on board 10x10.
+     *
+     * @return {@link Shot}
+     */
     @Override
     public Shot generateShot() {
         int fieldToShot = generateFieldToShot();
@@ -36,7 +43,6 @@ public class ComputerEasy extends AI {
         } while (shots.contains(fieldToShot));
 
         shots.add(fieldToShot);
-
         return fieldToShot;
     }
 }

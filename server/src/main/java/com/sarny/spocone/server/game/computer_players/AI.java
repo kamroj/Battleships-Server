@@ -3,6 +3,7 @@ package com.sarny.spocone.server.game.computer_players;
 import com.sarny.spocone.publicclasses.shot.Shot;
 
 /**
+ * Base of AI requirements implementation.
  * @author Kamil Rojek
  */
 public abstract class AI {
