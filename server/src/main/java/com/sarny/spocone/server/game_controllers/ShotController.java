@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 /**
- * Entry point for shots related requests.
- * Responsible for handle {@link Shot}, informs if the player's turn is currently allowed,
- * returning opponents {@link ShotsSummary} and return guaranteed misses.
+ * Entry point for {@link Shot} related requests.
+ * Responsible for handling {@link Shot}s.
+ * Informs player if it is his turn, and
+ * returns opponents {@link ShotsSummary}.
  *
  * @author Wojciech Makiela
  */
@@ -34,7 +35,7 @@ class ShotController {
     }
 
     /**
-     * Responsible for handle {@link Shot} and add shot summary {@link ShotResult} in Chat.
+     * Responsible for handling {@link Shot}s, and adds shot summary info in Chat.
      * Informs about game ending.
      *
      * @see ChatService
@@ -66,7 +67,7 @@ class ShotController {
     }
 
     /**
-     * Provides information if the player's turn is currently allowed.
+     * Provides information if its player's turn.
      *
      * @param playerId who currently asking about his turn.
      * @param gameId corresponding game id.
@@ -105,7 +106,7 @@ class ShotController {
     }
 
     /**
-     * Provides for guaranteed misses for sunk ships.
+     * Provides set of integers representing guaranteed misses around last sunk ship.
      *
      * @param playerId who currently asking about his guaranteed misses.
      * @return set of guaranteed misses.
