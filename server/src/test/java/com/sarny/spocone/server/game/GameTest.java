@@ -4,6 +4,7 @@ import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
+import com.sarny.spocone.server.game.support_class.PlayerDisconnectedException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -30,7 +31,7 @@ public class GameTest {
     }
 
     @Test
-    public void testIsFirstPlayerRound_whenGameInitialized_returnTrue() {
+    public void testIsFirstPlayerRound_whenGameInitialized_returnTrue() throws PlayerDisconnectedException {
         //Act
         boolean isPlayerRound = game.isPlayerRound(firstPlayerID);
 
@@ -39,7 +40,7 @@ public class GameTest {
     }
 
     @Test
-    public void testIsNotSecondPlayerRound_whenGameInitialized_returnTrue() {
+    public void testIsNotSecondPlayerRound_whenGameInitialized_returnTrue() throws PlayerDisconnectedException {
         //Act
         boolean isNotPlayerRound = game.isPlayerRound(secondPlayerID);
 
