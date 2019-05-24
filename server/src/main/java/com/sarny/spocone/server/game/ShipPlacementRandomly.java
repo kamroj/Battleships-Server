@@ -1,7 +1,5 @@
 package com.sarny.spocone.server.game;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.*;
 
 /**
@@ -18,20 +16,9 @@ public class ShipPlacementRandomly {
     private ShipPlacementValidator shipPlacementValidator;
     private Random random;
 
-    @Autowired
     ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
         randomlyPlacedShips = new ArrayList<>();
         this.shipPlacementValidator = shipPlacementValidator;
-        this.random = new Random();
-    }
-
-    @Autowired
-    public ShipPlacementRandomly() {
-        randomlyPlacedShips = new ArrayList<>();
-        ShipPlacementValidator.Builder builder = new ShipPlacementValidator.Builder();
-        shipPlacementValidator = builder
-                .withGuaranteedMissGenerator(new ShipNeighbouringFieldsGenerator())
-                .forBoard(new Board());
         this.random = new Random();
     }
 

@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * Entry point for ship placement related requests.
+ * Responsible for the correct placing of the ship on the board by player
+ * and for placing ships randomly on the board by server.
+ *
  * @author Wojciech Makiela
  */
 @RestController

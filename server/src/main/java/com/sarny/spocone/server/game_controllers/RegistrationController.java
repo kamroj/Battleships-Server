@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 /**
+ * Entry point for registration related requests.
+ * Responsible for creating new room for player and
+ * for adding player to chosen room.
+ * Provides information about existing rooms and
+ * a game with an AI.
+ *
  * @author Wojciech Makiela
  */
 @RestController
