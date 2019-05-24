@@ -6,6 +6,7 @@ import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
 import com.sarny.spocone.server.chat.ChatService;
 import com.sarny.spocone.server.game.Game;
+import com.sarny.spocone.server.game.support_class.PlayerDisconnectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,13 +53,20 @@ class ShotController {
         }
     }
 
-    @GetMapping("/turn/{playerId}")
-    ResponseEntity<?> isPlayersTurn(@PathVariable Integer playerId) {
+    @GetMapping("/turn/{playerId}/{gameId}")
+    ResponseEntity<?> isPlayersTurn(@PathVariable Integer playerId, @PathVariable Integer gameId) {
         Game gameForPlayer = activeGames.findGameOfPlayer(playerId);
         if (gameForPlayer == null) return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
-        boolean isPlayersRound = gameForPlayer.isPlayerRound(playerId);
-        return new ResponseEntity<>(isPlayersRound, HttpStatus.OK);
+        try {
+            boolean isPlayersRound = gameForPlayer.isPlayerRound(playerId);
+            return new ResponseEntity<>(isPlayersRound, HttpStatus.OK);
+        } catch (PlayerDisconnectedException e) {
+            int disconnectedPlayerId = e.disconnectedPlayerId;
+            chatService.addGameEndedMessage(gameId);
+            chatService.playerDisconnected(gameId, disconnectedPlayerId);
+            return new ResponseEntity<>(false, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/summary/{firstPlayerId}")
