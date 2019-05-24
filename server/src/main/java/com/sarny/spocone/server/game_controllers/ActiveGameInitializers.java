@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Initialize active games for two players.
+ *
  * @author Wojciech Makiela
  */
 @Component

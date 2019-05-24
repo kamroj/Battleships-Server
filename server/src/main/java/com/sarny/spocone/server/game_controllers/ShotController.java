@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 /**
+ * Entry point for shots related requests.
+ * Responsible for handle {@link Shot}, informs if the player's turn is currently allowed,
+ * returning opponents {@link ShotsSummary} and return guaranteed misses.
+ *
  * @author Wojciech Makiela
  */
 @RestController
@@ -29,6 +33,14 @@ class ShotController {
         this.chatService = chatService;
     }
 
+    /**
+     * Responsible for handle {@link Shot} and add shot summary {@link ShotResult} in Chat.
+     * Informs about game ending.
+     *
+     * @see ChatService
+     * @param shot taken by player with possible move.
+     * @return {@link ShotResult} of executed {@link Shot}.
+     */
     @PostMapping("/shot")
     ResponseEntity<?> fire(@RequestBody Shot shot) {
         Game gameForPlayer;
@@ -53,6 +65,13 @@ class ShotController {
         }
     }
 
+    /**
+     * Provides information if the player's turn is currently allowed.
+     *
+     * @param playerId who currently asking about his turn.
+     * @param gameId corresponding game id.
+     * @return true if current player can do a move.
+     */
     @GetMapping("/turn/{playerId}/{gameId}")
     ResponseEntity<?> isPlayersTurn(@PathVariable Integer playerId, @PathVariable Integer gameId) {
         Game gameForPlayer = activeGames.findGameOfPlayer(playerId);
@@ -69,6 +88,12 @@ class ShotController {
         }
     }
 
+    /**
+     * Provides information about opponents {@link ShotsSummary}.
+     *
+     * @param firstPlayerId who ask for previous players {@link ShotsSummary}.
+     * @return opponents {@link ShotsSummary}.
+     */
     @GetMapping("/summary/{firstPlayerId}")
     ResponseEntity<ShotsSummary> getSummaryOfOpponentsShots(@PathVariable Integer firstPlayerId) {
         Game gameForPlayer = activeGames.findGameOfPlayer(firstPlayerId);
@@ -79,6 +104,12 @@ class ShotController {
         return new ResponseEntity<>(opponentsShots, HttpStatus.OK);
     }
 
+    /**
+     * Provides for guaranteed misses for sunk ships.
+     *
+     * @param playerId who currently asking about his guaranteed misses.
+     * @return set of guaranteed misses.
+     */
     @GetMapping("/misses/{playerId}")
     ResponseEntity<?> getGuaranteedMisses(@PathVariable Integer playerId) {
         Game gameForPlayer = activeGames.findGameOfPlayer(playerId);

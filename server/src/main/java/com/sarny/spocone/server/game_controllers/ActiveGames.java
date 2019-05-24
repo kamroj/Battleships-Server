@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Responsible for finding active player's game and for adding new games to active games.
+ *
  * @author Wojciech Makiela
  */
 @Component
