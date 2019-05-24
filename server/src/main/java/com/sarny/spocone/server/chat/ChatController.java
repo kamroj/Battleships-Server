@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ *  Entry point for chat related requests.
+ *  Responsible for both persisting new messages, and returning chat history for specific player.
+ *
  * @author Wojciech Makiela
  */
 @RestController

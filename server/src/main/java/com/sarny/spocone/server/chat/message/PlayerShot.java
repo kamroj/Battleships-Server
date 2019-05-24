@@ -12,7 +12,7 @@ class PlayerShot extends Message {
     private final ShotOutcome shotOutcome;
     private final String playerId;
 
-    public PlayerShot(String sentBy, String playerId, ShotResult result) {
+    PlayerShot(String sentBy, String playerId, ShotResult result) {
         super(sentBy, "MESSAGE_SHOT");
         field = result.getField();
         shotOutcome = result.getShotOutcome();

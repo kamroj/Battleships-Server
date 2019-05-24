@@ -7,7 +7,7 @@ class PlayersTurn extends Message {
 
     private final int playerId;
 
-    public PlayersTurn(String sentBy, int playerId) {
+    PlayersTurn(String sentBy, int playerId) {
         super(sentBy, "MESSAGE_TURN");
         this.playerId = playerId;
     }

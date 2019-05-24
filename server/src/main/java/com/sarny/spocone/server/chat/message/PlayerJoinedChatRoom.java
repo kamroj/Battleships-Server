@@ -7,7 +7,7 @@ class PlayerJoinedChatRoom extends Message {
 
     private final String playerId;
 
-    public PlayerJoinedChatRoom(String sentBy, String playerId) {
+    PlayerJoinedChatRoom(String sentBy, String playerId) {
         super(sentBy, "MESSAGE_JOIN");
         this.playerId = playerId;
     }
