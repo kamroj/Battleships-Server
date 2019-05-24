@@ -4,6 +4,7 @@ import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotOutcome;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.server.game.computer_players.AI;
+import com.sarny.spocone.server.game.support_class.PlayerDisconnectedException;
 
 import java.util.Set;
 
@@ -40,6 +41,16 @@ class GamePlayerVSComputer extends Game {
     public Set<Integer> getGuaranteedMisses(int playerID) {
         Ship ship = getLastSunkShip(playerID);
         return new ShipNeighbouringFieldsGenerator().generateNeighbours(ship);
+    }
+
+    /**
+     * Informs about whether or not the player with the given ID can shot.
+     *
+     * @param playerID who needs to be checked
+     * @return current active players ID is equal to provided playerID
+     */
+    public boolean isPlayerRound(int playerID) {
+        return activeRound.isPlayerRound(playerID);
     }
 
     private Ship getLastSunkShip(int playerID) {

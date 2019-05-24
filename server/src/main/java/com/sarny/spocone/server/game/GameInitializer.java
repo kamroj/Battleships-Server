@@ -33,7 +33,7 @@ public class GameInitializer {
         return ship.asDTO();
     }
 
-    public List<ShipDTO> placeShipsRandomly(int playerID) throws InvalidShipPlacementException {
+    public List<ShipDTO> placeShipsRandomly(int playerID) {
         BoardInitializer boardInitializer = this.boardInitializers.get(playerID);
         return boardInitializer.placeShipsRandomly();
     }

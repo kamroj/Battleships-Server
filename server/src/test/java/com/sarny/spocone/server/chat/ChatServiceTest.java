@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author Wojciech Makiela
@@ -23,16 +23,7 @@ public class ChatServiceTest {
         int firstPlayerId = 1;
         int secondPlayerId = 2;
         String language = "EN";
-        List<String> expectedMessages = new ArrayList<>();
-        expectedMessages.add("[SERVER]: Player 1 joined!");
-        expectedMessages.add("[SERVER]: Player 2 joined!");
-        expectedMessages.add("[1]: Hello");
-        expectedMessages.add("[2]: Hello");
-        expectedMessages.add("[SERVER]: Player 1 shot field 0 : Miss!");
-        expectedMessages.add("[SERVER]: Turn of player 1 ended.");
-        expectedMessages.add("[2]: My next shot will end this game");
-        expectedMessages.add("[SERVER]: Player 2 shot field 0 : Game over!");
-        expectedMessages.add("[SERVER]: ~~~Game Over~~~");
+        List<String> expectedMessages = getExpectedMessages();
 
         // act
         service.getChatMessagesAsStrings(firstPlayerId, gameId, language);
@@ -47,5 +38,19 @@ public class ChatServiceTest {
 
         // assert
         assertEquals(expectedMessages, service.getChatMessagesAsStrings(firstPlayerId, gameId, language));
+    }
+
+    private List<String> getExpectedMessages() {
+        List<String> expectedMessages = new ArrayList<>();
+        expectedMessages.add("[SERVER]: Player 1 joined!");
+        expectedMessages.add("[SERVER]: Player 2 joined!");
+        expectedMessages.add("[1]: Hello");
+        expectedMessages.add("[2]: Hello");
+        expectedMessages.add("[SERVER]: Player 1 shot field 0 : Miss!");
+        expectedMessages.add("[SERVER]: Turn of player 1 ended.");
+        expectedMessages.add("[2]: My next shot will end this game");
+        expectedMessages.add("[SERVER]: Player 2 shot field 0 : Game over!");
+        expectedMessages.add("[SERVER]: ~~~Game Over~~~");
+        return expectedMessages;
     }
 }
