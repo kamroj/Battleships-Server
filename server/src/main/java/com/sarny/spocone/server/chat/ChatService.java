@@ -29,7 +29,8 @@ public class ChatService {
     }
 
     /**
-     * Add Server message about player loosing connection in {@link Chat} corresponding to game with provided id.
+     * Add Server message about player loosing connection
+     * in {@link Chat} corresponding to game with provided id.
      * @param gameId corresponding game id.
      * @param disconnectedPlayerId message provides information about player who disconnected
      */
@@ -39,7 +40,8 @@ public class ChatService {
     }
 
     /**
-     * Add Server message about player {@link ShotResult} in {@link Chat} corresponding to game with provided id.
+     * Add Server message about player {@link ShotResult}
+     * in {@link Chat} corresponding to game with provided id.
      * @param playerId player who took a shot.
      * @param result shot outcome.
      * @param gameId corresponding game id.
@@ -50,7 +52,8 @@ public class ChatService {
     }
 
     /**
-     * Add Server message about end of players turn in {@link Chat} corresponding to game with provided id.
+     * Add Server message about end of players turn
+     * in {@link Chat} corresponding to game with provided id.
      * @param playerId player who finished his turn.
      * @param gameId corresponding game id.
      */
@@ -60,7 +63,8 @@ public class ChatService {
     }
 
     /**
-     * Add Server message about end of a game in {@link Chat} corresponding to game with provided id.
+     * Add Server message about end of a game
+     * in {@link Chat} corresponding to game with provided id.
      * @param gameId game that has ended.
      */
     public void addGameEndedMessage(int gameId) {
@@ -87,7 +91,8 @@ public class ChatService {
      * @return translated chat content as list of strings.
      */
     List<String> addUserMessageAndGetChat(ChatMessage chatMessage) {
-        Message message = defaultMessageFactory.textMessage(chatMessage.playerId, chatMessage.textMessage);
+        Message message = defaultMessageFactory
+                .textMessage(chatMessage.playerId, chatMessage.textMessage);
         return putNewUserMessage(message, chatMessage.gameId, chatMessage.language);
     }
 

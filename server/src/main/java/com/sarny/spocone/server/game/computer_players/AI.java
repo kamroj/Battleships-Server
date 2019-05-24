@@ -4,6 +4,7 @@ import com.sarny.spocone.publicclasses.shot.Shot;
 
 /**
  * Base of AI requirements implementation.
+ *
  * @author Kamil Rojek
  */
 public abstract class AI {

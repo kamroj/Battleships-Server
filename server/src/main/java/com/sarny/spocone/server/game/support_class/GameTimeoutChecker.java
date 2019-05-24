@@ -13,9 +13,9 @@ import java.util.Map;
  */
 public class GameTimeoutChecker {
 
-    private Map<Integer, LocalTime> lastPlayerActivity = new HashMap<>();
     private final int FIRST_PLAYER;
     private final int SECOND_PLAYER;
+    private Map<Integer, LocalTime> lastPlayerActivity = new HashMap<>();
 
     public GameTimeoutChecker(int firstPlayerId, int secondPlayerId) {
         FIRST_PLAYER = firstPlayerId;

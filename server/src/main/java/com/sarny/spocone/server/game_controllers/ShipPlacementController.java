@@ -2,7 +2,10 @@ package com.sarny.spocone.server.game_controllers;
 
 import com.sarny.spocone.publicclasses.ship.ShipDTO;
 import com.sarny.spocone.publicclasses.ship.ShipPlacementData;
-import com.sarny.spocone.server.game.*;
+import com.sarny.spocone.server.game.Game;
+import com.sarny.spocone.server.game.GameInitializer;
+import com.sarny.spocone.server.game.InvalidBoardCreationException;
+import com.sarny.spocone.server.game.InvalidShipPlacementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -12,20 +12,14 @@ public class ShipPlacementRandomly {
     private static final int NUMBER_TO_MOVE_VERTICALLY = 10;
     private static final int NUMBER_TO_MOVE_HORIZONTALLY = 1;
     private static final int BOARD_CAPACITY = 100;
-    private static final int NUMBER_OF_POSSIBLE_DIRECTIONS = 2;
     private static final int MAX_SHIP_LENGTH = 4;
-
-    private int numberOfShipLength4 = 1;
-    private int numberOfShipLength3 = 2;
-    private int numberOfShipLength2 = 3;
-    private int numberOfShipLength1 = 4;
 
     private List<Ship> randomlyPlacedShips;
     private ShipPlacementValidator shipPlacementValidator;
     private Random random;
 
     @Autowired
-    public ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
+    ShipPlacementRandomly(ShipPlacementValidator shipPlacementValidator) {
         randomlyPlacedShips = new ArrayList<>();
         this.shipPlacementValidator = shipPlacementValidator;
         this.random = new Random();
@@ -60,13 +54,9 @@ public class ShipPlacementRandomly {
     }
 
     private void placeShipInRandomDirection(int shipLength) {
-        int choiceForHorOrVer = random.nextInt(NUMBER_OF_POSSIBLE_DIRECTIONS);
-        if (choiceForHorOrVer == 0) {
-            placeShipRandomly(shipLength, NUMBER_TO_MOVE_HORIZONTALLY);
-
-        } else {
-            placeShipRandomly(shipLength, NUMBER_TO_MOVE_VERTICALLY);
-        }
+        boolean moveHorizontally = random.nextBoolean();
+        placeShipRandomly(shipLength,
+                moveHorizontally ? NUMBER_TO_MOVE_HORIZONTALLY : NUMBER_TO_MOVE_VERTICALLY);
     }
 
     private void placeShipRandomly(int shipLength, int numberToMoveForward) {
@@ -94,10 +84,10 @@ public class ShipPlacementRandomly {
 
     private Map<Integer, Integer> getAllShipsToPlaceOnTheBoard() {
         Map<Integer, Integer> shipsOfLengthToPlace = new HashMap<>();
-        shipsOfLengthToPlace.put(4, numberOfShipLength4);
-        shipsOfLengthToPlace.put(3, numberOfShipLength3);
-        shipsOfLengthToPlace.put(2, numberOfShipLength2);
-        shipsOfLengthToPlace.put(1, numberOfShipLength1);
+        shipsOfLengthToPlace.put(4, 1);
+        shipsOfLengthToPlace.put(3, 2);
+        shipsOfLengthToPlace.put(2, 3);
+        shipsOfLengthToPlace.put(1, 4);
         return shipsOfLengthToPlace;
     }
 }

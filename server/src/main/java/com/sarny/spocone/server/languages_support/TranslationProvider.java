@@ -26,7 +26,7 @@ public class TranslationProvider {
     private Map<String, Translation> loadedTranslations;
 
     @Autowired
-    public TranslationProvider(SupportedLanguages supportedLanguages) {
+    TranslationProvider(SupportedLanguages supportedLanguages) {
         this.supportedLanguages = supportedLanguages;
         loadedTranslations = new HashMap<>();
         loadTranslations();

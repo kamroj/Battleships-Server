@@ -4,12 +4,12 @@ import com.sarny.spocone.server.chat.message.Message;
 
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
- * Representation of chat messages. Stores up to {@value MAX_NUMBER_OF_MESSAGES} messages.
+ * Representation of chat messages.
+ * Stores up to {@value MAX_NUMBER_OF_MESSAGES} messages.
  * Since both players might post message in the same time, used collection is thread safe.
  *
  * @author Wojciech Makiela

@@ -22,6 +22,7 @@ public abstract class Message {
 
     /**
      * Translate and format message content.
+     *
      * @param language desired message translation.
      * @return translated message.
      */
