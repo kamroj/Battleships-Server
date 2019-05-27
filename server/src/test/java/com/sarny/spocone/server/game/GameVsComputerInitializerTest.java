@@ -15,7 +15,7 @@ import static org.testng.Assert.assertTrue;
  * @author Wojciech Makiela
  */
 public class GameVsComputerInitializerTest {
-    List<Ship> shipsToPlace = Arrays.asList(
+    private List<Ship> shipsToPlace = Arrays.asList(
             new Ship(new ArrayList<>(Arrays.asList(1, 2, 3, 4))),
             new Ship(new ArrayList<>(Arrays.asList(6, 7, 8))),
             new Ship(new ArrayList<>(Arrays.asList(20, 21, 22))),
@@ -42,7 +42,7 @@ public class GameVsComputerInitializerTest {
         assertTrue(areReady);
     }
 
-    @Test(invocationCount = 10000)
+    @Test(invocationCount = 100)
     public void testGenerateGame_whenHumanPlayerFinishedPlacingShips_returnValidBoardForAI() throws InvalidBoardCreationException, InvalidShipPlacementException {
         // arrange
         int AI_ID = 2;

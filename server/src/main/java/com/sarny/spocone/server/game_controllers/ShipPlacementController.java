@@ -9,13 +9,15 @@ import com.sarny.spocone.server.game.InvalidShipPlacementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
+ * Entry point for ship placement related requests.
+ * Responsible for the correct placing of the ship on the board by player
+ * and for placing ships randomly on the board by server.
+ *
  * @author Wojciech Makiela
  */
 @RestController
@@ -37,15 +39,28 @@ class ShipPlacementController {
 
         try {
             ResponseEntity<ShipDTO> shipDTOResponseEntity = placeShipAndReturnItsDTO(placementData);
-            moveGameToActiveGamesIfFinalized(placementData);
+            moveGameToActiveGamesIfFinalized(placementData.getPlayerID());
             return shipDTOResponseEntity;
         } catch (InvalidShipPlacementException | InvalidBoardCreationException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
-    private void moveGameToActiveGamesIfFinalized(ShipPlacementData placementData) throws InvalidBoardCreationException {
-        int playerId = placementData.getPlayerID();
+    @GetMapping("/placeShipsRandomly/{playerId}")
+    ResponseEntity<List<ShipDTO>> placeShipsRandomly(@PathVariable Integer playerId) throws InvalidShipPlacementException {
+        if (playerId == null || initializers.getInitializerForPlayer(playerId) == null) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        try {
+            List<ShipDTO> shipsDTO = initializers.getInitializerForPlayer(playerId).placeShipsRandomly(playerId);
+            moveGameToActiveGamesIfFinalized(playerId);
+            return new ResponseEntity<>(shipsDTO, HttpStatus.OK);
+        } catch (InvalidBoardCreationException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void moveGameToActiveGamesIfFinalized(Integer playerId) throws InvalidBoardCreationException {
         GameInitializer initializerForPlayer = initializers.getInitializerForPlayer(playerId);
         if (initializerForPlayer.areBothPlayersDone()) {
             Game game = initializerForPlayer.generateGame();

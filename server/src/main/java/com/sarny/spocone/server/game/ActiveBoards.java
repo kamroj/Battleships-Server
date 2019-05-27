@@ -25,6 +25,10 @@ class ActiveBoards {
         return boardsInGame.get(playerID).getShipFromField(fieldNumber);
     }
 
+    Map<Integer, Board> getBoards() {
+        return boardsInGame;
+    }
+
     private Board getPlayerBoard(int playerID) {
         return boardsInGame.get(playerID);
     }

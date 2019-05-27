@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertFalse;
 
 /**
  * @author Kamil Rojek
@@ -22,22 +22,22 @@ public class ComputerEasyTest {
     public void setUp() {
         computer = new ComputerEasy(AI.generateID());
     }
-    
+
     @Test(invocationCount = 100)
-    public void testGenerateFieldToShot_whenCalledMultipleTimes_returnUniqueShotObjects(){
+    public void testGenerateFieldToShot_whenCalledMultipleTimes_returnUniqueShotObjects() {
         // arrange
         Set<Shot> generatedShots = new HashSet<>();
         boolean duplicatesFound = false;
         int shotsToGenerate = 50;
 
         // act
-        for(int i = shotsToGenerate; i > 0; i--) {
+        for (int i = shotsToGenerate; i > 0; i--) {
             Shot shot = computer.generateShot();
             if (!generatedShots.add(shot)) {
                 duplicatesFound = true;
             }
         }
-        
+
         // assert
         assertFalse(duplicatesFound);
     }

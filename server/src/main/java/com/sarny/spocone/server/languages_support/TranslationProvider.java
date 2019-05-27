@@ -1,5 +1,7 @@
 package com.sarny.spocone.server.languages_support;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +11,7 @@ import java.util.ResourceBundle;
 
 /**
  * Loads translations for languages specified in {@link SupportedLanguages} from .properties files
- *
+ * <p>
  * Map structure:
  * Key: language code (ISO 639-1 standard)
  * Value: {@link Translation} - 1 to 1 representation of .properties file content
@@ -17,14 +19,21 @@ import java.util.ResourceBundle;
  * @author Wojciech Makiela
  */
 @Component
-class TranslationProvider {
+public class TranslationProvider {
 
+    private static Logger logger = LogManager.getLogger(TranslationProvider.class);
     private SupportedLanguages supportedLanguages;
     private Map<String, Translation> loadedTranslations;
 
     @Autowired
     TranslationProvider(SupportedLanguages supportedLanguages) {
         this.supportedLanguages = supportedLanguages;
+        loadedTranslations = new HashMap<>();
+        loadTranslations();
+    }
+
+    public TranslationProvider() {
+        this.supportedLanguages = new SupportedLanguages();
         loadedTranslations = new HashMap<>();
         loadTranslations();
     }
@@ -36,11 +45,20 @@ class TranslationProvider {
         }
     }
 
+    public String getValueForKeyForGivenLanguage(String language, String key) {
+        Translation translation = loadedTranslations.get(language.toUpperCase());
+        if (translation == null) {
+            logger.warn("Searched for key " + key + " in unsupported translation {" + language + "}.");
+            return "Unsupported Language";
+        }
+        return translation.asMap.get(key);
+    }
+
     Translation getTranslation(String code) {
         return loadedTranslations.get(code.toUpperCase());
     }
 
-    class Translation {
+    static class Translation {
         Map<String, String> asMap;
 
         Translation(ResourceBundle bundle) {

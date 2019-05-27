@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Responsible for finding active player's game and for adding new games to active games.
+ *
  * @author Wojciech Makiela
  */
 @Component
@@ -18,7 +20,7 @@ class ActiveGames {
         return activeGames.get(playerId);
     }
 
-     void addNewGame(Game game) {
+    void addNewGame(Game game) {
         for (int id : game.getPlayersIDs()) {
             activeGames.put(id, game);
         }

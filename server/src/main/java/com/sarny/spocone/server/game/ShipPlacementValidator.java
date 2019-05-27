@@ -115,6 +115,35 @@ class ShipPlacementValidator {
         return ship.fieldsToHit.get(ship.length() - 1);
     }
 
+    int leftToPlaceOfLength(int shipLength) {
+        return shipsOfLengthToPlace.get(shipLength);
+    }
+
+    interface WithShipsOfLength4 {
+        WithShipsOfLength3 withShipsOfLength4(int ships);
+    }
+
+    interface WithShipsOfLength3 {
+        WithShipsOfLength2 withShipsOfLength3(int ships);
+
+    }
+
+    interface WithShipsOfLength2 {
+        WithShipsOfLength1 withShipsOfLength2(int ships);
+    }
+
+    interface WithShipsOfLength1 {
+        WithGuaranteedMissGenerator withShipsOfLength1(int ships);
+    }
+
+    interface WithGuaranteedMissGenerator {
+        BuildShipPlacementValidator withGuaranteedMissGenerator(ShipNeighbouringFieldsGenerator generator);
+    }
+
+    interface BuildShipPlacementValidator {
+        ShipPlacementValidator forBoard(Board board);
+    }
+
     static class Builder implements WithShipsOfLength4, WithShipsOfLength3, WithShipsOfLength2, WithShipsOfLength1, WithGuaranteedMissGenerator, BuildShipPlacementValidator {
 
         private int shipLength4 = 1;
@@ -162,30 +191,5 @@ class ShipPlacementValidator {
             shipsOfLengthToPlace.put(1, shipLength1);
             return new ShipPlacementValidator(shipsOfLengthToPlace, board, generator);
         }
-    }
-
-    interface WithShipsOfLength4 {
-        WithShipsOfLength3 withShipsOfLength4(int ships);
-    }
-
-    interface WithShipsOfLength3 {
-        WithShipsOfLength2 withShipsOfLength3(int ships);
-
-    }
-
-    interface WithShipsOfLength2 {
-        WithShipsOfLength1 withShipsOfLength2(int ships);
-    }
-
-    interface WithShipsOfLength1 {
-        WithGuaranteedMissGenerator withShipsOfLength1(int ships);
-    }
-
-    interface WithGuaranteedMissGenerator {
-        BuildShipPlacementValidator withGuaranteedMissGenerator(ShipNeighbouringFieldsGenerator generator);
-    }
-
-    interface BuildShipPlacementValidator {
-        ShipPlacementValidator forBoard(Board board);
     }
 }

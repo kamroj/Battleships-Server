@@ -27,17 +27,17 @@ class TranslationController {
     @GetMapping("/language/{code}")
     ResponseEntity<Map<String, String>> getTranslationForCode(@PathVariable String code) {
         TranslationProvider.Translation translation = translationProvider.getTranslation(code.toUpperCase());
-        return translation != null ?
-                new ResponseEntity<>(translation.asMap, HttpStatus.OK) :
-                new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        return translation != null
+                ? new ResponseEntity<>(translation.asMap, HttpStatus.OK)
+                : new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/language")
     ResponseEntity<Map<String, String>> getAllSupportedTranslations() {
         Map<String, String> translations = supportedLanguages.asMap();
-        return translations != null ?
-                new ResponseEntity<>(translations, HttpStatus.OK) :
-                new ResponseEntity<>(null, HttpStatus.valueOf(503)); // 503 - Service Unavailable
+        return translations != null
+                ? new ResponseEntity<>(translations, HttpStatus.OK)
+                : new ResponseEntity<>(null, HttpStatus.valueOf(503)); // 503 - Service Unavailable
 
     }
 }

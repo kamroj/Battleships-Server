@@ -10,8 +10,8 @@ import java.util.List;
  */
 class Board {
 
-    private List<Ship> ships;
-    private List<Ship> sunkShips;
+    List<Ship> ships;
+    List<Ship> sunkShips;
 
     Board() {
         this.ships = new ArrayList<>();
@@ -63,4 +63,5 @@ class Board {
     private ShotOutcome checkIfWin() {
         return ships.isEmpty() ? ShotOutcome.WIN : ShotOutcome.SUNK;
     }
+
 }

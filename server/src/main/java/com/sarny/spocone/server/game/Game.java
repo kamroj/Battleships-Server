@@ -3,12 +3,14 @@ package com.sarny.spocone.server.game;
 import com.sarny.spocone.publicclasses.shot.Shot;
 import com.sarny.spocone.publicclasses.shot.ShotResult;
 import com.sarny.spocone.publicclasses.shot.ShotsSummary;
+import com.sarny.spocone.server.game.support_class.GameTimeoutChecker;
+import com.sarny.spocone.server.game.support_class.PlayerDisconnectedException;
 
 import java.util.*;
 
 /**
- * Provides set of functions allowing conducting single game
- * Package private constructor prevents instantiating Game without using GameInitializer
+ * Provides set of functions allowing conducting single game.
+ * Package private constructor prevents instantiating Game without using GameInitializer.
  *
  * @author Wojciech Makiela
  * @author Agnieszka Trzewik
@@ -16,14 +18,16 @@ import java.util.*;
 public class Game {
 
     ActiveBoards activeBoards;
-    private Stack<Round> rounds;
+    Stack<Round> rounds;
     Round activeRound;
     private List<Integer> playersIDs;
+    private GameTimeoutChecker timeoutChecker;
 
     Game(ActiveBoards activeBoards, int firstPlayerID, int secondPlayerID) {
         this.activeBoards = activeBoards;
         this.playersIDs = new LinkedList<>(Arrays.asList(firstPlayerID, secondPlayerID));
         this.rounds = new Stack<>();
+        timeoutChecker = new GameTimeoutChecker(firstPlayerID, secondPlayerID);
         createNewRound();
     }
 
@@ -55,7 +59,8 @@ public class Game {
      * @param playerID who needs to be checked
      * @return current active players ID is equal to provided playerID
      */
-    public boolean isPlayerRound(int playerID) {
+    public boolean isPlayerRound(int playerID) throws PlayerDisconnectedException {
+        timeoutChecker.playerWithIdTookAction(playerID);
         return activeRound.isPlayerRound(playerID);
     }
 
@@ -102,7 +107,7 @@ public class Game {
         return activeBoards.getShipOnField(fieldNumber, oppositePlayerID);
     }
 
-    private void createNewRound() {
+    void createNewRound() {
         activeRound = new Round(activeBoards, playersIDs);
     }
 }

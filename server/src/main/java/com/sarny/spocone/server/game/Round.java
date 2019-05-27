@@ -47,8 +47,8 @@ class Round {
 
     Integer getLastSunkField(int playerId) {
         return playersShots.get(playerId).stream()
-                .filter(shotResult -> shotResult.getShotOutcome() == ShotOutcome.SUNK ||
-                        shotResult.getShotOutcome() == ShotOutcome.WIN)
+                .filter(shotResult -> shotResult.getShotOutcome() == ShotOutcome.SUNK
+                        || shotResult.getShotOutcome() == ShotOutcome.WIN)
                 .reduce((first, second) -> second)
                 .map(ShotResult::getField)
                 .orElse(null);
@@ -63,7 +63,7 @@ class Round {
         playersShots.get(activePlayerId).add(shotResult);
 
         if (shotOutcome == ShotOutcome.MISS) {
-            activePlayerId = oppositePlayerId(shot.getPlayerID());
+            activePlayerId = oppositePlayerId(shot.getPlayerId());
             misses++;
         }
     }
@@ -76,6 +76,9 @@ class Round {
     }
 
     private boolean checkIfLastShotIsWin(List<ShotResult> shotResults) {
+        if (shotResults.isEmpty()) {
+            return false;
+        }
         return shotResults.get(shotResults.size() - 1).getShotOutcome() == ShotOutcome.WIN;
     }
 

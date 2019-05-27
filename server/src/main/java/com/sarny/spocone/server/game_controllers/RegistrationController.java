@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 /**
+ * Entry point for registration related requests.
+ * Responsible for creating new room for player and
+ * for adding player to chosen room.
+ * Provides information about existing rooms and
+ * a game with an AI.
+ *
  * @author Wojciech Makiela
  */
 @RestController
@@ -67,14 +73,14 @@ class RegistrationController {
     }
 
     @PostMapping(path = "/playVersusAi")
-    ResponseEntity<Integer> playVersusAi(@RequestBody Integer id) {
-        if (id == null) {
+    ResponseEntity<Integer> playVersusAi(@RequestBody Integer playerId) {
+        if (playerId == null) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
         int aiId = AI.generateID();
-        AI ai = new ComputerEasy(aiId);
-        initializers.addNewActiveGameInitializer(new GameVsComputerInitializer(id, aiId, ai), id, aiId);
-        return new ResponseEntity<>(-1, HttpStatus.OK);
+        AI aiPlayer = new ComputerEasy(aiId);
+        initializers.addNewActiveGameInitializer(new GameVsComputerInitializer(playerId, aiId, aiPlayer), playerId, aiId);
+        return new ResponseEntity<>(rooms.getRoomId(), HttpStatus.OK);
     }
 
     @GetMapping("/rooms")

@@ -1,5 +1,6 @@
 package com.sarny.spocone.publicclasses.ship;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,10 +18,15 @@ public class ShipDTO {
     }
 
     public ShipDTO() {
+        shotDownFields = new ArrayList<>();
     }
 
     public List<Integer> getShotDownFields() {
         return shotDownFields;
+    }
+
+    public void addFields(List<Integer> fields) {
+        shotDownFields.addAll(fields);
     }
 
     @Override

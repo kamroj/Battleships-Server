@@ -28,7 +28,7 @@ public class ShotsSummary {
         return shotResults;
     }
 
-    public void addShot(ShotResult shotResult){
+    public void addShot(ShotResult shotResult) {
         shotResults.add(shotResult);
     }
 
@@ -36,7 +36,7 @@ public class ShotsSummary {
         return isGameOver;
     }
 
-    public void gameOver(){
+    public void gameOver() {
         isGameOver = true;
     }
 }
