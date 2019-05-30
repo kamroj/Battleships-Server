@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 @Component
 public class TranslationProvider {
 
-    private static Logger logger = LogManager.getLogger(TranslationProvider.class);
+    private static Logger logger = LogManager.getLogger();
     private SupportedLanguages supportedLanguages;
     private Map<String, Translation> loadedTranslations;
 

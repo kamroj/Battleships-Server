@@ -14,7 +14,7 @@ class GameComputerVsComputer extends Game {
     private AI firstComputer;
     private AI secondComputer;
     private BoardDrawer boardDrawer;
-    private Logger logger = LogManager.getLogger(GameComputerVsComputer.class);
+    private Logger logger = LogManager.getLogger();
 
     GameComputerVsComputer(ActiveBoards activeBoards, AI firstComputer, AI secondComputer) {
         super(activeBoards, firstComputer.getID(), secondComputer.getID());
