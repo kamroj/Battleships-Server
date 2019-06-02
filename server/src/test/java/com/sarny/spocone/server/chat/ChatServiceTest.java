@@ -49,7 +49,7 @@ public class ChatServiceTest {
         expectedMessages.add("[SERVER]: Player 1 shot field 0 : Miss!");
         expectedMessages.add("[SERVER]: Turn of player 1 ended.");
         expectedMessages.add("[2]: My next shot will end this game");
-        expectedMessages.add("[SERVER]: Player 2 shot field 0 : Game over!");
+        expectedMessages.add("[SERVER]: Player 2 shot field 0 : Player Won!");
         expectedMessages.add("[SERVER]: ~~~Game Over~~~");
         return expectedMessages;
     }
