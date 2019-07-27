@@ -5,7 +5,8 @@ import org.testng.annotations.Test;
 
 import java.util.Map;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author Wojciech Makiela
@@ -13,7 +14,7 @@ import static org.testng.Assert.*;
 public class TranslationControllerTest {
 
     @Test
-    public void testGetTranslationForCode_whenPassedCodeForNotSupportedLanguage_returnNullWith400StatusCode(){
+    public void testGetTranslationForCode_whenPassedCodeForNotSupportedLanguage_returnNullWith400StatusCode() {
         // arrange
         SupportedLanguages supportedLanguages = new SupportedLanguages();
         TranslationController controller = new TranslationController(new TranslationProvider(supportedLanguages), supportedLanguages);
@@ -23,9 +24,9 @@ public class TranslationControllerTest {
         // assert
         assertEquals(response.getStatusCodeValue(), 400);
     }
-    
+
     @Test
-    public void testGetAllSupportedLanguages_whenSupportedLanguagesProvided_returnCodesWithTheirFullNames(){
+    public void testGetAllSupportedLanguages_whenSupportedLanguagesProvided_returnCodesWithTheirFullNames() {
         // arrange
         SupportedLanguages supportedLanguages = new SupportedLanguages();
         TranslationController controller = new TranslationController(new TranslationProvider(supportedLanguages), supportedLanguages);
